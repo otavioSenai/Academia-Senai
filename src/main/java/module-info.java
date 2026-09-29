@@ -5,4 +5,6 @@ module com.example.academia {
 
     opens com.example.academia to javafx.fxml;
     exports com.example.academia;
+
+    //asdasdaafsadsadasdsaasd
 }
