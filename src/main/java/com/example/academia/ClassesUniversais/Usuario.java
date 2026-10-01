@@ -2,16 +2,21 @@ package com.example.academia.ClassesUniversais;
 
 public class Usuario {
 
+    protected final int id;
     protected String nome;
-    private final String senha;
-    protected String cpf;
+    private String senha;
+    protected final String cpf;
 
-    public Usuario(String nome, String senha, String cpf){
+    public Usuario(int id, String nome, String senha, String cpf){
         this.nome = nome;
+        this.id = id;
         this.senha = senha;
         this.cpf = cpf;
     }
 
+    public int id(){
+        return this.id;
+    }
     public String getNome(){
         return this.nome;
     }
