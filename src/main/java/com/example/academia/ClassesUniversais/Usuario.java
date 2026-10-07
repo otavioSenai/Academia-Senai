@@ -14,17 +14,12 @@ public class Usuario {
         this.cpf = cpf;
     }
 
-    public int id(){
-        return this.id;
-    }
-    public String getNome(){
-        return this.nome;
-    }
-    public String getCpf(){
-        return this.cpf;
-    }
-    public String getSenha(){
-        return this.senha;
-    }
+    public int getId(){return this.id;}
+
+    public String getNome(){return this.nome;}
+
+    public String getCpf(){return this.cpf;}
+
+    public String getSenha(){return this.senha;}
 
 }
