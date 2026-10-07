@@ -1,4 +1,4 @@
-package com.example.academia.administrativo;
+package com.example.academia.administrativo.controller;
 
 public class AdministrativoAddDepartamentoController {
 }

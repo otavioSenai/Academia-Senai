@@ -18,12 +18,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
-        stage.setTitle("Academia Icaro");
+        stage.setTitle("Academia Ícaro - Painel Administrador");
 
-        Parent fxmlAdministrativo = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../resources/com/example/academia/administrativo/Administrativo.fxml")));
+        Parent fxmlAdministrativo = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/academia/administrativo/telas/Administrativo.fxml")));
         cenaAdministrativo = new Scene(fxmlAdministrativo, 600, 400);
 
-        Parent fxmlAdministrativoAddDepartamento = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../resources/com/example/academia/administrativo/AdministrativoAddDepartamento.fxml")));
+        Parent fxmlAdministrativoAddDepartamento = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/academia/administrativo/telas/AdministrativoAddDepartamento.fxml")));
         cenaAdministrativoAddDepartamento = new Scene(fxmlAdministrativoAddDepartamento, 300, 200);
 
         stage.setScene(cenaAdministrativo);

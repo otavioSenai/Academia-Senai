@@ -1,12 +1,8 @@
-package com.example.academia.administrativo;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+package com.example.academia.administrativo.controller;
 
 import com.example.academia.ClassesUniversais.Departamento;
 import com.example.academia.Main;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.*;
 import javafx.scene.control.Button;

@@ -2,12 +2,7 @@ package com.example.academia.administrativo;
 
     import com.example.academia.ClassesUniversais.*;
 
-    import java.util.ArrayList;
-
-
 public class Administrativo extends Funcionario {
-
-    ArrayList<Departamento> departamentos = new ArrayList<>();
 
     //Construtor
     public Administrativo(int id, String nome, String senha, String cpf, double salario){
@@ -23,7 +18,7 @@ public class Administrativo extends Funcionario {
 
         boolean nomeEncontrado = false;
 
-        for(Departamento dp : departamentos){
+        for(Departamento dp : BancoDeDados.getInstance().departamentos){
             if(dp.getNome().equals(nome)){
                 nomeEncontrado = true;
                 break;
@@ -35,7 +30,7 @@ public class Administrativo extends Funcionario {
         }
         else{
             departamento = new Departamento(nome);
-            departamentos.add(departamento);
+            BancoDeDados.getInstance().departamentos.add(departamento);
             System.out.println("Departamento Cadastrado");
         }
     }
@@ -50,7 +45,7 @@ public class Administrativo extends Funcionario {
 
             Departamento dpRemove = null;
 
-            for (Departamento dp : departamentos) {
+            for (Departamento dp : BancoDeDados.getInstance().departamentos) {
                 if (dp.getNome().equals(nome)) {
                     dpRemove = dp;
                     break;
@@ -60,11 +55,9 @@ public class Administrativo extends Funcionario {
             if (dpRemove == null) {
                 System.out.println("Valores Inválidos");
             } else {
-                departamentos.remove(dpRemove);
+                BancoDeDados.getInstance().departamentos.remove(dpRemove);
             }
         }
     }
-
-
 
 }
