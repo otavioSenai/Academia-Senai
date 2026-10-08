@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<HBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.academia.aluno.AlunoController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.academia.aluno.AlunoController">
       <VBox prefHeight="200.0" prefWidth="230.0" spacing="10.0" style="-fx-background-color: #151515;">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -63,11 +62,19 @@
                                     <Font name="Arial Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Label text="Musculação" textFill="WHITE">
+                              <Label fx:id="lblDepartamento" text="Musculação" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="22.0" />
                                  </font>
                               </Label>
+                           <Label fx:id="lblPlano" text="PLANO" textFill="RED">
+                              <font>
+                                 <Font size="22.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="lblPlano" text="Premiun" />
+                           <Label text="Intensidade" />
+                           <Label fx:id="lblIntensidade" text="medio" />
                            </children>
                         </VBox>
                      </children>
