@@ -2,20 +2,50 @@ package com.example.academia.administrativo.controller;
 
 import com.example.academia.ClassesUniversais.Departamento;
 import com.example.academia.Main;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.*;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
+
+import java.awt.event.MouseEvent;
 
 public class AdministrativoController {
 
+    @FXML private Pane menuLateral;
+
+    @FXML private StackPane rootPane;
+
     @FXML private Button AcessarDepartamento;
 
-    ObservableList<Departamento> listaDepartamentos = FXCollections.observableArrayList();
+    @FXML private final Pane peliculaFundo = new Pane();
+
+
+    public void initialize() {
+        fecharMenu();
+    }
+
+    @FXML
+    public void abrirMenu(){
+        menuLateral.setManaged(true);
+        menuLateral.setVisible(true);
+
+        TranslateTransition slideIn = new TranslateTransition(Duration.millis(250), menuLateral);
+        slideIn.setToX(0);
+        slideIn.play();
+    }
+
+    @FXML
+    public void fecharMenu(){
+
+        TranslateTransition slideOut = new TranslateTransition(Duration.millis(250), menuLateral);
+        slideOut.setToX(124);
+        slideOut.setOnFinished(e -> menuLateral.setVisible(false));
+        slideOut.play();
+    }
 
     @FXML
     protected void MudarCor(){
@@ -26,6 +56,6 @@ public class AdministrativoController {
 
     @FXML
     protected void clicarBotao(){
-        Main.clicarBotao();
+        Main.telaAddDepartamento();
     }
 }

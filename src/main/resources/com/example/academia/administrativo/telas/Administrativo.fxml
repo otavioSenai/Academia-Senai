@@ -6,125 +6,158 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2c1f36;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.academia.administrativo.controller.AdministrativoController">
-   <left>
-      <HBox prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <VBox prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #0e0e10;">
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.academia.administrativo.controller.AdministrativoController">
+   <children>
+      <BorderPane fx:id="raiz" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="0.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #2c1f36;">
+         <center>
+            <GridPane style="-fx-background-color: #131315;" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <Label text="Adm" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                     </graphic>
-                     <VBox.margin>
-                        <Insets bottom="25.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Button graphicTextGap="5.0" mnemonicParsing="false" style="-fx-background-color: #1e252b;" text="Departamento" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@/com/example/academia/administrativo/img/img_botao_departamentos.png" />
-                           </image></ImageView>
-                     </graphic>
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Button>
-                  <Button graphicTextGap="5.0" mnemonicParsing="false" style="-fx-background-color: #0e0e10;" text="Planos" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@/com/example/academia/administrativo/img/img_botao_planos.png" />
-                           </image></ImageView>
-                     </graphic>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" style="-fx-background-color: #0e0e10;" text="Usuários" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@/com/example/academia/administrativo/img/img_botao_professores.png" />
-                           </image></ImageView>
-                     </graphic>
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
-                  <Button graphicTextGap="2.0" mnemonicParsing="false" style="-fx-background-color: #0e0e10;" text="Equipamentos" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@/com/example/academia/administrativo/img/img_botao_equipamentos.png" />
-                           </image></ImageView>
-                     </graphic>
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-   </left>
-   <center>
-      <GridPane style="-fx-background-color: #131315;" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-               <children>
-                  <Button fx:id="NovoDepartamento" alignment="TOP_LEFT" layoutX="100.0" layoutY="50.0" mnemonicParsing="false" onAction="#clicarBotao" style="-fx-background-color: #f1ba2a;" text="+ Novo Departamento" />
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
-               <children>
-                  <VBox fx:id="Departamento" layoutX="20.0" layoutY="50.0" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #39393b; -fx-background-radius: 3;" translateY="-30.0">
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label text="Musculação" textFill="#e5e1e4" translateX="20.0">
+                        <Button fx:id="menu" mnemonicParsing="false" onAction="#abrirMenu" style="-fx-background-color: #0e0e10;" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/com/example/academia/administrativo/img/img_botao_menu.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <Button fx:id="NovoDepartamento" alignment="TOP_LEFT" layoutX="100.0" layoutY="20.0" mnemonicParsing="false" onAction="#clicarBotao" style="-fx-background-color: #f1ba2a;" text="+ Novo Departamento" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="300.0" prefWidth="600.0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2">
+                     <children>
+                        <VBox fx:id="Departamento" layoutX="20.0" layoutY="50.0" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #39393b; -fx-background-radius: 3;" translateY="-30.0">
+                           <children>
+                              <Label text="Musculação" textFill="#e5e1e4" translateX="20.0">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="numeroDepartamentos" text="d% Departamentos Cadastrados" textFill="#d8c3ad" translateX="20.0">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Button fx:id="AcessarDepartamento" alignment="TOP_RIGHT" mnemonicParsing="false" onDragDetected="#MudarCor" style="-fx-background-color: #f1ba2a;" text="Acessar Departamento" translateX="90.0">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
+         </center>
+         <left>
+            <HBox fx:id="menuLateral" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox style="-fx-background-color: #0e0e10;">
+                     <children>
+                        <Button fx:id="sair" mnemonicParsing="false" onAction="#fecharMenu" style="-fx-background-color: #0e0e10;" textFill="WHITE" translateX="95.0">
                            <font>
                               <Font size="10.0" />
                            </font>
+                           <graphic>
+                              <ImageView fitHeight="1.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/com/example/academia/administrativo/img/img_botao_sair.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label text="Adm" textFill="WHITE" translateY="-25.0">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
                            <VBox.margin>
-                              <Insets bottom="10.0" />
+                              <Insets bottom="25.0" />
                            </VBox.margin>
                         </Label>
-                        <Label fx:id="numeroDepartamentos" text="d% Departamentos Cadastrados" textFill="#d8c3ad" translateX="20.0">
+                        <Button graphicTextGap="5.0" mnemonicParsing="false" style="-fx-background-color: #1e252b;" text="Departamento" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/com/example/academia/administrativo/img/img_botao_departamentos.png" />
+                                 </image>
+                              </ImageView>
+                             </graphic>
                            <font>
-                              <Font size="9.0" />
+                              <Font size="10.0" />
                            </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                        <Button graphicTextGap="5.0" mnemonicParsing="false" style="-fx-background-color: #0e0e10;" text="Planos" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/com/example/academia/administrativo/img/img_botao_planos.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                            <VBox.margin>
-                              <Insets bottom="10.0" />
+                              <Insets />
                            </VBox.margin>
-                        </Label>
-                        <Button fx:id="AcessarDepartamento" alignment="TOP_RIGHT" mnemonicParsing="false" onDragDetected="#MudarCor" style="-fx-background-color: #f1ba2a;" text="Acessar Departamento" translateX="90.0">
                            <font>
-                              <Font size="9.0" />
+                              <Font size="10.0" />
                            </font>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" style="-fx-background-color: #0e0e10;" text="Usuários" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/com/example/academia/administrativo/img/img_botao_professores.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                        <Button graphicTextGap="2.0" mnemonicParsing="false" style="-fx-background-color: #0e0e10;" text="Equipamentos" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/com/example/academia/administrativo/img/img_botao_equipamentos.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="10.0" />
+                           </font>
                         </Button>
                      </children>
                   </VBox>
                </children>
-            </AnchorPane>
-         </children>
-      </GridPane>
-   </center>
-</BorderPane>
+            </HBox>
+         </left>
+      </BorderPane>
+   </children>
+</StackPane>
