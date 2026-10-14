@@ -4,47 +4,47 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="383.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane layoutY="1.0" prefHeight="413.0" prefWidth="133.0">
-         <content>
-            <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="126.0" text="departamento">
+      <VBox layoutX="-1.0" prefHeight="383.0" prefWidth="97.0" style="-fx-background-color: gray;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="286.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button mnemonicParsing="false" text="Button">
                <graphic>
-                  <ImageView fitHeight="30.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@img/img_botao_departamento.png" />
+                        <Image url="@img/departamento.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-         </content>
-      </ScrollPane>
-      <Button layoutY="41.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="127.0" text="planos">
-         <graphic>
-            <ImageView fitHeight="29.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@img/Apresentação%20de%20serviços%20moderna%20amarelo%20e%20preto%20informativo%20academia.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button layoutY="83.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="127.0" text="usuario">
-         <graphic>
-            <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@img/a.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button layoutY="126.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="127.0" text="grafico">
-         <graphic>
-            <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@img/Apresentação%20de%20serviços%20moderna%20amarelo%20e%20preto%20informativo%20academia%20(1).png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="79.0" text="Button">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/plano.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="80.0" text="Button">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/usuario.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="80.0" text="Button">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/grafico.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
    </children>
-</Pane>
+</AnchorPane>
