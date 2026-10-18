@@ -13,7 +13,6 @@ public class Usuario {
         this.senha = senha;
         this.cpf = cpf;
     }
-
     public int id(){
         return this.id;
     }
