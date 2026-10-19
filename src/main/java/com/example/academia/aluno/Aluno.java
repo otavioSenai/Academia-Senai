@@ -7,6 +7,8 @@ import com.example.academia.ClassesUniversais.Usuario;
 import java.util.ArrayList;
 
 public class Aluno extends Usuario {
+    private String nome;
+    private int id;
     private int idade;
     private double altura;
     private double peso;
@@ -27,8 +29,10 @@ public class Aluno extends Usuario {
     }
 
     public void setIdade(int idade) {
-        this.idade = idade;
-    }
+
+            this.idade = idade;
+        }
+
 
     public double getAltura() {
         return altura;
@@ -50,7 +54,8 @@ public class Aluno extends Usuario {
         return plano;
     }
 
-    public void setPlano(Plano plano) {
+    public void setPlano(Plano plano)
+    {
         this.plano = plano;
     }
 
@@ -59,7 +64,11 @@ public class Aluno extends Usuario {
     }
 
     public void setIntensidade(String intensidade) {
-        this.intensidade = intensidade;
+        if (intensidade.isEmpty()) {
+            System.out.println("Valores Inválidos");
+        } else {
+            this.intensidade = intensidade;
+        }
     }
 
     public ArrayList<Departamento> getDepartamentos() {
