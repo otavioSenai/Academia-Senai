@@ -16,10 +16,12 @@ public class Aluno extends Usuario {
     private ArrayList<String> treinos;
 
 
-    public Aluno(int id, String nome, String senha, String cpf) {
+    public Aluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, String intensidade) {
         super(id, nome, senha, cpf);
-        this.departamentos = new ArrayList<>();
-        this.treinos = new ArrayList<>();
+        this.idade = idade;
+        this.altura = altura;
+        this.peso = peso;
+        this.intensidade = intensidade;
     }
 
     public int getIdade() {
