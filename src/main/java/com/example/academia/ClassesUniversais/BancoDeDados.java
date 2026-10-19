@@ -9,13 +9,11 @@ public class BancoDeDados {
 
     private static BancoDeDados banco;
 
-    ArrayList<Departamento> departamentos = new ArrayList<>();
-    ArrayList<Plano> planos = new ArrayList<>();
-    ArrayList<Funcionario> funcionarios = new ArrayList<>();
-    ArrayList<Usuario> usuarios = new ArrayList<>();
-    ArrayList<Custo> custos = new ArrayList<>();
-    ArrayList <Aluno> alunos= new ArrayList<>();
-    ArrayList <Professor> professores= new ArrayList<>();
+    public static ArrayList <Departamento> departamentos = new ArrayList<>();
+    public static ArrayList <Plano> planos = new ArrayList<>();
+    public static ArrayList <Custo> custos = new ArrayList<>();
+    public static ArrayList <Aluno> alunos= new ArrayList<>();
+    public static ArrayList <Professor> professores= new ArrayList<>();
 
 
 

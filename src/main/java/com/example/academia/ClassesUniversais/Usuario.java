@@ -18,8 +18,26 @@ public class Usuario {
 
     public String getNome(){return this.nome;}
 
+    protected void setNome(String nome){
+        if(nome.isEmpty()){
+            System.out.println("Valores Inválidos");
+        }
+        else{
+            this.nome = nome;
+        }
+    }
+
     public String getCpf(){return this.cpf;}
 
     public String getSenha(){return this.senha;}
+
+    private void setSenha(String senha){
+        if(senha.isEmpty()){
+            System.out.println("Valores inválidos");
+        }
+        else{
+            this.senha = senha;
+        }
+    }
 
 }

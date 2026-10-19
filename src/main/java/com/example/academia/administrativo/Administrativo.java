@@ -12,6 +12,13 @@ public class Administrativo extends Funcionario {
 
     //Métodos
 
+    //Exibir Carterinha Do Administrativo
+    public void exibirInformacoes(){
+        System.out.println("Nome: " + getNome());
+        System.out.println("CPF: " + this.cpf);
+        System.out.println("Salário: " + getCpf());
+    }
+
     //Cadastra Um Departamento
     public void cadastrarDepartamento(String nome, int id, String descricao){
 
