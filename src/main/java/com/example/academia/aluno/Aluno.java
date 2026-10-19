@@ -18,10 +18,30 @@ public class Aluno extends Usuario {
     private ArrayList<String> treinos;
 
 
-    public Aluno(int id, String nome, String senha, String cpf) {
+    public Aluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade) {
         super(id, nome, senha, cpf);
-        this.departamentos = new ArrayList<>();
-        this.treinos = new ArrayList<>();
+        this.idade = idade;
+        this.altura = altura;
+        this.peso = peso;
+        this.plano = plano;
+        this.intensidade = intensidade;
+    }
+
+    @Override
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIdade() {
@@ -29,10 +49,8 @@ public class Aluno extends Usuario {
     }
 
     public void setIdade(int idade) {
-
-            this.idade = idade;
-        }
-
+        this.idade = idade;
+    }
 
     public double getAltura() {
         return altura;
@@ -54,8 +72,7 @@ public class Aluno extends Usuario {
         return plano;
     }
 
-    public void setPlano(Plano plano)
-    {
+    public void setPlano(Plano plano) {
         this.plano = plano;
     }
 
@@ -64,27 +81,8 @@ public class Aluno extends Usuario {
     }
 
     public void setIntensidade(String intensidade) {
-        if (intensidade.isEmpty()) {
-            System.out.println("Valores Inválidos");
-        } else {
-            this.intensidade = intensidade;
-        }
-    }
-
-    public ArrayList<Departamento> getDepartamentos() {
-        return departamentos;
-    }
-
-    public void setDepartamentos(ArrayList<Departamento> departamentos) {
-        this.departamentos = departamentos;
-    }
-
-    public ArrayList<String> getTreinos() {
-        return treinos;
-    }
-
-    public void setTreinos(ArrayList<String> treinos) {
-        this.treinos = treinos;
+        this.intensidade = intensidade;
     }
 }
+
 
