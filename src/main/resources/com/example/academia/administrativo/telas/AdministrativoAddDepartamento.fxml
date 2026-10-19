@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #131315;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextFlow prefHeight="200.0" prefWidth="200.0" translateY="110.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" translateX="240.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Button" />
+               </children>
+            </VBox>
+         </children></TextFlow>
+   </children>
+</VBox>
