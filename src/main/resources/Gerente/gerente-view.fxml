@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<GridPane prefHeight="328.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <BorderPane prefHeight="597.0" prefWidth="911.0" GridPane.rowIndex="1">
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="200.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                  <Button layoutX="-14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="CARTEIR. ALUNOS" textFill="#0a0a0a" />
+                  <Button layoutX="-6.0" layoutY="60.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="DEPARTAMENTOS" />
+                  <Button layoutX="-6.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="LISTA PROFESSORES" />
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</GridPane>
