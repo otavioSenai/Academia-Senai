@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Professor extends Usuario {
     private ArrayList<Departamento> departamentos;
+    private String Especialidade;
 
     public Professor(int id, String nome, String senha, String cpf) {
         super(id, nome, senha, cpf);
@@ -19,4 +20,15 @@ public class Professor extends Usuario {
     public void setDepartamentos(ArrayList<Departamento> departamentos) {
         this.departamentos = departamentos;
     }
+    public void mostrarCarteirinhaProfessor(){
+    System.out.println("========================================");
+            System.out.println("        ACADEMIA ÍCARO");
+            System.out.println("        CARTEIRINHA DO PROFESSOR");
+            System.out.println("========================================");
+            System.out.println("NOME: " + getNome());
+            System.out.println("----------------------------------------");
+            System.out.println("DEPARTAMENTO: "+getDepartamentos());
+            System.out.println("----------------------------------------");
+            System.out.println("ESPECIALIDADE: " + Especialidade);
+            System.out.println("========================================");}
 }
