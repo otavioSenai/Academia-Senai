@@ -11,4 +11,12 @@ public class Professor extends Usuario {
     public Professor(int id, String nome, String senha, String cpf) {
         super(id, nome, senha, cpf);
     }
+
+    public ArrayList<Departamento> getDepartamentos() {
+        return departamentos;
+    }
+
+    public void setDepartamentos(ArrayList<Departamento> departamentos) {
+        this.departamentos = departamentos;
+    }
 }

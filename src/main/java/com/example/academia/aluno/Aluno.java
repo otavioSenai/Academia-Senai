@@ -7,6 +7,8 @@ import com.example.academia.ClassesUniversais.Usuario;
 import java.util.ArrayList;
 
 public class Aluno extends Usuario {
+    private String nome;
+    private int id;
     private int idade;
     private double altura;
     private double peso;
@@ -16,12 +18,31 @@ public class Aluno extends Usuario {
     private ArrayList<String> treinos;
 
 
-    public Aluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, String intensidade) {
+    public Aluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade) {
         super(id, nome, senha, cpf);
         this.idade = idade;
         this.altura = altura;
         this.peso = peso;
+        this.plano = plano;
         this.intensidade = intensidade;
+    }
+
+    @Override
+    public String getNome()
+    {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIdade() {
@@ -63,21 +84,6 @@ public class Aluno extends Usuario {
     public void setIntensidade(String intensidade) {
         this.intensidade = intensidade;
     }
-
-    public ArrayList<Departamento> getDepartamentos() {
-        return departamentos;
-    }
-
-    public void setDepartamentos(ArrayList<Departamento> departamentos) {
-        this.departamentos = departamentos;
-    }
-
-    public ArrayList<String> getTreinos() {
-        return treinos;
-    }
-
-    public void setTreinos(ArrayList<String> treinos) {
-        this.treinos = treinos;
-    }
 }
+
 
