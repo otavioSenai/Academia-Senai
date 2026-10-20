@@ -2,8 +2,8 @@ package com.example.academia.ClassesUniversais;
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
 import com.example.academia.professor.Professor;
+import com.example.academia.ClassesUniversais.GraficoRenda;
 import java.util.Scanner;
-
 import com.example.academia.ClassesUniversais.BancoDeDados;
 
 
@@ -87,7 +87,7 @@ public void ExpulsarAluno(int id){
 
 }
 public void cadastrarProfessores(int id, String nome, String senha, String cpf){
-    Professor professor = new Professor(id, nome, senha, cpf);
+    Professor professor = new Professor(id, nome, senha, cpf, salario);
     BancoDeDados.getInstance().professores.add(professor);
     contratacao++;
 }
@@ -131,13 +131,14 @@ break;
 
     }
 
-    public void VerficarCarteirinhaProf(int id, String nome, String senha, String cpf){
-        Professor prof=new Professor(id, nome, senha, cpf);
+    public void VerficarCarteirinhaProf(String senha){
+        Professor prof=new Professor(id, nome, senha, cpf, salario);
         prof.mostrarCarteirinhaProfessor();
 
     }
-public void VerificarGrafico(){
+public void VerificarGrafico(int idade,String nome,String senha, double altura, double peso, Plano plano, String intensidade ){
         GraficoRenda grafico=new GraficoRenda();
+        System.out.println("Renda"+grafico.getRenda( id, nome, senha,  cpf, idade, altura, peso,  plano, intensidade));
 
 
 
@@ -159,14 +160,9 @@ public void VerificarGrafico(){
     }
 
 }
-public void VerificarCarteirinhaAd(double salario, String senha){
-    Administrativo administrativo= new Administrativo(id, nome, senha, cpf, salario);
-//    administrativo.getexibirInformacoes();
-
-    System.out.println("Carteirinha Do Administrativo:");
-    System.out.println("Nome: " + administrativo.getNome());
-    System.out.println("CPF: " + this.cpf);
-    System.out.println("Salário: " + administrativo.getCpf());
+public void VerificarCarteirinhaAd(double salario, String senha, String cpf){
+    Administrativo administrativo = new Administrativo(id, nome, senha, cpf, salario);
+     administrativo.exibirInformacoes();
 }
 
 }

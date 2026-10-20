@@ -12,8 +12,10 @@ public class TrocaProfessor {
 
     //Escreva isso no aluno kenen
     public void setComentario(Scanner entrada){
+
         System.out.println("Escreva Um Comentário Para Trocar De Professor");
         String comentario = entrada.nextLine();
+
     }
 
     public void getComentario(int idAluno, int idProfessor){

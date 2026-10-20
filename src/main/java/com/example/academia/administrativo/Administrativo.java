@@ -14,10 +14,11 @@ public class Administrativo extends Funcionario {
 
     //Exibir Carterinha Do Administrativo
     public void exibirInformacoes(){
+        System.out.println("Id: " + getId());
         System.out.println("Nome: " + getNome());
-        System.out.println("CPF: " + this.cpf);
-        System.out.println("Salário: " + getCpf());
-    }
+        System.out.println("CPF: " + getCpf());
+        System.out.println("Salário: " + getSalario());
+    };
 
     //Cadastra Um Departamento
     public void cadastrarDepartamento(String nome, int id, String descricao){
@@ -34,11 +35,8 @@ public class Administrativo extends Funcionario {
                     break;
                 }
             }
-
             if (idEncontrado) {
-
                 System.out.println("Departamento Já Existente");
-
             } else {
 
                 Departamento departamento = new Departamento(nome, id, descricao);
@@ -55,6 +53,7 @@ public class Administrativo extends Funcionario {
         if(id <= 0){
             System.out.println("Valores Inválidos");
         }
+
         else {
             Departamento dpRemove = null;
 
@@ -153,7 +152,14 @@ public class Administrativo extends Funcionario {
     }
 
     //Cadastrar Um Professor
-    public void cadastrarProfessor(){
+    public void cadastrarProfessor(int id, String nome, String senha, String cpf, double salario){
+
+        if(id <= 0 || nome.isEmpty() || cpf.isEmpty() || salario <= 0 || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+            System.out.println("Senha Inválida");
+        }
+        else{
+
+        }
 
     }
 
@@ -163,17 +169,16 @@ public class Administrativo extends Funcionario {
     }
 
     //Cadastrar Um Aluno
-    public void cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, String intensidade){
+    public void cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, String intensidade, Plano plano){
 
-        if(id <= 0 || nome.isEmpty() || senha.isEmpty() || cpf.isEmpty() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isEmpty()){
-            System.out.println("Valores Inválidos");
-        }
-        else{
+            if (id <= 0 || nome.isEmpty() || cpf.isEmpty() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isEmpty() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+                System.out.println("Valores Inválidos");
+            } else {
 
-            Aluno aluno = new Aluno(id, nome, senha, cpf, idade, altura, peso, intensidade);
-            BancoDeDados.getInstance().alunos.add(aluno);
-            System.out.println("Aluno Cadastrado");
-        }
+                Aluno aluno = new Aluno(id, nome, senha, cpf, idade, altura, peso, plano, intensidade);
+                BancoDeDados.getInstance().alunos.add(aluno);
+                System.out.println("Aluno Cadastrado");
+            }
     }
 
     //Expulsar Um Aluno

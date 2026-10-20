@@ -9,7 +9,8 @@ public class GraficoRenda {
     /*A renda precisaria do aluno, pois é ele quem paga
     O custo seria mais um ArrayList*/
 
-    public double getRenda() {
+    public double getRenda(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade) {
+        Aluno aluno=new Aluno(id, nome, senha, cpf, idade, altura, peso, plano,intensidade);
         return renda;
     }
 
