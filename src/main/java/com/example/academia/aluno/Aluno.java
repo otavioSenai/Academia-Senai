@@ -78,7 +78,7 @@ public class Aluno extends Usuario {
     public ArrayList<Treino> getTreinos() {
         return treinos;
     }
-    public void mostrarCarteirinha(){
+    public void mostrarCarteirinhaAluno(){
             System.out.println("========================================");
             System.out.println("        ACADEMIA ÍCARO");
             System.out.println("        CARTEIRINHA DO ALUNO");
