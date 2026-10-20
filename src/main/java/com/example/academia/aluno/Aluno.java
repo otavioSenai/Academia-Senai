@@ -14,12 +14,14 @@ public class Aluno extends Usuario {
     private double peso;
     private Plano plano;
     private String intensidade;
-    private ArrayList<Departamento> departamentos;
-    private ArrayList<String> treinos;
+    private ArrayList<Departamento> departamentos = new ArrayList<>();
+    private ArrayList<String> treinos = new ArrayList<>();
 
 
-    public Aluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade) {
+    public Aluno(int id, String nome, String senha, String cpf, String nome1, int id1, int idade, double altura, double peso, Plano plano, String intensidade) {
         super(id, nome, senha, cpf);
+        this.nome = nome;
+        this.id = id;
         this.idade = idade;
         this.altura = altura;
         this.peso = peso;
@@ -28,15 +30,21 @@ public class Aluno extends Usuario {
     }
 
     @Override
-    public String getNome()
-    {
+    public String getNome() {
         return nome;
     }
 
+    @Override
     public void setNome(String nome) {
+        if(nome.isEmpty()){
+            System.out.println("Valores Invalidos!");
+        }
+        else{
         this.nome = nome;
+        }
     }
 
+    @Override
     public int getId() {
         return id;
     }
@@ -82,8 +90,11 @@ public class Aluno extends Usuario {
     }
 
     public void setIntensidade(String intensidade) {
+        if(intensidade.isEmpty()){
+            System.out.println("Valores Invalidos!");
+        }
+        else{
         this.intensidade = intensidade;
+      }
     }
 }
-
-

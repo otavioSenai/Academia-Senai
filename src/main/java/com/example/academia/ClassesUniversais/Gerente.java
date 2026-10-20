@@ -12,7 +12,7 @@ private String senha;
 private String cpf;
 private int id;
 Scanner sc= new Scanner(System.in);
-    Aluno aluno=new Aluno( id, nome, senha, cpf);
+    Aluno aluno=new Aluno(id, nome, senha, cpf);
     Professor professor = new Professor(id, nome, senha, cpf);
 public void setNome(String nome) {
 
