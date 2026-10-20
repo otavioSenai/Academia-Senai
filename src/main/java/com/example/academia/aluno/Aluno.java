@@ -28,7 +28,8 @@ public class Aluno extends Usuario {
     }
 
     @Override
-    public String getNome() {
+    public String getNome()
+    {
         return nome;
     }
 
