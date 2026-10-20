@@ -7,8 +7,7 @@ import com.example.academia.ClassesUniversais.Usuario;
 import java.util.ArrayList;
 
 public class Aluno extends Usuario {
-    private String nome;
-    private int id;
+
     private int idade;
     private double altura;
     private double peso;
@@ -82,7 +81,12 @@ public class Aluno extends Usuario {
     }
 
     public void setIntensidade(String intensidade) {
-        this.intensidade = intensidade;
+        if(intensidade.isEmpty()){
+            System.out.println("Dados invalidos!");
+        }
+        else {
+            this.intensidade = intensidade;
+        }
     }
 }
 
