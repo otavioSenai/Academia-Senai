@@ -2,6 +2,7 @@ package com.example.academia.aluno;
 
 import com.example.academia.ClassesUniversais.Departamento;
 import com.example.academia.ClassesUniversais.Plano;
+import com.example.academia.ClassesUniversais.Treino;
 import com.example.academia.ClassesUniversais.Usuario;
 
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ public class Aluno extends Usuario {
     private double peso;
     private Plano plano;
     private String intensidade;
-    private ArrayList<Departamento> departamentos = new ArrayList<>();
-    private ArrayList<String> treinos = new ArrayList<>();
+    private ArrayList<Departamento> departamentos;
+    private ArrayList<Treino> treinos;
 
 
     public Aluno(int id, String nome, String senha, String cpf, String nome1, int id1, int idade, double altura, double peso, Plano plano, String intensidade) {
@@ -96,5 +97,9 @@ public class Aluno extends Usuario {
         else{
         this.intensidade = intensidade;
       }
+    }
+
+    public ArrayList<Treino> getTreinos() {
+        return treinos;
     }
 }
