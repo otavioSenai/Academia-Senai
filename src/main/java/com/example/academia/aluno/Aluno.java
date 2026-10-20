@@ -24,6 +24,11 @@ public class Aluno extends Usuario {
         this.intensidade = intensidade;
     }
 
+//    public Aluno(int id, String nome, String senha, String cpf) {
+//        super(id, nome, senha, cpf);
+//    }
+
+
     public int getIdade() {
         return idade;
     }
