@@ -8,10 +8,6 @@ import com.example.academia.ClassesUniversais.BancoDeDados;
 
 
 public class Gerente extends Funcionario{
-private String nome;
-private String senha;
-private String cpf;
-private int id;
 int demissoes=0;
 int contratacao=0;
 int alunosExpulsos=0;
@@ -21,8 +17,8 @@ public Gerente(int id, String nome, String senha, String cpf, double salario){
     super(id, nome, senha, cpf, salario);
 }
 Scanner sc= new Scanner(System.in);
-    Aluno aluno=new Aluno( id,  nome,  senha,  cpf, int idade, double altura, double peso, String intensidade);
-    Professor professor = new Professor(id, nome, senha, cpf);
+
+
 
     public void CarteirinhaGerente(){
         System.out.println("Nome:" + getNome());
@@ -35,21 +31,25 @@ Scanner sc= new Scanner(System.in);
     }
 
 
-public void CadastrarAluno(int id, String nome, String senha , String cpf){
-
+public void CadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade){
+        Aluno aluno=new Aluno(id, nome, senha, cpf, idade, altura, peso, plano, intensidade);
     System.out.println("Nome:");
-    aluno.getNome();
+    String nomeAluno = sc.nextLine();
     System.out.println("Id:");
     aluno.getId();
     System.out.println("Senha:");
     aluno.getSenha();
     System.out.println("CPF:");
     aluno.getCpf();
+    System.out.println("Idade:");
+    int idadeAluno = sc.nextInt();
     if(aluno.getNome().isEmpty() || aluno.getId()<0 || aluno.getSenha().isEmpty() || aluno.getCpf().isEmpty() ){
         System.out.println("Aluno não foi cadastrado");
 
     }
     else if(aluno.getId()==id){
+        aluno.setNome(nomeAluno);
+        aluno.setIdade(idadeAluno);
         System.out.println("Este aluno já pertencema a nossa Academia");
     }
     else{
@@ -59,12 +59,14 @@ public void CadastrarAluno(int id, String nome, String senha , String cpf){
 public void cadastrarDepartamento(String descricao){
     Departamento departamento=new Departamento(nome,id,descricao);
     BancoDeDados.getInstance().departamentos.add(departamento);
+    if(BancoDeDados.getInstance().alunos == null){
+        System.out.println("Este Departamento Não Existe No Sistema");
+    }
+    else{
+        System.out.println("Este Departamento Já Existe No Sistema");
+    }
 }
-public void CadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, String intensidade){
-    Aluno alunos=new Aluno(id, nome, senha, cpf);
-    BancoDeDados.getInstance().alunos.add(alunos);
-    contratacao++;
-}
+
 public void ExpulsarAluno(int id){
 
     Aluno alRemove = null;
@@ -85,7 +87,7 @@ public void ExpulsarAluno(int id){
 
 }
 public void cadastrarProfessores(int id, String nome, String senha, String cpf){
-
+    Professor professor = new Professor(id, nome, senha, cpf);
     BancoDeDados.getInstance().professores.add(professor);
     contratacao++;
 }
@@ -123,17 +125,21 @@ break;
         break;
     }
 }
-    public void VerficarCarteirinhaAluno(){
-//Kenen
+    public void VerficarCarteirinhaAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade){
+        Aluno aluno=new Aluno(id, nome, senha, cpf, idade, altura, peso, plano, intensidade);
+        aluno.mostrarCarteirinhaAluno();
 
     }
 
-    public void VerficarCarteirinhaProf(){
-//kenen
+    public void VerficarCarteirinhaProf(int id, String nome, String senha, String cpf){
+        Professor prof=new Professor(id, nome, senha, cpf);
+        prof.mostrarCarteirinhaProfessor();
 
     }
 public void VerificarGrafico(){
-        GraficoRenda();
+        GraficoRenda grafico=new GraficoRenda();
+
+
 
     }
 
@@ -153,12 +159,14 @@ public void VerificarGrafico(){
     }
 
 }
-public void VerificarCarteirinhaAd(double salario){
-    Administrativo ad= new Administrativo(id, nome, senha, cpf, salario);
+public void VerificarCarteirinhaAd(double salario, String senha){
+    Administrativo administrativo= new Administrativo(id, nome, senha, cpf, salario);
+//    administrativo.getexibirInformacoes();
+
     System.out.println("Carteirinha Do Administrativo:");
-    System.out.println("Nome: " + ad.getNome());
+    System.out.println("Nome: " + administrativo.getNome());
     System.out.println("CPF: " + this.cpf);
-    System.out.println("Salário: " + ad.getCpf());
+    System.out.println("Salário: " + administrativo.getCpf());
 }
 
 }

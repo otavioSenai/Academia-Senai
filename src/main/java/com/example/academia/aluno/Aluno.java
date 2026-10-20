@@ -21,8 +21,6 @@ public class Aluno extends Usuario {
 
     public Aluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade) {
         super(id, nome, senha, cpf);
-        this.nome = nome;
-        this.id = id;
         this.idade = idade;
         this.altura = altura;
         this.peso = peso;
