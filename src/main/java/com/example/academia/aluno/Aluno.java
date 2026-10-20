@@ -77,4 +77,22 @@ public class Aluno extends Usuario {
     public ArrayList<Treino> getTreinos() {
         return treinos;
     }
+    public void mostrarCarteirinha(){
+            System.out.println("========================================");
+            System.out.println("        ACADEMIA ÍCARO");
+            System.out.println("        CARTEIRINHA DO ALUNO");
+            System.out.println("========================================");
+            System.out.println("NOME: " + getNome());
+            System.out.println("----------------------------------------");
+            System.out.println("ALTURA: " + getAltura() + " m");
+            System.out.println("----------------------------------------");
+            System.out.println("PESO CORPORAL: " + getPeso() + " kg");
+            System.out.println("----------------------------------------");
+            System.out.println("CPF: " + getCpf());
+            System.out.println("----------------------------------------");
+           System.out.println();
+            System.out.println("========================================");
+        }
+
+
 }
