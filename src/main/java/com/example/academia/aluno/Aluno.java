@@ -29,6 +29,7 @@ public class Aluno extends Usuario {
         this.plano = plano;
         this.intensidade = intensidade;
     }
+
     public int getIdade() {
         return idade;
     }

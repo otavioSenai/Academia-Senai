@@ -15,7 +15,7 @@ public class BancoDeDados {
     public ArrayList <Custo> custos = new ArrayList<>();
     public ArrayList <Aluno> alunos= new ArrayList<>();
     public ArrayList <Professor> professores= new ArrayList<>();
-    public ArrayList<Administrativo> administrativos = new ArrayList<>();
+    public ArrayList<Administrativo> administrativos= new ArrayList<>();
 
 
 
