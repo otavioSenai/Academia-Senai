@@ -19,7 +19,7 @@ public class Aluno extends Usuario {
     private ArrayList<Treino> treinos;
 
 
-    public Aluno(int id, String nome, String senha, String cpf, String nome1, int id1, int idade, double altura, double peso, Plano plano, String intensidade) {
+    public Aluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade) {
         super(id, nome, senha, cpf);
         this.nome = nome;
         this.id = id;
