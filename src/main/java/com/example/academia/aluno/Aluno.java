@@ -29,31 +29,6 @@ public class Aluno extends Usuario {
         this.plano = plano;
         this.intensidade = intensidade;
     }
-
-    @Override
-    public String getNome() {
-        return nome;
-    }
-
-    @Override
-    public void setNome(String nome) {
-        if(nome.isEmpty()){
-            System.out.println("Valores Invalidos!");
-        }
-        else{
-        this.nome = nome;
-        }
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getIdade() {
         return idade;
     }
