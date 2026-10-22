@@ -1,22 +1,17 @@
 package com.example.academia.aluno;
 
-import com.example.academia.ClassesUniversais.Departamento;
-import com.example.academia.ClassesUniversais.Plano;
-import com.example.academia.ClassesUniversais.Treino;
-import com.example.academia.ClassesUniversais.Usuario;
+import com.example.academia.ClassesUniversais.*;
 
 import java.util.ArrayList;
 
 public class Aluno extends Usuario {
-    private String nome;
-    private int id;
     private int idade;
     private double altura;
     private double peso;
     private Plano plano;
     private String intensidade;
-    private ArrayList<Departamento> departamentos;
-    private ArrayList<Treino> treinos;
+    private ArrayList<Departamento> departamentos = new ArrayList<>();
+    private ArrayList<Treino> treinos = new ArrayList<>();
 
 
     public Aluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade) {
@@ -89,9 +84,6 @@ public class Aluno extends Usuario {
             System.out.println("----------------------------------------");
             System.out.println("CPF: " + getCpf());
             System.out.println("----------------------------------------");
-           System.out.println();
             System.out.println("========================================");
         }
-
-
 }
