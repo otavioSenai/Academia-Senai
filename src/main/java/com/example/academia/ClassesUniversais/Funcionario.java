@@ -1,5 +1,7 @@
 package com.example.academia.ClassesUniversais;
 
+import com.example.academia.aluno.Aluno;
+
 public class Funcionario extends Usuario{
     String nome;
     String departamento;
@@ -22,4 +24,5 @@ public class Funcionario extends Usuario{
             this.salario = salario;
         }
     }
+
 }

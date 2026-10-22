@@ -1,12 +1,12 @@
 package com.example.academia.professor;
 
-import com.example.academia.ClassesUniversais.Departamento;
+import com.example.academia.ClassesUniversais.Modalidade;
 import com.example.academia.ClassesUniversais.Funcionario;
 
 import java.util.ArrayList;
 
 public class Professor extends Funcionario {
-    private ArrayList<Departamento> departamentos;
+    private ArrayList<Modalidade> modalidades;
     private String Especialidade;
 
     public Professor(int id, String nome, String senha, String cpf, double salario) {
@@ -14,12 +14,12 @@ public class Professor extends Funcionario {
 
     }
 
-    public ArrayList<Departamento> getDepartamentos() {
-        return departamentos;
+    public ArrayList<Modalidade> getDepartamentos() {
+        return modalidades;
     }
 
-    public void setDepartamentos(ArrayList<Departamento> departamentos) {
-        this.departamentos = departamentos;
+    public void setDepartamentos(ArrayList<Modalidade> modalidades) {
+        this.modalidades = modalidades;
     }
     public void mostrarCarteirinhaProfessor(){
     System.out.println("========================================");

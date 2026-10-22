@@ -1,17 +1,12 @@
 package com.example.academia.administrativo.controller;
 
-import com.example.academia.ClassesUniversais.Departamento;
 import com.example.academia.Main;
 import javafx.animation.TranslateTransition;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.*;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-
-import java.awt.event.MouseEvent;
 
 public class AdministrativoController {
 

@@ -2,9 +2,8 @@ package com.example.academia.ClassesUniversais;
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
 import com.example.academia.professor.Professor;
-import com.example.academia.ClassesUniversais.GraficoRenda;
+
 import java.util.Scanner;
-import com.example.academia.ClassesUniversais.BancoDeDados;
 
 
 public class Gerente extends Funcionario{
@@ -58,8 +57,8 @@ public void CadastrarAluno(int id, String nome, String senha, String cpf, int id
     }
 }
 public void cadastrarDepartamento(String descricao){
-    Departamento departamento=new Departamento(nome,id,descricao);
-    BancoDeDados.getInstance().departamentos.add(departamento);
+    Modalidade modalidade =new Modalidade(nome,id,descricao);
+    BancoDeDados.getInstance().modalidades.add(modalidade);
     if(BancoDeDados.getInstance().alunos == null){
         System.out.println("Este Departamento Não Existe No Sistema");
     }
@@ -68,10 +67,10 @@ public void cadastrarDepartamento(String descricao){
     }
 }
     public void excluirDepartamento(int id){
-        Departamento depRemove=null;
-        for( Departamento departamento:BancoDeDados.getInstance().departamentos){
+        Modalidade depRemove=null;
+        for( Modalidade departamento:BancoDeDados.getInstance().modalidades){
             if(departamento.getId()==id){
-                BancoDeDados.getInstance().departamentos.remove(depRemove);
+                BancoDeDados.getInstance().modalidades.remove(depRemove);
                 System.out.println("Departamento Excluído");
             }
             else if(depRemove==null){
@@ -149,10 +148,16 @@ break;
         prof.mostrarCarteirinhaProfessor();
 
     }
+
 public void VerificarGrafico(int idade,String nome,String senha, double altura, double peso, Plano plano, String intensidade ){
         GraficoRenda grafico=new GraficoRenda();
         System.out.println("Renda"+grafico.getRenda( id, nome, senha,  cpf, idade, altura, peso,  plano, intensidade));
         System.out.println("Situação" +grafico.getSituacao());
+    }
+    public void cadastrarAdministrativo(int id, String nome, String senha, String cpf, double salario){
+        Administrativo ad=new Administrativo(id, nome,senha, cpf, salario);
+        BancoDeDados.getInstance().administrativos.add(ad);
+        contratacao++;
     }
 
     public void DemitirAdministrativo(int id){

@@ -2,6 +2,7 @@ package com.example.academia.administrativo;
 
     import com.example.academia.ClassesUniversais.*;
     import com.example.academia.aluno.Aluno;
+    import com.example.academia.professor.Professor;
 
 public class Administrativo extends Funcionario {
 
@@ -18,18 +19,18 @@ public class Administrativo extends Funcionario {
         System.out.println("Nome: " + getNome());
         System.out.println("CPF: " + getCpf());
         System.out.println("Salário: " + getSalario());
-    };
+    }
 
     //Cadastra Um Departamento
     public void cadastrarDepartamento(String nome, int id, String descricao){
 
-        if(id <= 0 || nome.isEmpty() || descricao.isEmpty()){
+        if(id <= 0 || nome.isBlank() || descricao.isBlank()){
             System.out.println("Valores Inválidos");
         }
         else {
             boolean idEncontrado = false;
 
-            for (Departamento dp : BancoDeDados.getInstance().departamentos) {
+            for (Modalidade dp : BancoDeDados.getInstance().modalidades) {
                 if (dp.getId() == id) {
                     idEncontrado = true;
                     break;
@@ -39,8 +40,8 @@ public class Administrativo extends Funcionario {
                 System.out.println("Departamento Já Existente");
             } else {
 
-                Departamento departamento = new Departamento(nome, id, descricao);
-                BancoDeDados.getInstance().departamentos.add(departamento);
+                Modalidade modalidade = new Modalidade(nome, id, descricao);
+                BancoDeDados.getInstance().modalidades.add(modalidade);
                 System.out.println("Departamento Cadastrado");
 
             }
@@ -55,13 +56,13 @@ public class Administrativo extends Funcionario {
         }
 
         else {
-            Departamento dpRemove = null;
+            Modalidade dpRemove = null;
 
-            for (Departamento dp : BancoDeDados.getInstance().departamentos) {
+            for (Modalidade dp : BancoDeDados.getInstance().modalidades) {
                 if (dp.getId() == id) {
                     dpRemove = dp;
 
-                    BancoDeDados.getInstance().departamentos.remove(dpRemove);
+                    BancoDeDados.getInstance().modalidades.remove(dpRemove);
 
                     System.out.println("Departamento Removido");
                     break;
@@ -76,7 +77,7 @@ public class Administrativo extends Funcionario {
 
     public void cadastrarCusto(String nome, int id, String data, double valor){
 
-        if(nome.isEmpty() || id <= 0 || data.isEmpty() || valor <= 0){
+        if(nome.isBlank() || id <= 0 || data.isBlank() || valor <= 0){
             System.out.println("Valores Inválidos");
         }
         else{
@@ -113,7 +114,7 @@ public class Administrativo extends Funcionario {
     //Cadastrar Um Plano
     public void cadatrarPlano(String nome, int id, String descricao, double valor){
 
-        if(nome.isEmpty() || id <= 0 || descricao.isEmpty() || valor <= 0) {
+        if(nome.isBlank() || id <= 0 || descricao.isBlank() || valor <= 0) {
             System.out.println("Valores Inválidos");
         }
         else {
@@ -154,24 +155,46 @@ public class Administrativo extends Funcionario {
     //Cadastrar Um Professor
     public void cadastrarProfessor(int id, String nome, String senha, String cpf, double salario){
 
-        if(id <= 0 || nome.isEmpty() || cpf.isEmpty() || salario <= 0 || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
-            System.out.println("Senha Inválida");
+        if(id <= 0 || nome.isBlank() || cpf.isBlank() || salario <= 0 || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+            System.out.println("Valores Inválidos");
         }
         else{
 
+            Professor professor = new Professor(id, nome, senha, cpf, salario);
+            BancoDeDados.getInstance().professores.add(professor);
+            System.out.println("Professor Cadastrado");
         }
 
     }
 
     //Demitir Um Professor
-    public void demitirProfessor(){
+    public void demitirProfessor(int id){
 
+            if(id <= 0){
+                System.out.println("Valores Inválidos");
+            }
+            else{
+                Professor prRemove = null;
+
+                for(Professor pr : BancoDeDados.getInstance().professores){
+                    if(pr.getId() == id){
+                        prRemove = pr;
+
+                        BancoDeDados.getInstance().professores.remove(prRemove);
+                        System.out.println("Professor Removido");
+                        break;
+                    }
+                }
+                if(prRemove == null){
+                    System.out.println("Professor Não Encontrado");
+                }
+            }
     }
 
     //Cadastrar Um Aluno
     public void cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, String intensidade, Plano plano){
 
-            if (id <= 0 || nome.isEmpty() || cpf.isEmpty() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isEmpty() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+            if (id <= 0 || nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
                 System.out.println("Valores Inválidos");
             } else {
 
@@ -182,25 +205,25 @@ public class Administrativo extends Funcionario {
     }
 
     //Expulsar Um Aluno
-    public void expulsarAluno(int id){
+    public void expulsarAluno(int id) {
 
-        if(id <= 0){
+        if (id <= 0) {
             System.out.println("Valores Inválidos");
-        }
+        } else {
+            Aluno alRemove = null;
 
-        Aluno alRemove = null;
-
-        for(Aluno al : BancoDeDados.getInstance().alunos){
-            if(al.getId() == id){
-                alRemove = al;
-                BancoDeDados.getInstance().alunos.remove(alRemove);
-                System.out.println("Aluno Removido");
-                break;
+            for (Aluno al : BancoDeDados.getInstance().alunos) {
+                if (al.getId() == id) {
+                    alRemove = al;
+                    BancoDeDados.getInstance().alunos.remove(alRemove);
+                    System.out.println("Aluno Removido");
+                    break;
+                }
+            }
+            if (alRemove == null) {
+                System.out.println("Aluno Não Encontrado");
             }
         }
-        if(alRemove == null){
-            System.out.println("Aluno Não Encontrado");
-        }
     }
-
 }
+

@@ -2,7 +2,7 @@ package com.example.academia.ClassesUniversais;
 
 import java.util.ArrayList;
 
-public class Departamento {
+public class Modalidade {
 
     private String nome;
     private final int id;
@@ -12,7 +12,7 @@ public class Departamento {
     private ArrayList<Funcionario> funcionarios = new ArrayList<>();
     private ArrayList<Plano> planos = new ArrayList<>();
 
-    public Departamento(String nome, int id, String descricao){
+    public Modalidade(String nome, int id, String descricao){
         this.nome = nome;
         this.id = id;
         this.descricao = descricao;

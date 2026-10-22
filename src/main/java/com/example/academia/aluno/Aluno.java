@@ -5,13 +5,16 @@ import com.example.academia.ClassesUniversais.*;
 import java.util.ArrayList;
 
 public class Aluno extends Usuario {
+    private String nome;
+    private int id;
     private int idade;
     private double altura;
     private double peso;
     private Plano plano;
     private String intensidade;
-    private ArrayList<Departamento> departamentos;
-    private ArrayList<Treino> treinos = new ArrayList<>();
+
+    private ArrayList<Modalidade> modalidades;
+    private ArrayList<Treino> treinos;
 
 
     public Aluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade) {

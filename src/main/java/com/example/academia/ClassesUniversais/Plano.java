@@ -1,5 +1,7 @@
 package com.example.academia.ClassesUniversais;
 
+import java.util.ArrayList;
+
 public class Plano {
 
     private String nome;
@@ -7,6 +9,7 @@ public class Plano {
     private String descricao;
     private double valor;
     private boolean validade;
+
 
     public Plano(String nome, int id, String descricao, double valor){
         this.nome = nome;
