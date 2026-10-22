@@ -1,17 +1,20 @@
 package com.example.academia.ClassesUniversais;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+
 public class Custo {
 
     private String nome;
     private final int id;
-    private String data;
+    private final Instant data;
     private double valor;
 
     public Custo(String nome, int id, String data, double valor){
         this.nome = nome;
         this.id = id;
-        this.data = data;
         this.valor = valor;
+        this.data = Instant.now();
     }
 
     //Métodos
@@ -50,16 +53,14 @@ public class Custo {
         }
     }
 
+    //Pegar data
     public String getData(){
-        return this.data;
-    }
 
-    public void setData(String data) {
-        if (data.isBlank()) {
-            System.out.println("Valores Inválidos");
-        } else {
-            this.data = data;
-        }
-    }
+        ZoneId fusoBrasil = ZoneId.of("America/Sao_Paulo");
 
+        //Exibe a data em um formato específico
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+        return this.data.atZone(fusoBrasil).format(formatador);
+    }
 }

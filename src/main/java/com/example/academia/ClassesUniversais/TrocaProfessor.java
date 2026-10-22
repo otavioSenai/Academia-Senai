@@ -15,24 +15,22 @@ public class TrocaProfessor {
         System.out.println("Insira o nome do Professor Que Deseja Trocar");
         String nomeProfessor = entrada.nextLine();
 
+        String nome = nomeProfessor.trim();
+
         boolean professorEncontrado = false;
 
         for(Professor pr : BancoDeDados.getInstance().professores){
-            if(pr.getNome().equalsIgnoreCase(nomeProfessor)){
+            if(pr.getNome().equalsIgnoreCase(nome)){
                 professorEncontrado = true;
+
+                System.out.println("Escreva Um Comentário Para Trocar De Professor");
+                this.comentario = entrada.nextLine();
                 break;
             }
         }
 
         if(!professorEncontrado){
             System.out.println("Professor Não Encontrado");
-        }
-        else {
-
-            System.out.println("Escreva Um Comentário Para Trocar De Professor");
-            String comentario = entrada.nextLine();
-
-
         }
     }
 

@@ -18,8 +18,8 @@ public class Usuario {
 
     public String getNome(){return this.nome;}
 
-    protected void setNome(String nome){
-        if(nome.isEmpty()){
+    public void setNome(String nome){
+        if(nome.isBlank()){
             System.out.println("Valores Inválidos");
         }
         else{
@@ -32,12 +32,11 @@ public class Usuario {
     public String getSenha(){return this.senha;}
 
     private void setSenha(String senha){
-        if(senha.isEmpty()){
+        if(senha.isBlank()){
             System.out.println("Valores inválidos");
         }
         else{
             this.senha = senha;
         }
     }
-
 }

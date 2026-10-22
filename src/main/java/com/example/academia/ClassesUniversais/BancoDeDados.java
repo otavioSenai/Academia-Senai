@@ -16,8 +16,10 @@ public class BancoDeDados {
     public ArrayList <Aluno> alunos= new ArrayList<>();
     public ArrayList <Professor> professores= new ArrayList<>();
     public ArrayList<Administrativo> administrativos= new ArrayList<>();
-
-
+    public ArrayList<Exercicio> exercicios = new ArrayList<>();
+    public ArrayList<Treino> treinos = new ArrayList<>();
+    public ArrayList<FeedbackProfessor> feedbacksProfessores = new ArrayList<>();
+    public ArrayList<TrocaProfessor> trocasProfessores = new ArrayList<>();
 
     private BancoDeDados(){}
 
@@ -27,6 +29,4 @@ public class BancoDeDados {
         }
         return banco;
     }
-
-
 }

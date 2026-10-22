@@ -10,7 +10,7 @@ public class FeedbackProfessor {
     public String comentario;
     public int qtdEstrelas;
 
-    //Faça esse metodo no aluno kenen
+
     public void setComentario(Scanner entrada){
         System.out.println("Escreva Um Comentário");
         String comentario = entrada.nextLine();
@@ -18,7 +18,7 @@ public class FeedbackProfessor {
         System.out.println("Digite o Número De Estrelas (1-5)");
         int qtdEstrelas = entrada.nextInt();
 
-        if(qtdEstrelas <= 0){
+        if(qtdEstrelas < 1 || qtdEstrelas > 5){
             System.out.println("Valores Inválidos");
         }
         else{
@@ -39,7 +39,7 @@ public class FeedbackProfessor {
                     aluno = al;
                     System.out.println("Aluno: " + al.getNome());
                     System.out.println(this.comentario);
-                    System.out.println("Estrelas: " + qtdEstrelas);
+                    System.out.println("Estrelas: " + this.qtdEstrelas);
                     break;
                 }
             }
@@ -48,5 +48,4 @@ public class FeedbackProfessor {
             }
         }
     }
-
 }

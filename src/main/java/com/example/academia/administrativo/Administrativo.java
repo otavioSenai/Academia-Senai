@@ -21,8 +21,8 @@ public class Administrativo extends Funcionario {
         System.out.println("Salário: " + getSalario());
     }
 
-    //Cadastra Um Departamento
-    public void cadastrarDepartamento(String nome, int id, String descricao){
+    //Cadastra Uma Modalidade
+    public void cadastrarModalidade(String nome, int id, String descricao){
 
         if(id <= 0 || nome.isBlank() || descricao.isBlank()){
             System.out.println("Valores Inválidos");
@@ -48,8 +48,8 @@ public class Administrativo extends Funcionario {
         }
     }
 
-    //Remove Um Departamento
-    public void removerDepartamento(int id){
+    //Remove Uma Modalidade
+    public void removerModalidade(int id){
 
         if(id <= 0){
             System.out.println("Valores Inválidos");
@@ -81,10 +81,8 @@ public class Administrativo extends Funcionario {
             System.out.println("Valores Inválidos");
         }
         else{
-
             Custo custo = new Custo(nome,id, data, valor);
             BancoDeDados.getInstance().custos.add(custo);
-
         }
     }
 
@@ -93,7 +91,6 @@ public class Administrativo extends Funcionario {
             System.out.println("Valores Inválidos");
         }
         else{
-
             Custo coRemove = null;
 
             for(Custo co : BancoDeDados.getInstance().custos){
@@ -226,4 +223,3 @@ public class Administrativo extends Funcionario {
         }
     }
 }
-
