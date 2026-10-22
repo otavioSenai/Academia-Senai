@@ -2,6 +2,7 @@ package com.example.academia.ClassesUniversais;
 
 import java.util.ArrayList;
 
+//Transforma em enum
 public class Modalidade {
 
     private String nome;
