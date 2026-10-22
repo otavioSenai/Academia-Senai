@@ -14,6 +14,7 @@ int alunosExpulsos=0;
 
 
 public Gerente(int id, String nome, String senha, String cpf, double salario){
+
     super(id, nome, senha, cpf, salario);
 }
 Scanner sc= new Scanner(System.in);
@@ -66,6 +67,18 @@ public void cadastrarDepartamento(String descricao){
         System.out.println("Este Departamento Já Existe No Sistema");
     }
 }
+    public void excluirDepartamento(int id){
+        Departamento depRemove=null;
+        for( Departamento departamento:BancoDeDados.getInstance().departamentos){
+            if(departamento.getId()==id){
+                BancoDeDados.getInstance().departamentos.remove(depRemove);
+                System.out.println("Departamento Excluído");
+            }
+            else if(depRemove==null){
+                System.out.println("Valores Inválidos");
+            }
+        }
+    }
 
 public void ExpulsarAluno(int id){
 
@@ -139,9 +152,7 @@ break;
 public void VerificarGrafico(int idade,String nome,String senha, double altura, double peso, Plano plano, String intensidade ){
         GraficoRenda grafico=new GraficoRenda();
         System.out.println("Renda"+grafico.getRenda( id, nome, senha,  cpf, idade, altura, peso,  plano, intensidade));
-
-
-
+        System.out.println("Situação" +grafico.getSituacao());
     }
 
     public void DemitirAdministrativo(int id){
