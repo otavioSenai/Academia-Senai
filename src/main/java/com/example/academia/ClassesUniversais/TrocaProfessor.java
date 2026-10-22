@@ -10,7 +10,6 @@ public class TrocaProfessor {
     private int id;
     public String comentario;
 
-    //Escreva isso no aluno kenen
     public void setComentario(Scanner entrada){
 
         System.out.println("Insira o nome do Professor Que Deseja Trocar");
