@@ -11,7 +11,7 @@ public class Professor extends Funcionario {
 
     public Professor(int id, String nome, String senha, String cpf, double salario) {
         super(id, nome, senha, cpf, salario);
-        this.id
+
     }
 
     public ArrayList<Departamento> getDepartamentos() {

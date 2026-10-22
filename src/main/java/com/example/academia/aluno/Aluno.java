@@ -10,7 +10,7 @@ public class Aluno extends Usuario {
     private double peso;
     private Plano plano;
     private String intensidade;
-    private ArrayList<Departamento> departamentos = new ArrayList<>();
+    private ArrayList<Departamento> departamentos;
     private ArrayList<Treino> treinos = new ArrayList<>();
 
 
@@ -28,7 +28,12 @@ public class Aluno extends Usuario {
     }
 
     public void setIdade(int idade) {
+        if(idade<13||idade>130){
+            System.out.println("Dados Invalidos!");
+        }
+        else{
         this.idade = idade;
+        }
     }
 
     public double getAltura() {
@@ -36,7 +41,11 @@ public class Aluno extends Usuario {
     }
 
     public void setAltura(double altura) {
-        this.altura = altura;
+        if(altura<0.50||altura>2.50){
+            System.out.println("Dados Invalidos!");
+        }
+        else{
+        this.altura = altura;}
     }
 
     public double getPeso() {
@@ -44,10 +53,16 @@ public class Aluno extends Usuario {
     }
 
     public void setPeso(double peso) {
-        this.peso = peso;
+        if(peso<30||peso>350){
+            System.out.println("Dados Invalidos!");
+        }
+        else {
+            this.peso = peso;
+        }
     }
 
     public Plano getPlano() {
+
         return plano;
     }
 
