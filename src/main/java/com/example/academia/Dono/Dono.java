@@ -1,63 +1,1 @@
-package com.example.academia.Dono;
-
-import com.example.academia.ClassesUniversais.BancoDeDados;
-import com.example.academia.ClassesUniversais.Departamento;
-import com.example.academia.ClassesUniversais.Funcionario;
-import com.example.academia.administrativo.Administrativo;
-import com.example.academia.professor.Professor;
-
-public class Dono extends Funcionario  {
-    public Dono(int id, String nome, String senha, String cpf, double salario) {
-
-        super(id, nome, senha, cpf, salario);
-    }
-    public void cadastrarDepartamento(String nome, int id, String descricao){
-        Departamento departamento=new Departamento(nome,id,descricao);
-        BancoDeDados.getInstance().departamentos.add(departamento);
-        if(BancoDeDados.getInstance().alunos == null){
-            System.out.println("Este Departamento Não Existe No Sistema");
-        }
-        else{
-            System.out.println("Este Departamento Já Existe No Sistema");
-        }
-
-    }
-    public void excluirDepartamento(int id){
-        Departamento depRemove=null;
-        for( Departamento departamento:BancoDeDados.getInstance().departamentos){
-            if(departamento.getId()==id){
-                BancoDeDados.getInstance().departamentos.remove(depRemove);
-                System.out.println("Departamento Excluído");
-            }
-            else if(depRemove==null){
-                System.out.println("Valores Inválidos");
-            }
-        }
-    }
-    public void CadastrarProfessor(int id, String nome, String senha, String cpf, double salario){
-
-        Professor professor= new Professor(id, nome, senha, cpf, salario);
-        BancoDeDados.getInstance().professores.add(professor);
-
-    }
-    public void demitirProfessor(int id){
-        Professor professorRemover= null;
-        for(Professor prof: BancoDeDados.getInstance().professores){
-            if(prof.getId()==id){
-                professorRemover=prof;
-                BancoDeDados.getInstance().administrativos.remove(professorRemover);
-
-            }
-            else if(professorRemover==null){
-                System.out.println("Valores Inválidos");
-            }
-            break;
-        }
-    }
-    public void cadastrarAluno(int id){
-
-    }
-
-
-
-}
+package com.example.academia.Dono;import com.example.academia.ClassesUniversais.BancoDeDados;import com.example.academia.ClassesUniversais.Departamento;import com.example.academia.ClassesUniversais.Funcionario;import com.example.academia.ClassesUniversais.Plano; import com.example.academia.administrativo.Administrativo;import com.example.academia.aluno.Aluno;import com.example.academia.professor.Professor;import java.util.Scanner;public class Dono extends Funcionario  {        Scanner sc=new Scanner(System.in);    public Dono(int id, String nome, String senha, String cpf, double salario) {        super(id, nome, senha, cpf, salario);    }    public void cadastrarDepartamento(String nome, int id, String descricao){        Departamento departamento=new Departamento(nome,id,descricao);        BancoDeDados.getInstance().departamentos.add(departamento);        if(BancoDeDados.getInstance().alunos == null){            System.out.println("Este Departamento Não Existe No Sistema");        }        else{            System.out.println("Este Departamento Já Existe No Sistema");        }    }    public void excluirDepartamento(int id){        Departamento depRemove=null;        for( Departamento departamento:BancoDeDados.getInstance().departamentos){            if(departamento.getId()==id){                BancoDeDados.getInstance().departamentos.remove(depRemove);                System.out.println("Departamento Excluído");            }            else if(depRemove==null){                System.out.println("Valores Inválidos");            }        }    }    public void CadastrarProfessor(int id, String nome, String senha, String cpf, double salario){        Professor professor= new Professor(id, nome, senha, cpf, salario);        BancoDeDados.getInstance().professores.add(professor);    }    public void demitirProfessor(int id){        Professor professorRemover= null;        for(Professor prof: BancoDeDados.getInstance().professores){            if(prof.getId()==id){                professorRemover=prof;                BancoDeDados.getInstance().administrativos.remove(professorRemover);            }            else if(professorRemover==null){                System.out.println("Valores Inválidos");            }            break;        }    }    public void cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade){        Aluno aluno=new Aluno(id, nome, senha, cpf, idade, altura, peso, plano, intensidade);        System.out.println("Nome:");        String nomeAluno = sc.nextLine();        System.out.println("Id:");    }    public void ExpulsarAluno(int id){        Aluno alRemove = null;        for(Aluno al : BancoDeDados.getInstance().alunos) {            if (al.getId() == id) {                alRemove = al;                BancoDeDados.getInstance().alunos.remove(alRemove);                System.out.println("Aluno Removido");                break;            }            else if(alRemove == null){                System.out.println("Valores Inválidos");            }            break;        }}}
