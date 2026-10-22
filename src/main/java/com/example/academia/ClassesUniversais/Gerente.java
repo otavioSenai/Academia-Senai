@@ -67,10 +67,10 @@ public void cadastrarDepartamento(String descricao){
     }
 }
     public void excluirDepartamento(int id){
-        Departamento depRemove=null;
-        for( Departamento departamento:BancoDeDados.getInstance().departamentos){
+        Modalidade depRemove=null;
+        for( Modalidade departamento:BancoDeDados.getInstance().modalidades){
             if(departamento.getId()==id){
-                BancoDeDados.getInstance().departamentos.remove(depRemove);
+                BancoDeDados.getInstance().modalidades.remove(depRemove);
                 System.out.println("Departamento Excluído");
             }
             else if(depRemove==null){
