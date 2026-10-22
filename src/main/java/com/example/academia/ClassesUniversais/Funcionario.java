@@ -10,6 +10,16 @@ public class Funcionario extends Usuario{
         this.salario = salario;
     }
 
+    protected double getSalario(){
+        return this.salario;
+    }
 
+    protected void setSalario(double salario) {
 
+        if (salario <= 0) {
+            System.out.println("Valores Inválidos");
+        } else {
+            this.salario = salario;
+        }
+    }
 }

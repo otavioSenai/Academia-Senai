@@ -1,5 +1,6 @@
 package com.example.academia.ClassesUniversais;
 
+import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
 import com.example.academia.professor.Professor;
 
@@ -14,6 +15,7 @@ public class BancoDeDados {
     public ArrayList <Custo> custos = new ArrayList<>();
     public ArrayList <Aluno> alunos= new ArrayList<>();
     public ArrayList <Professor> professores= new ArrayList<>();
+    public ArrayList<Administrativo> administrativos= new ArrayList<>();
 
 
 

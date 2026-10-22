@@ -1,6 +1,7 @@
 package com.example.academia.administrativo;
 
     import com.example.academia.ClassesUniversais.*;
+    import com.example.academia.aluno.Aluno;
 
 public class Administrativo extends Funcionario {
 
@@ -11,10 +12,18 @@ public class Administrativo extends Funcionario {
 
     //Métodos
 
+    //Exibir Carterinha Do Administrativo
+    public void exibirInformacoes(){
+        System.out.println("Id: " + getId());
+        System.out.println("Nome: " + getNome());
+        System.out.println("CPF: " + getCpf());
+        System.out.println("Salário: " + getSalario());
+    }
+
     //Cadastra Um Departamento
     public void cadastrarDepartamento(String nome, int id, String descricao){
 
-        if(id == 0 || nome.isBlank() || descricao.isBlank()){
+        if(id <= 0 || nome.isEmpty() || descricao.isEmpty()){
             System.out.println("Valores Inválidos");
         }
         else {
@@ -26,11 +35,8 @@ public class Administrativo extends Funcionario {
                     break;
                 }
             }
-
             if (idEncontrado) {
-
                 System.out.println("Departamento Já Existente");
-
             } else {
 
                 Departamento departamento = new Departamento(nome, id, descricao);
@@ -44,9 +50,10 @@ public class Administrativo extends Funcionario {
     //Remove Um Departamento
     public void removerDepartamento(int id){
 
-        if(id == 0){
+        if(id <= 0){
             System.out.println("Valores Inválidos");
         }
+
         else {
             Departamento dpRemove = null;
 
@@ -65,15 +72,48 @@ public class Administrativo extends Funcionario {
                 System.out.println("Valores Inválidos");
             }
         }
+    }
 
+    public void cadastrarCusto(String nome, int id, String data, double valor){
 
+        if(nome.isEmpty() || id <= 0 || data.isEmpty() || valor <= 0){
+            System.out.println("Valores Inválidos");
+        }
+        else{
 
+            Custo custo = new Custo(nome,id, data, valor);
+            BancoDeDados.getInstance().custos.add(custo);
+
+        }
+    }
+
+    public void removerCusto(int id){
+        if(id <=0){
+            System.out.println("Valores Inválidos");
+        }
+        else{
+
+            Custo coRemove = null;
+
+            for(Custo co : BancoDeDados.getInstance().custos){
+                if(co.getId() == id){
+                    coRemove = co;
+
+                    BancoDeDados.getInstance().custos.remove(coRemove);
+                    System.out.println("Custo Removido");
+                    break;
+                }
+            }
+            if(coRemove == null){
+                System.out.println("Valores Inválidos");
+            }
+        }
     }
 
     //Cadastrar Um Plano
     public void cadatrarPlano(String nome, int id, String descricao, double valor){
 
-        if(nome.isBlank() || id == 0 || descricao.isBlank() || valor == 0) {
+        if(nome.isEmpty() || id <= 0 || descricao.isEmpty() || valor <= 0) {
             System.out.println("Valores Inválidos");
         }
         else {
@@ -88,7 +128,7 @@ public class Administrativo extends Funcionario {
     //Remover Um Plano
     public void removerPlano(int id){
 
-        if(id == 0){
+        if(id <= 0){
             System.out.println("Valores Inválidos");
         }
         else{
@@ -111,8 +151,56 @@ public class Administrativo extends Funcionario {
         }
     }
 
-    public void cadastrarCusto(){
+    //Cadastrar Um Professor
+    public void cadastrarProfessor(int id, String nome, String senha, String cpf, double salario){
 
+        if(id <= 0 || nome.isEmpty() || cpf.isEmpty() || salario <= 0 || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+            System.out.println("Senha Inválida");
+        }
+        else{
+
+        }
+
+    }
+
+    //Demitir Um Professor
+    public void demitirProfessor(){
+
+    }
+
+    //Cadastrar Um Aluno
+    public void cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, String intensidade, Plano plano){
+
+            if (id <= 0 || nome.isEmpty() || cpf.isEmpty() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isEmpty() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+                System.out.println("Valores Inválidos");
+            } else {
+
+                Aluno aluno = new Aluno(id, nome, senha, cpf, idade, altura, peso, plano, intensidade);
+                BancoDeDados.getInstance().alunos.add(aluno);
+                System.out.println("Aluno Cadastrado");
+            }
+    }
+
+    //Expulsar Um Aluno
+    public void expulsarAluno(int id){
+
+        if(id <= 0){
+            System.out.println("Valores Inválidos");
+        }
+
+        Aluno alRemove = null;
+
+        for(Aluno al : BancoDeDados.getInstance().alunos){
+            if(al.getId() == id){
+                alRemove = al;
+                BancoDeDados.getInstance().alunos.remove(alRemove);
+                System.out.println("Aluno Removido");
+                break;
+            }
+        }
+        if(alRemove == null){
+            System.out.println("Aluno Não Encontrado");
+        }
     }
 
 }

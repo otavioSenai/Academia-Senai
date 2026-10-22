@@ -1,5 +1,6 @@
 package com.example.academia.Gerente;
 
+import com.example.academia.ClassesUniversais.BancoDeDados;
 import com.example.academia.ClassesUniversais.Funcionario;
 
 import javafx.application.Application;
