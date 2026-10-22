@@ -139,9 +139,7 @@ break;
 public void VerificarGrafico(int idade,String nome,String senha, double altura, double peso, Plano plano, String intensidade ){
         GraficoRenda grafico=new GraficoRenda();
         System.out.println("Renda"+grafico.getRenda( id, nome, senha,  cpf, idade, altura, peso,  plano, intensidade));
-
-
-
+        System.out.println("Situação" +grafico.getSituacao());
     }
 
     public void DemitirAdministrativo(int id){

@@ -1,6 +1,7 @@
 package com.example.academia.Dono;
 
 import com.example.academia.ClassesUniversais.BancoDeDados;
+import com.example.academia.ClassesUniversais.Departamento;
 import com.example.academia.ClassesUniversais.Funcionario;
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.professor.Professor;
@@ -9,6 +10,35 @@ public class Dono extends Funcionario  {
     public Dono(int id, String nome, String senha, String cpf, double salario) {
 
         super(id, nome, senha, cpf, salario);
+    }
+    public void cadastrarDepartamento(String nome, int id, String descricao){
+        Departamento departamento=new Departamento(nome,id,descricao);
+        BancoDeDados.getInstance().departamentos.add(departamento);
+        if(BancoDeDados.getInstance().alunos == null){
+            System.out.println("Este Departamento Não Existe No Sistema");
+        }
+        else{
+            System.out.println("Este Departamento Já Existe No Sistema");
+        }
+
+    }
+    public void excluirDepartamento(int id){
+        Departamento depRemove=null;
+        for( Departamento departamento:BancoDeDados.getInstance().departamentos){
+            if(departamento.getId()==id){
+                BancoDeDados.getInstance().departamentos.remove(depRemove);
+                System.out.println("Departamento Excluído");
+            }
+            else if(depRemove==null){
+                System.out.println("Valores Inválidos");
+            }
+        }
+    }
+    public void CadastrarProfessor(int id, String nome, String senha, String cpf, double salario){
+
+        Professor professor= new Professor(id, nome, senha, cpf, salario);
+        BancoDeDados.getInstance().professores.add(professor);
+
     }
     public void demitirProfessor(int id){
         Professor professorRemover= null;
@@ -24,12 +54,10 @@ public class Dono extends Funcionario  {
             break;
         }
     }
-    public void CadastrarProfessor(int id, String nome, String senha, String cpf, double salario){
-
-        Professor professor= new Professor(id, nome, senha, cpf, salario);
-        BancoDeDados.getInstance().professores.add(professor);
+    public void cadastrarAluno(int id){
 
     }
+
 
 
 }
