@@ -149,10 +149,16 @@ break;
         prof.mostrarCarteirinhaProfessor();
 
     }
+
 public void VerificarGrafico(int idade,String nome,String senha, double altura, double peso, Plano plano, String intensidade ){
         GraficoRenda grafico=new GraficoRenda();
         System.out.println("Renda"+grafico.getRenda( id, nome, senha,  cpf, idade, altura, peso,  plano, intensidade));
         System.out.println("Situação" +grafico.getSituacao());
+    }
+    public void cadastrarAdministrativo(int id, String nome, String senha, String cpf, double salario){
+        Administrativo ad=new Administrativo(id, nome,senha, cpf, salario);
+        BancoDeDados.getInstance().administrativos.add(ad);
+        contratacao++;
     }
 
     public void DemitirAdministrativo(int id){

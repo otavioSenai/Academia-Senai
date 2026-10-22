@@ -89,7 +89,6 @@ public class Aluno extends Usuario {
             System.out.println("----------------------------------------");
             System.out.println("CPF: " + getCpf());
             System.out.println("----------------------------------------");
-           System.out.println();
             System.out.println("========================================");
         }
 
