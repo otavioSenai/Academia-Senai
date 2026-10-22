@@ -11,6 +11,7 @@ public class Professor extends Funcionario {
 
     public Professor(int id, String nome, String senha, String cpf, double salario) {
         super(id, nome, senha, cpf, salario);
+        this.id
     }
 
     public ArrayList<Departamento> getDepartamentos() {
@@ -25,9 +26,7 @@ public class Professor extends Funcionario {
             System.out.println("        ACADEMIA ÍCARO");
             System.out.println("        CARTEIRINHA DO PROFESSOR");
             System.out.println("========================================");
-            System.out.println("NOME: " + getNome());
             System.out.println("----------------------------------------");
-            System.out.println("DEPARTAMENTO: "+getDepartamentos());
             System.out.println("----------------------------------------");
             System.out.println("ESPECIALIDADE: " + Especialidade);
             System.out.println("========================================");}
