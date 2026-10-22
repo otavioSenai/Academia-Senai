@@ -45,9 +45,9 @@ public class Dono extends Funcionario{
     public void removerPlanos(){
         BancoDeDados.getInstance().planos.remove(plano);
     }
-    public void verificarPlanos(){
-        for(int i = 0;i > BancoDeDados.getInstance().planos.size();i++)
-        BancoDeDados.getInstance().planos.get(i);
+    public void verificarPlanos() {
+        for (int i = 0; i > BancoDeDados.getInstance().planos.size(); i++)
+            BancoDeDados.getInstance().planos.get(i);
     }
 
 
