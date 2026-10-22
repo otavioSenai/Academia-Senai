@@ -2,9 +2,8 @@ package com.example.academia.ClassesUniversais;
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
 import com.example.academia.professor.Professor;
-import com.example.academia.ClassesUniversais.GraficoRenda;
+
 import java.util.Scanner;
-import com.example.academia.ClassesUniversais.BancoDeDados;
 
 
 public class Gerente extends Funcionario{
@@ -57,8 +56,8 @@ public void CadastrarAluno(int id, String nome, String senha, String cpf, int id
     }
 }
 public void cadastrarDepartamento(String descricao){
-    Departamento departamento=new Departamento(nome,id,descricao);
-    BancoDeDados.getInstance().departamentos.add(departamento);
+    Modalidade modalidade =new Modalidade(nome,id,descricao);
+    BancoDeDados.getInstance().modalidades.add(modalidade);
     if(BancoDeDados.getInstance().alunos == null){
         System.out.println("Este Departamento Não Existe No Sistema");
     }

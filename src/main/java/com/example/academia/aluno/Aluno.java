@@ -1,6 +1,6 @@
 package com.example.academia.aluno;
 
-import com.example.academia.ClassesUniversais.Departamento;
+import com.example.academia.ClassesUniversais.Modalidade;
 import com.example.academia.ClassesUniversais.Plano;
 import com.example.academia.ClassesUniversais.Treino;
 import com.example.academia.ClassesUniversais.Usuario;
@@ -15,7 +15,8 @@ public class Aluno extends Usuario {
     private double peso;
     private Plano plano;
     private String intensidade;
-    private ArrayList<Departamento> departamentos;
+
+    private ArrayList<Modalidade> modalidades;
     private ArrayList<Treino> treinos;
 
 

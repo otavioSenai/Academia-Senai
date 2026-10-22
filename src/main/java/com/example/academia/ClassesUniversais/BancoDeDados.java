@@ -10,7 +10,7 @@ public class BancoDeDados {
 
     private static BancoDeDados banco;
 
-    public ArrayList <Departamento> departamentos = new ArrayList<>();
+    public ArrayList <Modalidade> modalidades = new ArrayList<>();
     public ArrayList <Plano> planos = new ArrayList<>();
     public ArrayList <Custo> custos = new ArrayList<>();
     public ArrayList <Aluno> alunos= new ArrayList<>();
