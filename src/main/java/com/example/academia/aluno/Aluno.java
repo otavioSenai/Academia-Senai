@@ -1,9 +1,6 @@
 package com.example.academia.aluno;
 
-import com.example.academia.ClassesUniversais.Modalidade;
-import com.example.academia.ClassesUniversais.Plano;
-import com.example.academia.ClassesUniversais.Treino;
-import com.example.academia.ClassesUniversais.Usuario;
+import com.example.academia.ClassesUniversais.*;
 
 import java.util.ArrayList;
 

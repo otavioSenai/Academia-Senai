@@ -18,7 +18,8 @@ public class GraficoRenda {
         this.renda = renda;
     }
 
-    public boolean isSituacao() {
+    public boolean getSituacao() {
+
         return situacao;
     }
 
