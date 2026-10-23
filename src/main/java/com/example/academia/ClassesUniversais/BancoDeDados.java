@@ -18,7 +18,7 @@ public class BancoDeDados {
 
     public Map <Integer, Custo> custos = new HashMap<>();
     public Map <Integer, Aluno> alunos = new HashMap<>();
-    public Map <Integer, Professor> treinadores = new HashMap<>();
+    public Map <Integer, Treinador> treinadores = new HashMap<>();
     public Map <Integer, Administrativo> administrativos = new HashMap<>();
 
     public Map <Integer, Exercicio> exercicios = new HashMap<>();

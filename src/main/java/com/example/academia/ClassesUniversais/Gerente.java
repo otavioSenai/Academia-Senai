@@ -1,7 +1,7 @@
 package com.example.academia.ClassesUniversais;
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
-import com.example.academia.professor.Professor;
+import com.example.academia.professor.Treinador;
 
 import java.util.Scanner;
 
@@ -99,13 +99,13 @@ public void ExpulsarAluno(int id){
 
 }
 public void cadastrarProfessores(int id, String nome, String senha, String cpf){
-    Professor professor = new Professor(id, nome, senha, cpf, salario);
-    BancoDeDados.getInstance().professores.add(professor);
+    Treinador treinador = new Treinador(id, nome, senha, cpf, salario);
+    BancoDeDados.getInstance().professores.add(treinador);
     contratacao++;
 }
 public void demitirProfesores(int id){
- Professor profRemove=null;
- for(Professor prof: BancoDeDados.getInstance().professores){
+ Treinador profRemove=null;
+ for(Treinador prof: BancoDeDados.getInstance().professores){
      if(prof.getId()==id){
          profRemove = prof;
          BancoDeDados.getInstance().professores.remove(profRemove);
@@ -144,7 +144,7 @@ break;
     }
 
     public void VerficarCarteirinhaProf(String senha){
-        Professor prof=new Professor(id, nome, senha, cpf, salario);
+        Treinador prof=new Treinador(id, nome, senha, cpf, salario);
         prof.mostrarCarteirinhaProfessor();
 
     }
