@@ -1,7 +1,7 @@
 package com.example.academia.ClassesUniversais;
 
 import com.example.academia.aluno.Aluno;
-import com.example.academia.professor.Professor;
+import com.example.academia.professor.Treinador;
 
 import java.util.Scanner;
 
@@ -19,7 +19,7 @@ public class TrocaProfessor {
 
         boolean professorEncontrado = false;
 
-        for(Professor pr : BancoDeDados.getInstance().professores){
+        for(Treinador pr : BancoDeDados.getInstance().professores){
             if(pr.getNome().equalsIgnoreCase(nome)){
                 professorEncontrado = true;
 
@@ -54,8 +54,8 @@ public class TrocaProfessor {
                 System.out.println("Aluno Não Encontrado");
             }
             else{
-                Professor profe = null;
-                for(Professor fessor : BancoDeDados.getInstance().professores){
+                Treinador profe = null;
+                for(Treinador fessor : BancoDeDados.getInstance().professores){
                     if(fessor.getId() == idProfessor){
                         profe = fessor;
                         System.out.println("Professor Solicitado Para Ser Trocado: " + fessor.getNome());

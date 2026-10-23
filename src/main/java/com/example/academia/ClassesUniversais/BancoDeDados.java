@@ -2,7 +2,7 @@ package com.example.academia.ClassesUniversais;
 
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
-import com.example.academia.professor.Professor;
+import com.example.academia.professor.Treinador;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class BancoDeDados {
 
     public Map <Integer, Custo> custos = new HashMap<>();
     public Map <Integer, Aluno> alunos = new HashMap<>();
-    public Map <Integer, Professor> treinadores = new HashMap<>();
+    public Map <Integer, Treinador> treinadores = new HashMap<>();
     public Map <Integer, Administrativo> administrativos = new HashMap<>();
 
     public Map <Integer, Exercicio> exercicios = new HashMap<>();

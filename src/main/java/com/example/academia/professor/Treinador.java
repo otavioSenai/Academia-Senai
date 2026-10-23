@@ -5,11 +5,11 @@ import com.example.academia.ClassesUniversais.Funcionario;
 
 import java.util.ArrayList;
 
-public class Professor extends Funcionario {
+public class Treinador extends Funcionario {
     private ArrayList<Modalidade> modalidades;
     private String Especialidade;
 
-    public Professor(int id, String nome, String senha, String cpf, double salario) {
+    public Treinador(int id, String nome, String senha, String cpf, double salario) {
         super(id, nome, senha, cpf, salario);
 
     }

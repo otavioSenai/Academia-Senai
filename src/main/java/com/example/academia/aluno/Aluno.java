@@ -11,8 +11,8 @@ public class Aluno extends Usuario {
     private Plano plano;
     private String intensidade;
 
-    private ArrayList<Modalidade> modalidades;
-    private ArrayList<Treino> treinos;
+    private ArrayList<Modalidade> modalidades = new ArrayList<>();
+    private ArrayList<Treino> treinos = new ArrayList<>();
 
 
     public Aluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade) {
