@@ -5,21 +5,27 @@ import com.example.academia.aluno.Aluno;
 import com.example.academia.professor.Professor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BancoDeDados {
 
     private static BancoDeDados banco;
 
-    public ArrayList <Modalidade> modalidades = new ArrayList<>();
-    public ArrayList <Plano> planos = new ArrayList<>();
-    public ArrayList <Custo> custos = new ArrayList<>();
-    public ArrayList <Aluno> alunos= new ArrayList<>();
-    public ArrayList <Professor> professores= new ArrayList<>();
-    public ArrayList<Administrativo> administrativos= new ArrayList<>();
-    public ArrayList<Exercicio> exercicios = new ArrayList<>();
-    public ArrayList<Treino> treinos = new ArrayList<>();
-    public ArrayList<FeedbackProfessor> feedbacksProfessores = new ArrayList<>();
-    public ArrayList<TrocaProfessor> trocasProfessores = new ArrayList<>();
+    public List <Modalidade> modalidades = new ArrayList<>();
+    public List <Plano> planos = new ArrayList<>();
+
+    public Map <Integer, Custo> custos = new HashMap<>();
+    public Map <Integer, Aluno> alunos = new HashMap<>();
+    public Map <Integer, Professor> treinadores = new HashMap<>();
+    public Map <Integer, Administrativo> administrativos = new HashMap<>();
+
+    public Map <Integer, Exercicio> exercicios = new HashMap<>();
+    public Map <Integer, Treino> treinos = new HashMap<>();
+
+    public List <FeedbackProfessor> feedbacksProfessores = new ArrayList<>();
+    public List <TrocaProfessor> trocasProfessores = new ArrayList<>();
 
     private BancoDeDados(){}
 

@@ -62,5 +62,4 @@ public class Verificacao {
         return contCaractereEspecial == qtdCaractereEspecial && contNumero == qtdNumero;
     }
 
-
 }

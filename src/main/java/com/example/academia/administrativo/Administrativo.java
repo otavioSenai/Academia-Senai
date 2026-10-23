@@ -54,7 +54,6 @@ public class Administrativo extends Funcionario {
         if(id <= 0){
             System.out.println("Valores Inválidos");
         }
-
         else {
             Modalidade dpRemove = null;
 
@@ -68,58 +67,54 @@ public class Administrativo extends Funcionario {
                     break;
                 }
             }
-
             if (dpRemove == null) {
                 System.out.println("Valores Inválidos");
             }
         }
     }
 
+    //Cadastrar Custo
     public void cadastrarCusto(String nome, int id, String data, double valor){
 
-        if(nome.isBlank() || id <= 0 || data.isBlank() || valor <= 0){
+        if(nome.isBlank() || id <= 0 || BancoDeDados.getInstance().custos.containsKey(id) || data.isBlank() || valor <= 0){
             System.out.println("Valores Inválidos");
         }
         else{
             Custo custo = new Custo(nome,id, data, valor);
-            BancoDeDados.getInstance().custos.add(custo);
+            BancoDeDados.getInstance().custos.put(id, custo);
         }
     }
 
+    //Remover Custo
     public void removerCusto(int id){
-        if(id <=0){
+        if(!BancoDeDados.getInstance().custos.containsKey(id)){
             System.out.println("Valores Inválidos");
         }
         else{
-            Custo coRemove = null;
-
-            for(Custo co : BancoDeDados.getInstance().custos){
-                if(co.getId() == id){
-                    coRemove = co;
-
-                    BancoDeDados.getInstance().custos.remove(coRemove);
-                    System.out.println("Custo Removido");
-                    break;
-                }
-            }
-            if(coRemove == null){
-                System.out.println("Valores Inválidos");
-            }
+            BancoDeDados.getInstance().custos.remove(id);
+            System.out.println("Custo Removido");
         }
     }
 
     //Cadastrar Um Plano
     public void cadatrarPlano(String nome, int id, String descricao, double valor){
 
-        if(nome.isBlank() || id <= 0 || descricao.isBlank() || valor <= 0) {
+        boolean idEncontrado = false;
+
+        for(Plano pl : BancoDeDados.getInstance().planos){
+            if(pl.getId() == id){
+                idEncontrado = true;
+                break;
+            }
+        }
+
+        if(nome.isBlank() || id <= 0 || descricao.isBlank() || valor <= 0 || idEncontrado) {
             System.out.println("Valores Inválidos");
         }
         else {
-
         Plano plano = new Plano(nome, id, descricao, valor);
         BancoDeDados.getInstance().planos.add(plano);
         System.out.println("Plano Cadastrado");
-
         }
     }
 
@@ -130,7 +125,6 @@ public class Administrativo extends Funcionario {
             System.out.println("Valores Inválidos");
         }
         else{
-
             Plano plRemove = null;
 
             for(Plano pl : BancoDeDados.getInstance().planos){
@@ -138,7 +132,6 @@ public class Administrativo extends Funcionario {
                     plRemove = pl;
 
                     BancoDeDados.getInstance().planos.remove(plRemove);
-
                     System.out.println("Plano Removido");
                     break;
                 }
@@ -149,54 +142,39 @@ public class Administrativo extends Funcionario {
         }
     }
 
-    //Cadastrar Um Professor
-    public void cadastrarProfessor(int id, String nome, String senha, String cpf, double salario){
+    //Cadastrar Um Treinador
+    public void cadastrarTreinador(int id, String nome, String senha, String cpf, double salario){
 
-        if(id <= 0 || nome.isBlank() || cpf.isBlank() || salario <= 0 || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+        if(id <= 0 || BancoDeDados.getInstance().treinadores.containsKey(id) || nome.isBlank() || cpf.isBlank() || salario <= 0 || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
             System.out.println("Valores Inválidos");
         }
         else{
-
             Professor professor = new Professor(id, nome, senha, cpf, salario);
-            BancoDeDados.getInstance().professores.add(professor);
-            System.out.println("Professor Cadastrado");
+            BancoDeDados.getInstance().treinadores.put(id, professor);
+            System.out.println("Treinador Cadastrado");
         }
-
     }
 
-    //Demitir Um Professor
-    public void demitirProfessor(int id){
+    //Demitir Um Treinador
+    public void demitirTreinador(int id){
 
-            if(id <= 0){
-                System.out.println("Valores Inválidos");
-            }
-            else{
-                Professor prRemove = null;
-
-                for(Professor pr : BancoDeDados.getInstance().professores){
-                    if(pr.getId() == id){
-                        prRemove = pr;
-
-                        BancoDeDados.getInstance().professores.remove(prRemove);
-                        System.out.println("Professor Removido");
-                        break;
-                    }
-                }
-                if(prRemove == null){
-                    System.out.println("Professor Não Encontrado");
-                }
-            }
+        if(!BancoDeDados.getInstance().treinadores.containsKey(id)){
+            System.out.println("Valores Inválidos");
+        }
+        else{
+            BancoDeDados.getInstance().treinadores.remove(id);
+            System.out.println("Treinador Removido");
+        }
     }
 
     //Cadastrar Um Aluno
     public void cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, String intensidade, Plano plano){
 
-            if (id <= 0 || nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+            if (id <= 0 || BancoDeDados.getInstance().alunos.containsKey(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
                 System.out.println("Valores Inválidos");
             } else {
-
                 Aluno aluno = new Aluno(id, nome, senha, cpf, idade, altura, peso, plano, intensidade);
-                BancoDeDados.getInstance().alunos.add(aluno);
+                BancoDeDados.getInstance().alunos.put(id, aluno);
                 System.out.println("Aluno Cadastrado");
             }
     }
@@ -204,22 +182,11 @@ public class Administrativo extends Funcionario {
     //Expulsar Um Aluno
     public void expulsarAluno(int id) {
 
-        if (id <= 0) {
+        if (!BancoDeDados.getInstance().alunos.containsKey(id)) {
             System.out.println("Valores Inválidos");
         } else {
-            Aluno alRemove = null;
-
-            for (Aluno al : BancoDeDados.getInstance().alunos) {
-                if (al.getId() == id) {
-                    alRemove = al;
-                    BancoDeDados.getInstance().alunos.remove(alRemove);
-                    System.out.println("Aluno Removido");
-                    break;
-                }
-            }
-            if (alRemove == null) {
-                System.out.println("Aluno Não Encontrado");
-            }
+            BancoDeDados.getInstance().alunos.remove(id);
+            System.out.println("Aluno Removido");
         }
     }
 }

@@ -2,7 +2,7 @@ package com.example.academia.ClassesUniversais;
 
 public class Usuario {
 
-    protected final int id;
+    protected final Integer id;
     protected String nome;
     private String senha;
     protected final String cpf;
