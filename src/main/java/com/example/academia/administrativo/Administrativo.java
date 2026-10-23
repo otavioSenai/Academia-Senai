@@ -2,7 +2,7 @@ package com.example.academia.administrativo;
 
     import com.example.academia.ClassesUniversais.*;
     import com.example.academia.aluno.Aluno;
-    import com.example.academia.professor.Professor;
+    import com.example.academia.professor.Treinador;
 
 public class Administrativo extends Funcionario {
 
@@ -148,8 +148,8 @@ public class Administrativo extends Funcionario {
             System.out.println("Valores Inválidos");
         }
         else{
-            Professor professor = new Professor(id, nome, senha, cpf, salario);
-            BancoDeDados.getInstance().professores.put(id, professor);
+            Treinador treinador = new Treinador(id, nome, senha, cpf, salario);
+            BancoDeDados.getInstance().professores.put(id, treinador);
             System.out.println("Professor Cadastrado");
         }
 

@@ -1,4 +1,4 @@
 package com.example.academia.professor;
 
-public class ProfessorController {
+public class TreinadorController {
 }
