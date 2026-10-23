@@ -13,11 +13,7 @@ import java.util.Scanner;
 
 public class Gerente extends Funcionario {
     Scanner sc= new Scanner(System.in);
-    int id=sc.nextInt();
-    String nome;
     String texto;
-
-    BancoDeDados bancos = new BancoDeDados();
 
     public Gerente(String nome, String senha, String cpf, double salario, int id) {
         super(id, nome,senha, cpf, salario);

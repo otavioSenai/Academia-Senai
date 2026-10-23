@@ -5,8 +5,6 @@ import com.example.academia.ClassesUniversais.*;
 import java.util.ArrayList;
 
 public class Aluno extends Usuario {
-    private String nome;
-    private int id;
     private int idade;
     private double altura;
     private double peso;
