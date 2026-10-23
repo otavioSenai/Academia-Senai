@@ -2,7 +2,7 @@ package com.example.academia.ClassesUniversais;
 
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
-import com.example.academia.professor.Professor;
+import com.example.academia.professor.Treinador;
 
 import java.util.ArrayList;
 import java.util.HashMap;
