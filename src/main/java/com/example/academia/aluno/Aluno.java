@@ -102,4 +102,13 @@ public class Aluno extends Usuario {
             System.out.println("----------------------------------------");
             System.out.println("========================================");
         }
+        public void adicionarModalidades(Modalidade modalidade){
+        for(Modalidade existente : modalidades){
+            if(existente.getId() == modalidade.getId()){
+                System.out.println("Esta modalidade ja foi adicionada");
+                return;
+            }
+        }
+        modalidades.add(modalidade);
+ }
 }
