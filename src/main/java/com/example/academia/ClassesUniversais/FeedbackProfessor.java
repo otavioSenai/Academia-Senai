@@ -1,7 +1,5 @@
 package com.example.academia.ClassesUniversais;
 
-import com.example.academia.aluno.Aluno;
-
 import java.util.Scanner;
 
 public class FeedbackProfessor {
@@ -11,6 +9,7 @@ public class FeedbackProfessor {
     public int qtdEstrelas;
 
 
+    //Mudar o Comentário
     public void setComentario(Scanner entrada){
         System.out.println("Escreva Um Comentário");
         String comentario = entrada.nextLine();
@@ -18,34 +17,24 @@ public class FeedbackProfessor {
         System.out.println("Digite o Número De Estrelas (1-5)");
         int qtdEstrelas = entrada.nextInt();
 
-        if(qtdEstrelas < 1 || qtdEstrelas > 5){
+        if(qtdEstrelas < 1 || qtdEstrelas > 5 || comentario.isBlank()){
             System.out.println("Valores Inválidos");
         }
         else{
-            //Inicializa o FeedbackProfessor
+            //Inicializar Feedback
         }
     }
 
     //Pegar o Comentário
-    public void getComentario(int id){
+    public void getComentario(int idAluno){
 
-        if(id <= 0){
+        if(!BancoDeDados.getInstance().alunos.containsKey(idAluno)){
             System.out.println("Valores Inválidos");
         }
         else{
-            Aluno aluno = null;
-            for(Aluno al : BancoDeDados.getInstance().alunos){
-                if(al.getId() == id){
-                    aluno = al;
-                    System.out.println("Aluno: " + al.getNome());
-                    System.out.println(this.comentario);
-                    System.out.println("Estrelas: " + this.qtdEstrelas);
-                    break;
-                }
-            }
-            if(aluno == null){
-                System.out.println("Aluno Não Encontrado");
-            }
+            System.out.println("Aluno: " + BancoDeDados.getInstance().alunos.get(idAluno) + "\n");
+            System.out.println(this.comentario);
+            System.out.println("Estrelas: " + this.qtdEstrelas);
         }
     }
 }
