@@ -34,7 +34,7 @@ public class Treinador extends Funcionario {
 
     public void setModalidades(ArrayList<Modalidade> modalidades) {
         if (modalidades==null){
-            System.out.println("Dados Invalidos!");
+            System.out.println("Dados Invalidos");
         }
         else {
             this.modalidades = modalidades;

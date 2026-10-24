@@ -5,7 +5,7 @@ import com.example.academia.Treinador.Treinador;
 
 import java.util.Scanner;
 
-public class TrocaProfessor {
+public class TrocaTreinador {
 
     private int id;
     public String comentario;
@@ -19,7 +19,7 @@ public class TrocaProfessor {
 
         boolean professorEncontrado = false;
 
-        for(Treinador pr : BancoDeDados.getInstance().professores){
+        for(Treinador pr : BancoDeDados.getInstance().treinadores){
             if(pr.getNome().equalsIgnoreCase(nome)){
                 professorEncontrado = true;
 
@@ -55,7 +55,7 @@ public class TrocaProfessor {
             }
             else{
                 Treinador profe = null;
-                for(Treinador fessor : BancoDeDados.getInstance().professores){
+                for(Treinador fessor : BancoDeDados.getInstance().treinadores){
                     if(fessor.getId() == idProfessor){
                         profe = fessor;
                         System.out.println("Professor Solicitado Para Ser Trocado: " + fessor.getNome());
