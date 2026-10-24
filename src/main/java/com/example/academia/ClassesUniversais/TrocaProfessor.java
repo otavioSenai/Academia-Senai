@@ -1,7 +1,7 @@
 package com.example.academia.ClassesUniversais;
 
 import com.example.academia.aluno.Aluno;
-import com.example.academia.professor.Treinador;
+import com.example.academia.Treinador.Treinador;
 
 import java.util.Scanner;
 

@@ -2,7 +2,7 @@ package com.example.academia.administrativo;
 
     import com.example.academia.ClassesUniversais.*;
     import com.example.academia.aluno.Aluno;
-    import com.example.academia.professor.Treinador;
+    import com.example.academia.Treinador.Treinador;
 
 public class Administrativo extends Funcionario {
 
