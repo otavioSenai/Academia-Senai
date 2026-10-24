@@ -113,7 +113,7 @@ public void cadastrarProfessores(int id, String nome, String senha, String cpf, 
     }
 
     // 2. Se passou nas verificações, chama a classe para criptografar em SHA-512
-    CripografarSenha cripto = new CripografarSenha();
+    CriptografarSenha cripto = new CriptografarSenha();
     String senhaCriptografada = cripto.SenhaGeral(senhaCripto);
     Treinador treinador = new Treinador(id, nome, senha, cpf, salario);
     BancoDeDados.getInstance().treinadores.put(id,treinador);
@@ -186,7 +186,7 @@ public void VerificarGrafico(int idade,String nome,String senha, double altura, 
         }
 
         // 2. Se passou nas verificações, chama a classe para criptografar em SHA-512
-        CripografarSenha cripto = new CripografarSenha();
+        CriptografarSenha cripto = new CriptografarSenha();
         String senhaCriptografada = cripto.SenhaGeral(senhaCripto);
 
         Administrativo ad=new Administrativo(id, nome,senha, cpf, salario);

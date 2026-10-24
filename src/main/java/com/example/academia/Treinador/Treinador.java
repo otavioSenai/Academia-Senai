@@ -1,6 +1,5 @@
 package com.example.academia.Treinador;
 
-import com.example.academia.ClassesUniversais.Modalidade;
 import com.example.academia.ClassesUniversais.Funcionario;
 
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class Treinador extends Funcionario {
         }
     }
 
-    public void mostrarCarteirinhaProfessor(){
+    public void mostrarCarteirinhaTreinador(){
     System.out.println("========================================");
             System.out.println("        ACADEMIA ÍCARO");
             System.out.println("        CARTEIRINHA DO PROFESSOR");

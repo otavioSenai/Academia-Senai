@@ -35,12 +35,13 @@ public class Administrativo extends Funcionario {
 
     //Remover Custo
     public void removerCusto(int id){
-        if(!BancoDeDados.getInstance().custos.containsKey(id)){
-            System.out.println("Valores Inválidos");
-        }
-        else{
+
+        if(BancoDeDados.getInstance().custos.containsKey(id)){
             BancoDeDados.getInstance().custos.remove(id);
             System.out.println("Custo Removido");
+        }
+        else{
+            System.out.println("Valores Inválidos");
         }
     }
 
@@ -51,33 +52,21 @@ public class Administrativo extends Funcionario {
             System.out.println("Valores Inválidos");
         }
         else {
-        Plano plano = new Plano(nome, id, descricao, valor, validade);
-        BancoDeDados.getInstance().planos.put(id, plano);
-        System.out.println("Plano Cadastrado");
+            Plano plano = new Plano(nome, id, descricao, valor, validade);
+            BancoDeDados.getInstance().planos.put(id, plano);
+            System.out.println("Plano Cadastrado");
         }
     }
 
     //Remover Um Plano
     public void removerPlano(int id){
 
-        if(id <= 0){
-            System.out.println("Valores Inválidos");
+        if(BancoDeDados.getInstance().planos.containsKey(id)){
+            BancoDeDados.getInstance().planos.remove(id);
+            System.out.println("Plano Removido");
         }
         else{
-            Plano plRemove = null;
-
-            for(Plano pl : BancoDeDados.getInstance().planos){
-                if(pl.getId() == id){
-                    plRemove = pl;
-
-                    BancoDeDados.getInstance().planos.remove(plRemove);
-                    System.out.println("Plano Removido");
-                    break;
-                }
-            }
-            if(plRemove == null){
-                System.out.println("Valores Inválidos");
-            }
+            System.out.println("Valores Inválidos");
         }
     }
 
@@ -97,12 +86,12 @@ public class Administrativo extends Funcionario {
     //Demitir Um Treinador
     public void demitirTreinador(int id){
 
-        if(!BancoDeDados.getInstance().treinadores.containsKey(id)){
-            System.out.println("Valores Inválidos");
-        }
-        else{
+        if(BancoDeDados.getInstance().treinadores.containsKey(id)){
             BancoDeDados.getInstance().treinadores.remove(id);
             System.out.println("Treinador Removido");
+        }
+        else{
+            System.out.println("Valores Inválidos");
         }
     }
 
@@ -121,11 +110,12 @@ public class Administrativo extends Funcionario {
     //Expulsar Um Aluno
     public void expulsarAluno(int id) {
 
-        if (!BancoDeDados.getInstance().alunos.containsKey(id)) {
-            System.out.println("Valores Inválidos");
-        } else {
+        if (BancoDeDados.getInstance().alunos.containsKey(id)) {
             BancoDeDados.getInstance().alunos.remove(id);
             System.out.println("Aluno Removido");
+        }
+        else {
+            System.out.println("Valores Inválidos");
         }
     }
 }

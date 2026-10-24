@@ -1,56 +1,20 @@
 package com.example.academia.ClassesUniversais;
 
-import java.util.ArrayList;
+public enum Modalidade {
 
-//Transforma em enum
-public class Modalidade {
+    MUSCULACAO("Musculação"),
+    PILATE("Pilates"),
+    CROSSFIT("Crossfit"),
+    CARDIO("Cardio");
 
-    private String nome;
-    private final int id;
-    private String descricao;
+    private String Modalidade;
 
-    private ArrayList<Usuario> usuarios = new ArrayList<>();
-    private ArrayList<Funcionario> funcionarios = new ArrayList<>();
-    private ArrayList<Plano> planos = new ArrayList<>();
-
-    public Modalidade(String nome, int id, String descricao){
-        this.nome = nome;
-        this.id = id;
-        this.descricao = descricao;
+    Modalidade(String modalidade){
+        this.Modalidade = modalidade;
     }
 
-    //Métodos
-
-    //Pegar Nome
-    public String getNome(){
-        return this.nome;
-
+    public String getModalidade(){
+        return this.Modalidade;
     }
 
-    //Mudar Nome
-    public void setNome(String nome) {
-        if (nome.isBlank()) {
-            System.out.println("Valores Inválidos");
-        } else {
-            this.nome = nome;
-        }
-    }
-
-    //Pegar Id
-    public int getId(){
-        return this.id;
-    }
-
-    public String getDescricao(){
-
-        return this.descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        if (descricao.isBlank()) {
-            System.out.println("Valores Inválidos");
-        } else {
-            this.descricao = descricao;
-        }
-    }
 }

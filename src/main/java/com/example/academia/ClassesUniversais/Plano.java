@@ -12,7 +12,7 @@ public class Plano {
     private String descricao;
     private double valor;
 
-    private final Instant validade;
+    private Instant validade;
     private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.of("America/Sao_Paulo"));
     private boolean status;
 
@@ -28,15 +28,15 @@ public class Plano {
 
     //Métodos
 
-    //Definir Departamentos
-    public void setDepartamento(String departamento, Scanner entrada){
+    //Definir Modalidade
+    public void setModalidade(String departamento, Scanner entrada){
 
         System.out.println("Insira qual departamento pertence ao plano");
         String modalidadeEscolhida = entrada.nextLine();
 
             boolean ModalidadeExistente = false;
 
-            for(ModalidadeEnums m : BancoDeDados.getInstance().modalidades){
+            for(Modalidade m : BancoDeDados.getInstance().modalidades){
                 if(m.name().equalsIgnoreCase(modalidadeEscolhida)){
 
                     this.modalidade = m.toString();
@@ -127,7 +127,11 @@ public class Plano {
 
     //Mudar Validade
     public void setValidade(String validade){
-        this.validade.with(Instant.parse(validade));
+        if(validade.isBlank()){
+            System.out.println("Valores Inválidos");
+        }
+        else {
+            this.validade = Instant.from(this.formatador.parse(validade));
+        }
     }
-
 }

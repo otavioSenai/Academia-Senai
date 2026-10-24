@@ -1,5 +1,6 @@
 package com.example.academia.ClassesUniversais;
 
+import com.example.academia.Gerente.Gerente;
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
 import com.example.academia.Treinador.Treinador;
@@ -24,7 +25,7 @@ public class BancoDeDados {
     public Map <Integer, FeedbackProfessor> feedbacksProfessores = new HashMap<>();
     public Map <Integer, TrocaProfessor> trocasTreinadoress = new HashMap<>();
 
-    public ModalidadeEnums[] modalidades = ModalidadeEnums.values();
+    public Modalidade[] modalidades = Modalidade.values();
 
     private BancoDeDados(){}
 

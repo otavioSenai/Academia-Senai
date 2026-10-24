@@ -8,7 +8,6 @@ public class FeedbackProfessor {
     public String comentario;
     public int qtdEstrelas;
 
-
     //Mudar o Comentário
     public void setComentario(Scanner entrada){
         System.out.println("Escreva Um Comentário");
@@ -28,13 +27,13 @@ public class FeedbackProfessor {
     //Pegar o Comentário
     public void getComentario(int idAluno){
 
-        if(!BancoDeDados.getInstance().alunos.containsKey(idAluno)){
-            System.out.println("Valores Inválidos");
-        }
-        else{
+        if(BancoDeDados.getInstance().alunos.containsKey(idAluno)){
             System.out.println("Aluno: " + BancoDeDados.getInstance().alunos.get(idAluno) + "\n");
             System.out.println(this.comentario);
             System.out.println("Estrelas: " + this.qtdEstrelas);
+        }
+        else{
+            System.out.println("Valores Inválidos");
         }
     }
 }

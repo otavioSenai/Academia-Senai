@@ -4,7 +4,7 @@ public class Verificacao {
 
     //Verificar Se a Senha Está Correta
     public static boolean verificarSenha(String senha) {
-        CripografarSenha cripto=new CripografarSenha();
+        CriptografarSenha cripto=new CriptografarSenha();
 
         final int MinimoLetraMaiuscula = 1;
         final int MinimoNumero = 1;
