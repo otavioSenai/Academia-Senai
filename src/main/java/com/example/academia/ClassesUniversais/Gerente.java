@@ -3,6 +3,7 @@ import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
 import com.example.academia.professor.Treinador;
 
+import java.util.Map;
 import java.util.Scanner;
 
 
@@ -83,7 +84,8 @@ public void ExpulsarAluno(int id){
 
     Aluno alRemove = null;
 
-    for(Aluno al : BancoDeDados.getInstance().alunos) {
+    for(Map.Entry<Integer, Aluno> entrada : BancoDeDados.getInstance().alunos.entrySet()) {
+        Aluno al= entrada.getValue();
         if (al.getId() == id) {
             alRemove = al;
             BancoDeDados.getInstance().alunos.remove(alRemove);
@@ -100,15 +102,16 @@ public void ExpulsarAluno(int id){
 }
 public void cadastrarProfessores(int id, String nome, String senha, String cpf){
     Treinador treinador = new Treinador(id, nome, senha, cpf, salario);
-    BancoDeDados.getInstance().professores.add(treinador);
+    BancoDeDados.getInstance().treinadores.put(id,treinador);
     contratacao++;
 }
 public void demitirProfesores(int id){
  Treinador profRemove=null;
- for(Treinador prof: BancoDeDados.getInstance().professores){
+ for(Map.Entry<Integer, Treinador> entrada : BancoDeDados.getInstance().treinadores.entrySet()){
+     Treinador prof=entrada.getValue();
      if(prof.getId()==id){
          profRemove = prof;
-         BancoDeDados.getInstance().professores.remove(profRemove);
+         BancoDeDados.getInstance().treinadores.remove(profRemove);
          System.out.println("Professor Demitido");
          demissoes++;
          break;
@@ -156,13 +159,14 @@ public void VerificarGrafico(int idade,String nome,String senha, double altura, 
     }
     public void cadastrarAdministrativo(int id, String nome, String senha, String cpf, double salario){
         Administrativo ad=new Administrativo(id, nome,senha, cpf, salario);
-        BancoDeDados.getInstance().administrativos.add(ad);
+        BancoDeDados.getInstance().administrativos.put(id,ad);
         contratacao++;
     }
 
     public void DemitirAdministrativo(int id){
     Administrativo adRemove= null;
-    for(Administrativo ad: BancoDeDados.getInstance().administrativos){
+    for(Map.Entry<Integer, Administrativo> entrada : BancoDeDados.getInstance().administrativos.entrySet()){
+        Administrativo ad=entrada.getValue();
         if(ad.getId()==id){
             adRemove=ad;
             BancoDeDados.getInstance().administrativos.remove(adRemove);
