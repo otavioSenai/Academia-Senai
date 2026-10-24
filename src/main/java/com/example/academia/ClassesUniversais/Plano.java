@@ -1,7 +1,8 @@
 package com.example.academia.ClassesUniversais;
 
 import java.time.Instant;
-import java.util.ArrayList;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Plano {
@@ -11,15 +12,18 @@ public class Plano {
     private String descricao;
     private double valor;
 
-    private Instant validade;
+    private final Instant validade;
+    private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.of("America/Sao_Paulo"));
     private boolean status;
 
-    public Plano(String nome, int id, String descricao, double valor){
+    private String modalidade;
+
+    public Plano(String nome, int id, String descricao, double valor, String validade){
         this.nome = nome;
         this.id = id;
         this.descricao = descricao;
         this.valor = valor;
-
+        this.validade = Instant.from(this.formatador.parse(validade));
     }
 
     //Métodos
@@ -28,10 +32,40 @@ public class Plano {
     public void setDepartamento(String departamento, Scanner entrada){
 
         System.out.println("Insira qual departamento pertence ao plano");
-        String dp = entrada.nextLine();
+        String modalidadeEscolhida = entrada.nextLine();
 
-        for()
+            boolean ModalidadeExistente = false;
 
+            for(ModalidadeEnums m : BancoDeDados.getInstance().modalidades){
+                if(m.name().equalsIgnoreCase(modalidadeEscolhida)){
+
+                    this.modalidade = m.toString();
+                    ModalidadeExistente = true;
+                    break;
+                }
+            }
+            if(!ModalidadeExistente){
+                System.out.println("Valores Inválidos");
+            }
+    }
+
+    //Pegar a Modalidade
+    public String getModalidade(){
+        return this.modalidade;
+    }
+
+    //Ver se o tempo de pagamento passou
+    public void tempoPagar(){
+        Instant Agora = Instant.now();
+
+        if(Agora.isAfter(this.validade)){
+            System.out.println("Pagamento Atrasado");
+            this.status = false;
+        }
+        else{
+            System.out.println("Pagamento em Dia");
+            this.status = true;
+        }
     }
 
     //Pegar Nome
@@ -94,21 +128,6 @@ public class Plano {
     //Mudar Validade
     public void setValidade(String validade){
         this.validade.with(Instant.parse(validade));
-    }
-
-
-    //Ver se o tempo de pagamento passou
-    public void tempoPagar(){
-        Instant Agora = Instant.now();
-
-        if(Agora.isAfter(validade)){
-            System.out.println("Pagamento Atrasado");
-            this.status = false;
-        }
-        else{
-            System.out.println("Pagamento em Dia");
-            this.status = true;
-        }
     }
 
 }

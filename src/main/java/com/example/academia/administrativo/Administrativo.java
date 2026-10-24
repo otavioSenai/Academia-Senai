@@ -21,58 +21,6 @@ public class Administrativo extends Funcionario {
         System.out.println("Salário: " + getSalario());
     }
 
-    //Cadastra Uma Modalidade
-    public void cadastrarModalidade(String nome, int id, String descricao){
-
-        if(id <= 0 || nome.isBlank() || descricao.isBlank()){
-            System.out.println("Valores Inválidos");
-        }
-        else {
-            boolean idEncontrado = false;
-
-            for (Modalidade dp : BancoDeDados.getInstance().modalidades) {
-                if (dp.getId() == id) {
-                    idEncontrado = true;
-                    break;
-                }
-            }
-            if (idEncontrado) {
-                System.out.println("Departamento Já Existente");
-            } else {
-
-                Modalidade modalidade = new Modalidade(nome, id, descricao);
-                BancoDeDados.getInstance().modalidades.add(modalidade);
-                System.out.println("Departamento Cadastrado");
-
-            }
-        }
-    }
-
-    //Remove Uma Modalidade
-    public void removerModalidade(int id){
-
-        if(id <= 0){
-            System.out.println("Valores Inválidos");
-        }
-        else {
-            Modalidade dpRemove = null;
-
-            for (Modalidade dp : BancoDeDados.getInstance().modalidades) {
-                if (dp.getId() == id) {
-                    dpRemove = dp;
-
-                    BancoDeDados.getInstance().modalidades.remove(dpRemove);
-
-                    System.out.println("Departamento Removido");
-                    break;
-                }
-            }
-            if (dpRemove == null) {
-                System.out.println("Valores Inválidos");
-            }
-        }
-    }
-
     //Cadastrar Custo
     public void cadastrarCusto(String nome, int id, String data, double valor){
 
@@ -97,23 +45,14 @@ public class Administrativo extends Funcionario {
     }
 
     //Cadastrar Um Plano
-    public void cadatrarPlano(String nome, int id, String descricao, double valor){
+    public void cadatrarPlano(String nome, int id, String descricao, double valor, String validade){
 
-        boolean idEncontrado = false;
-
-        for(Plano pl : BancoDeDados.getInstance().planos){
-            if(pl.getId() == id){
-                idEncontrado = true;
-                break;
-            }
-        }
-
-        if(nome.isBlank() || id <= 0 || descricao.isBlank() || valor <= 0 || idEncontrado) {
+        if(nome.isBlank() || id <= 0 || BancoDeDados.getInstance().planos.containsKey(id) || descricao.isBlank() || valor <= 0 || validade.isBlank()) {
             System.out.println("Valores Inválidos");
         }
         else {
-        Plano plano = new Plano(nome, id, descricao, valor);
-        BancoDeDados.getInstance().planos.add(plano);
+        Plano plano = new Plano(nome, id, descricao, valor, validade);
+        BancoDeDados.getInstance().planos.put(id, plano);
         System.out.println("Plano Cadastrado");
         }
     }
@@ -168,7 +107,7 @@ public class Administrativo extends Funcionario {
     }
 
     //Cadastrar Um Aluno
-    public void cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, String intensidade, Plano plano){
+    public void cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade){
 
             if (id <= 0 || BancoDeDados.getInstance().alunos.containsKey(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
                 System.out.println("Valores Inválidos");
