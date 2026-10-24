@@ -101,8 +101,24 @@ public void ExpulsarAluno(int id){
 }
 
 }
-public void cadastrarProfessores(int id, String nome, String senha, String cpf, double salario){
+public void cadastrarProfessores(int id, String nome, String senha, String cpf, double salario, String senhaCripto){
+    if (!Verificacao.verificarSenha(senhaCripto)) {
+        System.out.println("Erro: A senha não atende aos requisitos mínimos de segurança!");
+        return; // Interrompe o método e não cadastra
+    }
+
+    if (!Verificacao.verificarCpf(cpf)) {
+        System.out.println("Erro: CPF inválido!");
+        return; // Interrompe o método se o CPF estiver errado
+    }
+
+    // 2. Se passou nas verificações, chama a classe para criptografar em SHA-512
+    CripografarSenha cripto = new CripografarSenha();
+    String senhaCriptografada = cripto.SenhaGeral(senhaCripto);
     Treinador treinador = new Treinador(id, nome, senha, cpf, salario);
+    BancoDeDados.getInstance().treinadores.put(id,treinador);
+
+        Treinador treinadores = new Treinador(id, nome, senha, cpf, salario);
     BancoDeDados.getInstance().treinadores.put(id,treinador);
     contratacao++;
 }
@@ -158,7 +174,21 @@ public void VerificarGrafico(int idade,String nome,String senha, double altura, 
         System.out.println("Renda"+grafico.getRenda( id, nome, senha,  cpf, idade, altura, peso,  plano, intensidade));
         System.out.println("Situação" +grafico.getSituacao());
     }
-    public void cadastrarAdministrativo(int id, String nome, String senha, String cpf, double salario){
+    public void cadastrarAdministrativo(int id, String nome, String senha, String cpf, double salario, String senhaCripto){
+        if (!Verificacao.verificarSenha(senhaCripto)) {
+            System.out.println("Erro: A senha não atende aos requisitos mínimos de segurança!");
+            return; // Interrompe o método e não cadastra
+        }
+
+        if (!Verificacao.verificarCpf(cpf)) {
+            System.out.println("Erro: CPF inválido!");
+            return; // Interrompe o método se o CPF estiver errado
+        }
+
+        // 2. Se passou nas verificações, chama a classe para criptografar em SHA-512
+        CripografarSenha cripto = new CripografarSenha();
+        String senhaCriptografada = cripto.SenhaGeral(senhaCripto);
+
         Administrativo ad=new Administrativo(id, nome,senha, cpf, salario);
         BancoDeDados.getInstance().administrativos.put(id,ad);
         contratacao++;
