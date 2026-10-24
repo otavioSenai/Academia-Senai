@@ -87,6 +87,9 @@ public class Aluno extends Usuario {
     public ArrayList<Treino> getTreinos() {
         return treinos;
     }
+    public ArrayList<Modalidade> getModalidades(){
+        return modalidades;
+    }
     public void mostrarCarteirinhaAluno(){
             System.out.println("========================================");
             System.out.println("        ACADEMIA ÍCARO");
@@ -103,6 +106,10 @@ public class Aluno extends Usuario {
             System.out.println("========================================");
         }
         public void adicionarModalidades(Modalidade modalidade){
+        if(modalidade == null){
+            System.out.println("Dados invalidos!");
+            return;
+        }
         for(Modalidade existente : modalidades){
             if(existente.getId() == modalidade.getId()){
                 System.out.println("Esta modalidade ja foi adicionada");
