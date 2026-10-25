@@ -34,7 +34,6 @@ Scanner sc= new Scanner(System.in);
 
 
 public void CadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade){
-        Aluno aluno=new Aluno(id, nome, senha, cpf, idade, altura, peso, plano, intensidade);
     System.out.println("Nome:");
     String nomeAluno = sc.nextLine();
     System.out.println("Id:");
@@ -45,8 +44,9 @@ public void CadastrarAluno(int id, String nome, String senha, String cpf, int id
     aluno.getCpf();
     System.out.println("Idade:");
     int idadeAluno = sc.nextInt();
-    if(aluno.getNome().isEmpty() || aluno.getId()<0 || aluno.getSenha().isEmpty() || aluno.getCpf().isEmpty() ){
-        System.out.println("Aluno não foi cadastrado");
+
+    if(BancoDeDados.getInstance().alunos.containsKey(id) || nome.isBlank() || senha.isBlank() || cpf.isBlank() ){
+        System.out.println("Valores Inválidos");
 
     }
     else if(aluno.getId()==id){
@@ -59,8 +59,8 @@ public void CadastrarAluno(int id, String nome, String senha, String cpf, int id
     }
 }
 public void cadastrarDepartamento(String descricao){
-    Modalidade modalidade =new Modalidade(nome,id,descricao);
-    BancoDeDados.getInstance().modalidades.add(modalidade);
+    ModalidadeEnums modalidadeEnums =new ModalidadeEnums(nome,id,descricao);
+    BancoDeDados.getInstance().modalidadeEnums.add(modalidadeEnums);
     if(BancoDeDados.getInstance().alunos == null){
         System.out.println("Este Departamento Não Existe No Sistema");
     }
@@ -69,10 +69,10 @@ public void cadastrarDepartamento(String descricao){
     }
 }
     public void excluirDepartamento(int id){
-        Modalidade depRemove=null;
-        for( Modalidade departamento:BancoDeDados.getInstance().modalidades){
+        ModalidadeEnums depRemove=null;
+        for( ModalidadeEnums departamento:BancoDeDados.getInstance().modalidadeEnums){
             if(departamento.getId()==id){
-                BancoDeDados.getInstance().modalidades.remove(depRemove);
+                BancoDeDados.getInstance().modalidadeEnums.remove(depRemove);
                 System.out.println("Departamento Excluído");
             }
             else if(depRemove==null){
@@ -122,6 +122,7 @@ public void cadastrarProfessores(int id, String nome, String senha, String cpf, 
     BancoDeDados.getInstance().treinadores.put(id,treinador);
     contratacao++;
 }
+
 public void demitirProfesores(int id){
  Treinador profRemove=null;
  for(Map.Entry<Integer, Treinador> entrada : BancoDeDados.getInstance().treinadores.entrySet()){
@@ -140,9 +141,12 @@ break;
 
  }
 }
-   public void acessarPlanos(String nome, int id, String descricao, double valor){
-    Plano planos= new Plano( nome,id, descricao,valor);
-    BancoDeDados.getInstance().planos.add(planos);
+   public void AddPlanos(String nome, int id, String descricao, double valor, String validade){
+
+        if(nome.isBlank() || BancoDeDados.getInstance().planos.containsKey(id) || id <= 0 || descricao.isBlank() || valor <= 0 || validade.isBlank()){
+            Plano planos= new Plano( nome,id, descricao,valor, validade);
+            BancoDeDados.getInstance().planos.put(id, planos);
+        }
 }
    public void RemoverPlano(int id){
     Plano plRemove=null;

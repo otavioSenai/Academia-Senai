@@ -34,19 +34,8 @@ public class Plano {
         System.out.println("Insira qual departamento pertence ao plano");
         String modalidadeEscolhida = entrada.nextLine();
 
-            boolean ModalidadeExistente = false;
-
-            for(Modalidade m : BancoDeDados.getInstance().modalidades){
-                if(m.name().equalsIgnoreCase(modalidadeEscolhida)){
-
-                    this.modalidade = m.toString();
-                    ModalidadeExistente = true;
-                    break;
-                }
-            }
-            if(!ModalidadeExistente){
-                System.out.println("Valores Inválidos");
-            }
+            Modalidade modalidade = new Modalidade();
+            modalidade.escolherModalidade(modalidadeEscolhida);
     }
 
     //Pegar a Modalidade

@@ -25,7 +25,7 @@ public class BancoDeDados {
     public Map <Integer, FeedbackProfessor> feedbacksProfessores = new HashMap<>();
     public Map <Integer, TrocaProfessor> trocasTreinadores = new HashMap<>();
 
-    public Modalidade[] modalidades = Modalidade.values();
+    public ModalidadeEnums[] modalidadeEnums = ModalidadeEnums.values();
 
     private BancoDeDados(){}
 
