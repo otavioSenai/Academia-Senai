@@ -1,6 +1,7 @@
 package com.example.academia.Treinador;
 
 import com.example.academia.ClassesUniversais.Funcionario;
+import com.example.academia.ClassesUniversais.Modalidade;
 
 import java.util.ArrayList;
 
@@ -8,9 +9,9 @@ public class Treinador extends Funcionario {
     private ArrayList<Modalidade> modalidades = new ArrayList<>();
     private String Especialidade;
 
-    public Treinador(int id, String nome, String senha, String cpf, double salario) {
+    public Treinador(int id, String nome, String senha, String cpf, double salario, Modalidade modalidade) {
         super(id, nome, senha, cpf, salario);
-
+        this.modalidades.add(modalidade);
     }
 
     public String getEspecialidade() {
@@ -26,12 +27,11 @@ public class Treinador extends Funcionario {
          }
     }
 
-    public ArrayList<Modalidade> getModalidades() {
-
-        return modalidades;
+    public Modalidade getModalidades(int id) {
+        return this.modalidades.get(id);
     }
 
-    public void setModalidades(ArrayList<Modalidade> modalidades) {
+    public void setModalidades(Modalidade modalidade) {
         if (modalidades==null){
             System.out.println("Dados Invalidos");
         }
@@ -49,5 +49,4 @@ public class Treinador extends Funcionario {
             System.out.println("----------------------------------------");
             System.out.println("ESPECIALIDADE: " + Especialidade);
             System.out.println("========================================");}
-
 }

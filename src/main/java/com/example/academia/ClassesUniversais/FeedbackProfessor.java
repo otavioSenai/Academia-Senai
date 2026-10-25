@@ -9,19 +9,10 @@ public class FeedbackProfessor {
     public int qtdEstrelas;
 
     //Mudar o Comentário
-    public void setComentario(Scanner entrada){
-        System.out.println("Escreva Um Comentário");
-        String comentario = entrada.nextLine();
+    public void setComentario(String comentario, int qtdEstrelas){
 
-        System.out.println("Digite o Número De Estrelas (1-5)");
-        int qtdEstrelas = entrada.nextInt();
-
-        if(qtdEstrelas < 1 || qtdEstrelas > 5 || comentario.isBlank()){
-            System.out.println("Valores Inválidos");
-        }
-        else{
-            //Inicializar Feedback
-        }
+        this.comentario = comentario;
+        this.qtdEstrelas = qtdEstrelas;
     }
 
     //Pegar o Comentário

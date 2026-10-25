@@ -1,6 +1,6 @@
 package com.example.academia.ClassesUniversais;
 
-import com.example.academia.Gerente.Gerente;
+import com.example.academia.TrocaProfessor;
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
 import com.example.academia.Treinador.Treinador;

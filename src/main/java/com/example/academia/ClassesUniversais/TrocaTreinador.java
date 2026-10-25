@@ -2,7 +2,7 @@ package com.example.academia.ClassesUniversais;
 
 import java.util.Scanner;
 
-class TrocaProfessor {
+public class TrocaTreinador {
 
     private int id;
     public String comentario;
@@ -14,7 +14,7 @@ class TrocaProfessor {
             System.out.println("Escreva Um Comentário Para Trocar De Treinador");
             this.comentario = entrada.nextLine();
         } else {
-            System.out.println("Professor Não Encontrado");
+            System.out.println("Treinador Não Encontrado");
         }
     }
 
