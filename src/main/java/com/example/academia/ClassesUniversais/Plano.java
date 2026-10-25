@@ -126,7 +126,7 @@ public class Plano {
     }
 
     //Mudar Validade
-    public void setValidade(String validade){
+    public void addValidade(String validade){
         if(validade.isBlank()){
             System.out.println("Valores Inválidos");
         }

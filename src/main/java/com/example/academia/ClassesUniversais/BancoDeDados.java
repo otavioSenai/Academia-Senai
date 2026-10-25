@@ -23,7 +23,7 @@ public class BancoDeDados {
     public Map <Integer, Treino> treinos = new HashMap<>();
 
     public Map <Integer, FeedbackProfessor> feedbacksProfessores = new HashMap<>();
-    public Map <Integer, TrocaProfessor> trocasTreinadoress = new HashMap<>();
+    public Map <Integer, TrocaProfessor> trocasTreinadores = new HashMap<>();
 
     public Modalidade[] modalidades = Modalidade.values();
 

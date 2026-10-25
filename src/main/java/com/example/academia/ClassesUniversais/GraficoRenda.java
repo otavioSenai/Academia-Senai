@@ -9,9 +9,18 @@ public class GraficoRenda {
     /*A renda precisaria do aluno, pois é ele quem paga
     O custo seria mais um ArrayList*/
 
-    public double getRenda(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade) {
-        Aluno aluno=new Aluno(id, nome, senha, cpf, idade, altura, peso, plano,intensidade);
-        return renda;
+    public void addRenda(int id) {
+        if(BancoDeDados.getInstance().alunos.containsKey(id)){
+            Aluno aluno = BancoDeDados.getInstance().alunos.get(id);
+            this.renda += aluno.getPlano().getValor();
+        }
+        else {
+            System.out.println("Valora Inválidos");
+        }
+    }
+
+    public double getRenda(){
+        return this.renda;
     }
 
     public void setRenda(double renda) {
@@ -19,7 +28,6 @@ public class GraficoRenda {
     }
 
     public boolean getSituacao() {
-
         return situacao;
     }
 

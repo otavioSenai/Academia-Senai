@@ -4,66 +4,43 @@ import com.example.academia.ClassesUniversais.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Aluno extends Usuario {
 
     private int idade;
     private double altura;
     private double peso;
-    private Plano plano;
     private String intensidade;
 
-    private final ArrayList<Modalidade> modalidades = new ArrayList<>();
-    private final ArrayList<Treino> treinos = new ArrayList<>();
+    private ArrayList<Plano> planos = new ArrayList<>();
+    private ArrayList<Treino> treinos = new ArrayList<>();
 
     public Aluno(int id, String nome, String senha, String cpf,
                  int idade, double altura, double peso,
                  Plano plano, String intensidade) {
 
         super(id, nome, senha, cpf);
-
-        if (idade < 13 || idade > 130) {
-            throw new IllegalArgumentException("Idade inválida.");
-        }
-
-        if (!Double.isFinite(altura) || altura < 0.50 || altura > 2.50) {
-            throw new IllegalArgumentException("Altura inválida.");
-        }
-
-        if (!Double.isFinite(peso) || peso < 30 || peso > 350) {
-            throw new IllegalArgumentException("Peso inválido.");
-        }
-
-        String intensidadeValida = normalizarIntensidade(intensidade);
-
-        if (intensidadeValida == null) {
-            throw new IllegalArgumentException("Intensidade inválida.");
-        }
-
         this.idade = idade;
         this.altura = altura;
         this.peso = peso;
-        this.plano = plano;
-        this.intensidade = intensidadeValida;
+        this.planos.add(plano);
+        this.intensidade = intensidade;
     }
 
     private static String normalizarIntensidade(String intensidade) {
         if (intensidade == null) {
             return null;
         }
-
-        if (intensidade.equalsIgnoreCase("Leve")) {
+        else if (intensidade.equalsIgnoreCase("Leve")) {
             return "Leve";
         }
-
-        if (intensidade.equalsIgnoreCase("Médio")) {
+        else if (intensidade.equalsIgnoreCase("Médio")) {
             return "Médio";
         }
-
-        if (intensidade.equalsIgnoreCase("Intenso")) {
+        else if (intensidade.equalsIgnoreCase("Intenso")) {
             return "Intenso";
         }
-
         return null;
     }
 
@@ -76,7 +53,6 @@ public class Aluno extends Usuario {
             System.out.println("Idade inválida!");
             return;
         }
-
         this.idade = idade;
     }
 
@@ -89,7 +65,6 @@ public class Aluno extends Usuario {
             System.out.println("Altura inválida!");
             return;
         }
-
         this.altura = altura;
     }
 
@@ -102,20 +77,35 @@ public class Aluno extends Usuario {
             System.out.println("Peso inválido!");
             return;
         }
-
         this.peso = peso;
     }
 
-    public Plano getPlano() {
-        return plano;
+    public ArrayList<Plano> getPlano() {
+        return this.planos;
     }
 
-    public void setPlano(Plano plano) {
-        this.plano = plano;
+    public void adicionarPlano(String nome, int id, String descricao, double valor, String validade) {
+
+        if(nome.isBlank() || BancoDeDados.getInstance().planos.containsKey(id) || descricao.isBlank() || valor <= 0 || validade.isBlank()){
+            System.out.println("Valores Inválidos");
+        }
+        else{
+            Plano plano = new Plano(nome, id, descricao, valor, validade);
+            this.planos.add(plano);
+        }
+    }
+
+    public List<String> getModalidade(){
+        List<String> listaModalidades = new ArrayList<>();
+
+        for(Plano p : this.planos){
+            listaModalidades.add(p.getModalidade());
+        }
+        return listaModalidades;
     }
 
     public String getIntensidade() {
-        return intensidade;
+        return this.intensidade;
     }
 
     public void setIntensidade(String intensidade) {
@@ -125,55 +115,7 @@ public class Aluno extends Usuario {
             System.out.println("Intensidade inválida!");
             return;
         }
-
         this.intensidade = intensidadeValida;
-    }
-
-    public ArrayList<Modalidade> getModalidades() {
-        return new ArrayList<>(modalidades);
-    }
-
-    public void adicionarModalidades(Modalidade modalidade) {
-        if (modalidade == null) {
-            System.out.println("Modalidade inválida!");
-            return;
-        }
-
-        boolean modalidadeRegistrada = false;
-
-        for (Modalidade registrada : BancoDeDados.getInstance().modalidades) {
-            if (registrada != null && registrada.getId() == modalidade.getId()) {
-                modalidadeRegistrada = true;
-                break;
-            }
-        }
-
-        if (!modalidadeRegistrada) {
-            System.out.println("Esta modalidade não está cadastrada na academia!");
-            return;
-        }
-
-        for (Modalidade existente : modalidades) {
-            if (existente.getId() == modalidade.getId()) {
-                System.out.println("Esta modalidade já foi adicionada!");
-                return;
-            }
-        }
-
-        modalidades.add(modalidade);
-        System.out.println("Modalidade adicionada!");
-    }
-
-    public void removerModalidade(int id) {
-        for (int i = 0; i < modalidades.size(); i++) {
-            if (modalidades.get(i).getId() == id) {
-                modalidades.remove(i);
-                System.out.println("Modalidade removida!");
-                return;
-            }
-        }
-
-        System.out.println("Modalidade não encontrada!");
     }
 
     public ArrayList<Treino> getTreinos() {
@@ -265,6 +207,13 @@ public class Aluno extends Usuario {
     }
 
     public void mostrarCarteirinhaAluno() {
+
+        ArrayList<String> nomePlanos = new ArrayList<>();
+
+        for(Plano p : this.planos){
+            nomePlanos.add(p.getNome());
+        }
+
         System.out.println("========================================");
         System.out.println("          ACADEMIA ÍCARO");
         System.out.println("       CARTEIRINHA DO ALUNO");
@@ -274,18 +223,16 @@ public class Aluno extends Usuario {
         System.out.println("IDADE: " + idade);
         System.out.println("ALTURA: " + altura + " m");
         System.out.println("PESO CORPORAL: " + peso + " kg");
-        System.out.println("PLANO: " + (plano == null ? "Não definido" : plano.getNome()));
+        System.out.println("PLANO: " + (planos == null ? "Não definido" : nomePlanos));
         System.out.println("INTENSIDADE: " + intensidade);
 
         System.out.println("----------------------------------------");
         System.out.println("MODALIDADES:");
 
-        if (modalidades.isEmpty()) {
+        if (getModalidade().isEmpty()) {
             System.out.println("Nenhuma modalidade selecionada.");
         } else {
-            for (Modalidade modalidade : modalidades) {
-                System.out.println("- " + modalidade.getNome());
-            }
+            System.out.println("- " + getModalidade());
         }
 
         System.out.println("----------------------------------------");
