@@ -61,7 +61,7 @@ public class Aluno extends Usuario {
         }
         else{
             FeedbackTreinador feedback = new FeedbackTreinador();
-            feedback.setComentario(comentario, qtdEstrelas);
+            feedback.addComentario(comentario, qtdEstrelas);
         }
     }
 
