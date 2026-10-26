@@ -11,10 +11,13 @@ public class GraficoRenda {
 
     public void addRenda(int id) {
         if(BancoDeDados.getInstance().alunos.containsKey(id)){
+
+
             Aluno aluno = BancoDeDados.getInstance().alunos.get(id);
-            for(int i = 0; i < aluno.getPlano().size(); i++) {
+            for(int i=0;i<aluno.getPlano().size();i++ ){
                 this.renda += aluno.getPlano().get(i).getValor();
             }
+
         }
         else {
             System.out.println("Valores Inválidos");
