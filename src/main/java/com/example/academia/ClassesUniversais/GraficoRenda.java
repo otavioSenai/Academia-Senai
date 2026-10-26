@@ -10,20 +10,26 @@ public class GraficoRenda {
     O custo seria mais um ArrayList*/
 
     public void addRenda(int id) {
+
         if(BancoDeDados.getInstance().alunos.containsKey(id)){
             Aluno aluno = BancoDeDados.getInstance().alunos.get(id);
-            this.renda += aluno.getPlano().getValor();
+            for(int i = 0; i < aluno.getPlano().size(); i++) {
+                this.renda += aluno.getPlano().get(i).getValor();
+            }
         }
         else {
+
             System.out.println("Valora Inválidos");
         }
     }
 
     public double getRenda(){
+
         return this.renda;
     }
 
-    public void setRenda(double renda) {
+    public void setRenda(double renda)
+    {
         this.renda = renda;
     }
 
@@ -32,6 +38,7 @@ public class GraficoRenda {
     }
 
     public void setSituacao(boolean situacao) {
+
         this.situacao = situacao;
     }
 }

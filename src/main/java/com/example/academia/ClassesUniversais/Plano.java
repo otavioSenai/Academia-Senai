@@ -73,11 +73,13 @@ public class Plano {
 
     //Pegar Id
     public int getId(){
+
         return this.id;
     }
 
     //Pegar Descrição
     public String getDescricao(){
+
         return this.descricao;
     }
 
@@ -106,11 +108,13 @@ public class Plano {
 
     //Pegar Status
     public boolean getStatus(){
+
         return this.status;
     }
 
     //Pegar Validade
     public Instant getValidade(){
+
         return this.validade;
     }
 
