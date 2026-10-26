@@ -5,7 +5,7 @@ import com.example.academia.aluno.Aluno;
 import com.example.academia.Treinador.Treinador;
 
 import javax.swing.plaf.basic.BasicLookAndFeel;
-import java.lang.classfile.attribute.RuntimeVisibleAnnotationsAttribute;
+
 import java.util.Map;
 import java.util.Scanner;
 

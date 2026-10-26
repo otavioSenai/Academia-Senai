@@ -15,30 +15,43 @@ public class Main extends Application {
     private static Scene cenaAdministrativo;
     private static Scene cenaAdministrativoAddDepartamento;
 
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         stage.setTitle("Academia Ícaro - Painel Administrador");
 
+        Parent fxmlAdministrativo = FXMLLoader.load(
+                Objects.requireNonNull(
+                        getClass().getResource(
+                                "/com/example/academia/administrativo/telas/Administrativo.fxml"
+                        )
+                )
+        );
 
-        Parent fxmlAdministrativo = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/academia/administrativo/telas/Administrativo.fxml")));
         cenaAdministrativo = new Scene(fxmlAdministrativo, 600, 400);
 
-        Parent fxmlAdministrativoAddDepartamento = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/academia/administrativo/telas/AdministrativoAddDepartamento.fxml")));
-        cenaAdministrativoAddDepartamento = new Scene(fxmlAdministrativoAddDepartamento, 300, 200);
+        Parent fxmlAdministrativoAddDepartamento = FXMLLoader.load(
+                Objects.requireNonNull(
+                        getClass().getResource(
+                                "/com/example/academia/administrativo/telas/AdministrativoAddDepartamento.fxml"
+                        )
+                )
+        );
+
+        cenaAdministrativoAddDepartamento =
+                new Scene(fxmlAdministrativoAddDepartamento, 300, 200);
 
         stage.setScene(cenaAdministrativo);
         stage.show();
     }
 
-    public static void telaAddDepartamento(){
-        if(cenaAdministrativo != null && cenaAdministrativoAddDepartamento != null) {
+    public static void telaAddDepartamento() {
+        if (stage != null && cenaAdministrativoAddDepartamento != null) {
             stage.setScene(cenaAdministrativoAddDepartamento);
         }
     }
 
-    public static void main(String[]args){
+    public static void main(String[] args) {
         launch(args);
     }
 }
