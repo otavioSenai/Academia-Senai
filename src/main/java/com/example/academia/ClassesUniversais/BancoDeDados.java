@@ -11,6 +11,7 @@ public class BancoDeDados {
 
     private static BancoDeDados banco;
 
+    public Modalidade[] modalidades = new Modalidade[4];
     public Map <Integer, Plano> planos = new HashMap();
 
     public Map <Integer, Custo> custos = new HashMap<>();
