@@ -14,7 +14,7 @@ public class Plano {
 
     private Instant validade;
     private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.of("America/Sao_Paulo"));
-    private boolean status;
+    private boolean status = true;
 
     private String modalidade;
 

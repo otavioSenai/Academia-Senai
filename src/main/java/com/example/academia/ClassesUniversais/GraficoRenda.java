@@ -15,7 +15,7 @@ public class GraficoRenda {
             this.renda += aluno.getPlano().getValor();
         }
         else {
-            System.out.println("Valora Inválidos");
+            System.out.println("Valores Inválidos");
         }
     }
 

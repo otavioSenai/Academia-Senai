@@ -1,8 +1,6 @@
 package com.example.academia.ClassesUniversais;
 
-import java.util.Scanner;
-
-public class FeedbackProfessor {
+public class FeedbackTreinador {
 
     private int id;
     public String comentario;

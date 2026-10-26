@@ -49,7 +49,7 @@ public class Aluno extends Usuario {
     }
 
     //Fazer um Feedback Para Um Professor
-    public void fazerFeedback(Scanner entrada){
+    public void fazerFeedback(Scanner entrada, int id){
         System.out.println("Escreva Um Comentário");
         String comentario = entrada.nextLine();
 
@@ -60,7 +60,7 @@ public class Aluno extends Usuario {
             System.out.println("Valores Inválidos");
         }
         else{
-            FeedbackProfessor feedback = new FeedbackProfessor();
+            FeedbackTreinador feedback = new FeedbackTreinador();
             feedback.setComentario(comentario, qtdEstrelas);
         }
     }
