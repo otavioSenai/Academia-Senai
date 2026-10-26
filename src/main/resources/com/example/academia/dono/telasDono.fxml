@@ -5,9 +5,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #0f1219;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #0f1219; -fx-border-radius: 191;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="400.0" prefWidth="100.0" style="-fx-background-color: #1d2332;">
+      <VBox prefWidth="100.0" style="-fx-background-color: #1d2332;">
          <children>
             <Button layoutX="10.0" layoutY="46.0" mnemonicParsing="false" prefWidth="100.0" text="Departamento" wrapText="true">
                <graphic>
@@ -41,7 +41,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="10.0" layoutY="124.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="157.0" text="Carteirinha">
+            <Button layoutX="10.0" layoutY="124.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="157.0" text="Carteirinha" textOverrun="CLIP" wrapText="true">
                <graphic>
                   <ImageView fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
@@ -67,28 +67,28 @@
             </Button>
          </children>
       </VBox>
-      <VBox layoutX="111.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: #1d2332;">
+      <VBox layoutX="111.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: #1d2332; -fx-background-radius: 15;">
          <children>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="remover" textFill="RED" translateX="10.0" translateY="55.0" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="acessar" translateX="90.0" translateY="30.0" />
+            <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" style="-fx-background-radius: 15;" text="remover" textFill="RED" translateX="10.0" translateY="55.0" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" style="-fx-background-radius: 15;" text="acessar" translateX="90.0" translateY="30.0" />
          </children></VBox>
-      <VBox layoutX="276.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: #1d2332;">
+      <VBox layoutX="276.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: #1d2332; -fx-background-radius: 15;">
          <children>
-            <Button mnemonicParsing="false" text="remover" translateX="10.0" translateY="55.0" />
-            <Button mnemonicParsing="false" text="acessar" translateX="90.0" translateY="30.0" />
+            <Button mnemonicParsing="false" style="-fx-background-radius: 15;" text="remover" translateX="10.0" translateY="55.0" />
+            <Button mnemonicParsing="false" style="-fx-background-radius: 15;" text="acessar" translateX="90.0" translateY="30.0" />
          </children></VBox>
-      <VBox layoutX="439.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: gold; -fx-blend-mode: white;">
+      <VBox layoutX="439.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: gold; -fx-blend-mode: white; -fx-background-radius: 15;">
          <children>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" text="remover" textFill="RED" translateX="10.0" translateY="55.0" />
-            <Button mnemonicParsing="false" text="acessar" translateX="90.0" translateY="30.0" />
+            <Button alignment="TOP_LEFT" mnemonicParsing="false" style="-fx-background-radius: 15;" text="remover" textFill="RED" translateX="10.0" translateY="55.0" />
+            <Button mnemonicParsing="false" style="-fx-background-radius: 15;" text="acessar" translateX="90.0" translateY="30.0" />
          </children></VBox>
-      <VBox layoutX="111.0" layoutY="210.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: #1d2332;">
+      <VBox layoutX="111.0" layoutY="210.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: #1d2332; -fx-background-radius: 15;">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <children>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" text="remover" textFill="RED" translateX="10.0" translateY="55.0" />
-            <Button mnemonicParsing="false" text="acessar" translateX="90.0" translateY="30.0" />
+            <Button alignment="TOP_LEFT" mnemonicParsing="false" style="-fx-background-radius: 15;" text="remover" textFill="RED" translateX="10.0" translateY="55.0" />
+            <Button mnemonicParsing="false" style="-fx-background-radius: 15;" text="acessar" translateX="90.0" translateY="30.0" />
          </children>
       </VBox>
    </children>
