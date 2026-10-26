@@ -12,43 +12,19 @@ public class Main extends Application {
 
     private static Stage stage;
 
-    private static Scene cenaAdministrativo;
-    private static Scene cenaAdministrativoAddDepartamento;
+    private static Scene cenaDono;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
-        stage.setTitle("Academia Ícaro - Painel Administrador");
+        stage.setTitle("Academia Ícaro - Painel Dono");
 
-        Parent fxmlAdministrativo = FXMLLoader.load(
-                Objects.requireNonNull(
-                        getClass().getResource(
-                                "/com/example/academia/administrativo/telas/Administrativo.fxml"
-                        )
-                )
-        );
+        Parent fxmlDono = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/academia/dono/telas/telasDono.fxml")));
 
-        cenaAdministrativo = new Scene(fxmlAdministrativo, 600, 400);
+        cenaDono = new Scene(fxmlDono, 600, 400);
 
-        Parent fxmlAdministrativoAddDepartamento = FXMLLoader.load(
-                Objects.requireNonNull(
-                        getClass().getResource(
-                                "/com/example/academia/administrativo/telas/AdministrativoAddDepartamento.fxml"
-                        )
-                )
-        );
-
-        cenaAdministrativoAddDepartamento =
-                new Scene(fxmlAdministrativoAddDepartamento, 300, 200);
-
-        stage.setScene(cenaAdministrativo);
+        stage.setScene(cenaDono);
         stage.show();
-    }
-
-    public static void telaAddDepartamento() {
-        if (stage != null && cenaAdministrativoAddDepartamento != null) {
-            stage.setScene(cenaAdministrativoAddDepartamento);
-        }
     }
 
     public static void main(String[] args) {
