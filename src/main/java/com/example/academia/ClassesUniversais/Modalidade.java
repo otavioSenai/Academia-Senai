@@ -7,9 +7,10 @@ import java.util.Map;
 
 public class Modalidade {
 
-    Map treinadores = new HashMap();
+    static Map treinadores = new HashMap();
     String modalidade;
 
+    //Escolhe a Modalidade
     public void escolherModalidade(String modalidadeEscolhida){
         boolean ModalidadeExistente = false;
 
@@ -26,10 +27,12 @@ public class Modalidade {
         }
     }
 
+    //Pega a Modalidade
     public String getModalidade(){
         return this.modalidade;
     }
 
+    //Adiciona um Professor
     public void addTreinador(int id, Treinador treinador){
         if(!treinadores.containsKey(id)){
             treinadores.put(id, treinador);
@@ -37,5 +40,13 @@ public class Modalidade {
         else{
             System.out.println("Valores Inválidos");
         }
+    }
+
+    //Pega o Treinador
+    public String getTreinador(int id){
+        if(treinadores.containsKey(id)){
+            return treinadores.get(id).toString();
+        }
+        return "Professor Não Enontrado";
     }
 }

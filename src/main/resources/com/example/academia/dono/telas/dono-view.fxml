@@ -14,7 +14,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.academia.ono.DonoController"
+            fx:controller="com.example.academia.Dono.Controller.DonoController"
             prefWidth="1360.0" prefHeight="800.0"
             style="-fx-background-color: #05070B;">
 

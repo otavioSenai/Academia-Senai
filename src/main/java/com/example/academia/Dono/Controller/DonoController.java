@@ -1,6 +1,7 @@
-package com.example.academia.Dono;
+package com.example.academia.Dono.Controller;
 
 import com.example.academia.ClassesUniversais.Plano;
+import com.example.academia.Dono.Dono;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;

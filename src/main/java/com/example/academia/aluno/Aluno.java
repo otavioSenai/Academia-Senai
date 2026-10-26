@@ -13,19 +13,18 @@ public class Aluno extends Usuario {
     private double peso;
     private String intensidade;
 
-    private Map<Integer, Treinador> treinadores = new HashMap<>();
-    private ArrayList<Plano> planos = new ArrayList<>();
+    private ArrayList<AssinaturaPlano> assinaturaPlanos = new ArrayList<>();
     private ArrayList<Treino> treinos = new ArrayList<>();
 
     public Aluno(int id, String nome, String senha, String cpf,
                  int idade, double altura, double peso,
-                 Plano plano, String intensidade) {
+                 AssinaturaPlano assinaturaPlano, String intensidade) {
 
         super(id, nome, senha, cpf);
         this.idade = idade;
         this.altura = altura;
         this.peso = peso;
-        this.planos.add(plano);
+        this.assinaturaPlanos.add(assinaturaPlano);
         this.intensidade = intensidade;
     }
 
@@ -119,9 +118,16 @@ public class Aluno extends Usuario {
     }
 
     //Pegar Plano
-    public ArrayList<Plano> getPlano() {
+    public ArrayList<AssinaturaPlano> getPlano() {
+        return this.assinaturaPlanos;
+    }
 
-        return this.planos;
+    //Pagar Plano
+    public void pagarPlano(int id){
+        if(BancoDeDados.getInstance().planos.containsKey(id)){
+            if(this.assinaturaPlanos.get(id).tempoPagar()){
+            }
+        }
     }
 
     //Adicionar Plano
@@ -131,7 +137,7 @@ public class Aluno extends Usuario {
         }
         else{
             Plano plano = new Plano(nome, id, descricao, valor, validade);
-            this.planos.add(plano);
+            this.assinaturaPlanos.plano = plano;
         }
     }
 
