@@ -75,8 +75,13 @@
       <VBox layoutX="276.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: white;">
          <children>
             <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" text="Button" />
          </children></VBox>
-      <VBox layoutX="439.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: gold; -fx-blend-mode: white;" />
+      <VBox layoutX="439.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: gold; -fx-blend-mode: white;">
+         <children>
+            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" text="Button" />
+         </children></VBox>
       <VBox layoutX="111.0" layoutY="210.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: white;">
          <cursor>
             <Cursor fx:constant="HAND" />
