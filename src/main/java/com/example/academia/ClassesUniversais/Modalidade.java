@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Modalidade {
 
-    Map treinadores = new HashMap();
+    static Map treinadores = new HashMap();
     String modalidade;
 
     public void escolherModalidade(String modalidadeEscolhida){
@@ -30,7 +30,7 @@ public class Modalidade {
         return this.modalidade;
     }
 
-    public void addTreinador(int id, Treinador treinador){
+    public static void addTreinador(int id, Treinador treinador){
         if(!treinadores.containsKey(id)){
             treinadores.put(id, treinador);
         }
