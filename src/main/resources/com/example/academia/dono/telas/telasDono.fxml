@@ -9,7 +9,7 @@
    <children>
       <VBox prefHeight="400.0" prefWidth="100.0" style="-fx-background-color: gray;">
          <children>
-            <Button mnemonicParsing="false" prefWidth="100.0" text="departa mento" wrapText="true">
+            <Button mnemonicParsing="false" prefWidth="100.0" text="departamento" wrapText="true">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

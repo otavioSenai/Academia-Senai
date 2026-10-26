@@ -1,6 +1,4 @@
-package com.example.academia.administrativo;
-
-import com.example.academia.Main;
+package com.example.academia;
 
 public class app {
     public static void main(String[] args){

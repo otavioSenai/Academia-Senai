@@ -51,6 +51,5 @@ public class AdministrativoController {
 
     @FXML
     protected void clicarBotao(){
-        Main.telaAddDepartamento();
     }
 }
