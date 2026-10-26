@@ -3,7 +3,6 @@ package com.example.academia.Treinador;
 import com.example.academia.ClassesUniversais.BancoDeDados;
 import com.example.academia.ClassesUniversais.Funcionario;
 import com.example.academia.ClassesUniversais.ModalidadeEnums;
-
 import java.util.ArrayList;
 
 public class Treinador extends Funcionario {

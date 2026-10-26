@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.academia.ono.DonoController"
+            prefWidth="1360.0" prefHeight="800.0"
+            style="-fx-background-color: #05070B;">
+
+    <!-- Barra lateral inspirada nas telas do PowerPoint -->
+    <left>
+        <VBox prefWidth="225.0" spacing="14.0"
+              style="-fx-background-color: #1B2030;">
+            <padding>
+                <Insets top="24" right="15" bottom="22" left="15"/>
+            </padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                <VBox spacing="0.0">
+                    <Label text="ÍCARO" style="-fx-text-fill: #F5BD25; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+                    <Label text="ACADEMIA" style="-fx-text-fill: #FFFFFF; -fx-font-size: 11px; -fx-font-weight: bold;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="✕" style="-fx-text-fill: white; -fx-font-size: 17px;"/>
+            </HBox>
+
+            <Region VBox.vgrow="ALWAYS" minHeight="20.0"/>
+
+            <Button text="▦   Departamentos" onAction="#mostrarDepartamentos"
+                    maxWidth="Infinity" alignment="CENTER_LEFT"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 12 10;"/>
+            <Button text="▤   Planos" onAction="#mostrarPlanos"
+                    maxWidth="Infinity" alignment="CENTER_LEFT"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 12 10;"/>
+            <Button text="♙   Treinadores" onAction="#mostrarTreinadores"
+                    maxWidth="Infinity" alignment="CENTER_LEFT"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 12 10;"/>
+            <Button text="●   Alunos" onAction="#mostrarAlunos"
+                    maxWidth="Infinity" alignment="CENTER_LEFT"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 12 10;"/>
+            <Button text="＄   Administrativo" onAction="#mostrarAdministrativos"
+                    maxWidth="Infinity" alignment="CENTER_LEFT"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 12 10;"/>
+            <Button text="▣   Gerente / Relatórios" onAction="#mostrarGerente"
+                    maxWidth="Infinity" alignment="CENTER_LEFT"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 12 10;"/>
+
+            <Region VBox.vgrow="ALWAYS" minHeight="30.0"/>
+            <Label text="PAINEL ADMINISTRATIVO" wrapText="true"
+                   style="-fx-text-fill: #8D93A2; -fx-font-size: 10px;"/>
+        </VBox>
+    </left>
+
+    <!-- Cabeçalho -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20.0"
+              style="-fx-background-color: #05070B; -fx-border-color: transparent transparent #171A22 transparent; -fx-border-width: 0 0 1 0;">
+            <padding>
+                <Insets top="18" right="28" bottom="18" left="24"/>
+            </padding>
+
+            <Button text="Cadastrar" onAction="#abrirCadastro"
+                    style="-fx-background-color: #F5BD25; -fx-text-fill: #090909; -fx-font-size: 16px; -fx-background-radius: 24; -fx-padding: 10 34;"/>
+
+            <TextField fx:id="txtPesquisa" promptText="⌕   Pesquisar operações"
+                       onAction="#pesquisar" prefWidth="330.0"
+                       style="-fx-background-color: #090C12; -fx-text-fill: white; -fx-prompt-text-fill: #D4D4D8; -fx-border-color: #171A22; -fx-border-radius: 18; -fx-background-radius: 18; -fx-padding: 11 15; -fx-font-size: 14px;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <VBox alignment="CENTER_RIGHT" spacing="2.0">
+                <Label text="Dono" style="-fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+                <Label text="Academia Ícaro" style="-fx-text-fill: #A7AAB3; -fx-font-size: 11px;"/>
+            </VBox>
+            <Label text="●" style="-fx-text-fill: #FFFFFF; -fx-font-size: 23px;"/>
+        </HBox>
+    </top>
+
+    <!-- Conteúdo principal -->
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                    style="-fx-background: #05070B; -fx-background-color: #05070B;">
+            <content>
+                <VBox spacing="22.0">
+                    <padding>
+                        <Insets top="30" right="30" bottom="35" left="30"/>
+                    </padding>
+
+                    <VBox spacing="7.0">
+                        <Label text="GESTÃO DA ACADEMIA"
+                               style="-fx-text-fill: #F5BD25; -fx-font-size: 12px; -fx-font-weight: bold;"/>
+                        <Label fx:id="lblTitulo" text="Painel do Dono"
+                               style="-fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold;"/>
+                        <Label fx:id="lblMensagem" text="Selecione uma operação para gerenciar a Academia Ícaro."
+                               wrapText="true" style="-fx-text-fill: #B8BBC4; -fx-font-size: 14px;"/>
+                    </VBox>
+
+                    <GridPane fx:id="gridOperacoes" hgap="18.0" vgap="18.0">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="33.333" hgrow="ALWAYS"/>
+                            <ColumnConstraints percentWidth="33.333" hgrow="ALWAYS"/>
+                            <ColumnConstraints percentWidth="33.334" hgrow="ALWAYS"/>
+                        </columnConstraints>
+
+                        <!-- Treinadores -->
+                        <VBox accessibleText="treinadores professor funcionário equipe" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                              spacing="13.0" minHeight="230.0"
+                              style="-fx-background-color: #090C12; -fx-border-color: #171A22; -fx-border-radius: 14; -fx-background-radius: 14;">
+                            <padding><Insets top="21" right="20" bottom="20" left="20"/></padding>
+                            <Label text="Treinadores" style="-fx-text-fill: white; -fx-font-size: 21px; -fx-font-weight: bold;"/>
+                            <Label text="Cadastre profissionais, consulte carteirinhas ou registre demissões."
+                                   wrapText="true" style="-fx-text-fill: #B8BBC4; -fx-font-size: 13px;"/>
+                            <Region VBox.vgrow="ALWAYS"/>
+                            <Button text="Cadastrar treinador" onAction="#cadastrarTreinador" maxWidth="Infinity"
+                                    style="-fx-background-color: #F5BD25; -fx-text-fill: #090909; -fx-background-radius: 22; -fx-padding: 9;"/>
+                            <HBox spacing="8.0">
+                                <Button text="Demitir" onAction="#demitirTreinador" maxWidth="Infinity" HBox.hgrow="ALWAYS"
+                                        style="-fx-background-color: #858585; -fx-text-fill: #080808; -fx-background-radius: 22; -fx-padding: 8;"/>
+                                <Button text="Carteirinha" onAction="#carteirinhaTreinador" maxWidth="Infinity" HBox.hgrow="ALWAYS"
+                                        style="-fx-background-color: #F5BD25; -fx-text-fill: #090909; -fx-background-radius: 22; -fx-padding: 8;"/>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Alunos -->
+                        <VBox accessibleText="alunos aluno matrícula carterinha" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                              spacing="13.0" minHeight="230.0"
+                              style="-fx-background-color: #090C12; -fx-border-color: #171A22; -fx-border-radius: 14; -fx-background-radius: 14;">
+                            <padding><Insets top="21" right="20" bottom="20" left="20"/></padding>
+                            <Label text="Alunos" style="-fx-text-fill: white; -fx-font-size: 21px; -fx-font-weight: bold;"/>
+                            <Label text="Gerencie matrículas, consulte carteirinhas e remova cadastros."
+                                   wrapText="true" style="-fx-text-fill: #B8BBC4; -fx-font-size: 13px;"/>
+                            <Region VBox.vgrow="ALWAYS"/>
+                            <Button text="Cadastrar aluno" onAction="#cadastrarAluno" maxWidth="Infinity"
+                                    style="-fx-background-color: #F5BD25; -fx-text-fill: #090909; -fx-background-radius: 22; -fx-padding: 9;"/>
+                            <HBox spacing="8.0">
+                                <Button text="Expulsar" onAction="#expulsarAluno" maxWidth="Infinity" HBox.hgrow="ALWAYS"
+                                        style="-fx-background-color: #858585; -fx-text-fill: #080808; -fx-background-radius: 22; -fx-padding: 8;"/>
+                                <Button text="Carteirinha" onAction="#carteirinhaAluno" maxWidth="Infinity" HBox.hgrow="ALWAYS"
+                                        style="-fx-background-color: #F5BD25; -fx-text-fill: #090909; -fx-background-radius: 22; -fx-padding: 8;"/>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Planos -->
+                        <VBox accessibleText="planos assinatura mensal anual promoção" GridPane.columnIndex="2" GridPane.rowIndex="0"
+                              spacing="13.0" minHeight="230.0"
+                              style="-fx-background-color: #090C12; -fx-border-color: #D9A91D; -fx-border-radius: 14; -fx-background-radius: 14;">
+                            <padding><Insets top="21" right="20" bottom="20" left="20"/></padding>
+                            <Label text="Planos" style="-fx-text-fill: white; -fx-font-size: 21px; -fx-font-weight: bold;"/>
+                            <Label text="Cadastre e remova planos de assinatura da academia."
+                                   wrapText="true" style="-fx-text-fill: #B8BBC4; -fx-font-size: 13px;"/>
+                            <Region VBox.vgrow="ALWAYS"/>
+                            <Button text="Cadastrar plano" onAction="#cadastrarPlano" maxWidth="Infinity"
+                                    style="-fx-background-color: #F5BD25; -fx-text-fill: #090909; -fx-background-radius: 22; -fx-padding: 9;"/>
+                            <Button text="Remover plano" onAction="#removerPlano" maxWidth="Infinity"
+                                    style="-fx-background-color: #858585; -fx-text-fill: #080808; -fx-background-radius: 22; -fx-padding: 8;"/>
+                        </VBox>
+
+                        <!-- Administrativo -->
+                        <VBox accessibleText="administrativo funcionário funcionários administração" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                              spacing="13.0" minHeight="230.0"
+                              style="-fx-background-color: #090C12; -fx-border-color: #171A22; -fx-border-radius: 14; -fx-background-radius: 14;">
+                            <padding><Insets top="21" right="20" bottom="20" left="20"/></padding>
+                            <Label text="Administrativo" style="-fx-text-fill: white; -fx-font-size: 21px; -fx-font-weight: bold;"/>
+                            <Label text="Gerencie funcionários administrativos e consulte suas carteirinhas."
+                                   wrapText="true" style="-fx-text-fill: #B8BBC4; -fx-font-size: 13px;"/>
+                            <Region VBox.vgrow="ALWAYS"/>
+                            <Button text="Cadastrar administrativo" onAction="#cadastrarAdministrativo" maxWidth="Infinity"
+                                    style="-fx-background-color: #F5BD25; -fx-text-fill: #090909; -fx-background-radius: 22; -fx-padding: 9;"/>
+                            <HBox spacing="8.0">
+                                <Button text="Demitir" onAction="#demitirAdministrativo" maxWidth="Infinity" HBox.hgrow="ALWAYS"
+                                        style="-fx-background-color: #858585; -fx-text-fill: #080808; -fx-background-radius: 22; -fx-padding: 8;"/>
+                                <Button text="Carteirinha" onAction="#carteirinhaAdministrativo" maxWidth="Infinity" HBox.hgrow="ALWAYS"
+                                        style="-fx-background-color: #F5BD25; -fx-text-fill: #090909; -fx-background-radius: 22; -fx-padding: 8;"/>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Financeiro -->
+                        <VBox accessibleText="financeiro renda gráfico custos lucro despesas" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                              spacing="13.0" minHeight="230.0"
+                              style="-fx-background-color: #090C12; -fx-border-color: #171A22; -fx-border-radius: 14; -fx-background-radius: 14;">
+                            <padding><Insets top="21" right="20" bottom="20" left="20"/></padding>
+                            <Label text="Financeiro" style="-fx-text-fill: white; -fx-font-size: 21px; -fx-font-weight: bold;"/>
+                            <Label text="Consulte os dados de renda e custos cadastrados no sistema."
+                                   wrapText="true" style="-fx-text-fill: #B8BBC4; -fx-font-size: 13px;"/>
+                            <Region VBox.vgrow="ALWAYS"/>
+                            <Button text="Ver gráfico de renda" onAction="#verificarGrafico" maxWidth="Infinity"
+                                    style="-fx-background-color: #F5BD25; -fx-text-fill: #090909; -fx-background-radius: 22; -fx-padding: 9;"/>
+                            <Button text="Verificar custo" onAction="#verificarCusto" maxWidth="Infinity"
+                                    style="-fx-background-color: #858585; -fx-text-fill: #080808; -fx-background-radius: 22; -fx-padding: 8;"/>
+                        </VBox>
+
+                        <!-- Acompanhamento -->
+                        <VBox accessibleText="feedback treinador troca acompanhar solicitações" GridPane.columnIndex="2" GridPane.rowIndex="1"
+                              spacing="13.0" minHeight="230.0"
+                              style="-fx-background-color: #090C12; -fx-border-color: #171A22; -fx-border-radius: 14; -fx-background-radius: 14;">
+                            <padding><Insets top="21" right="20" bottom="20" left="20"/></padding>
+                            <Label text="Acompanhamento" style="-fx-text-fill: white; -fx-font-size: 21px; -fx-font-weight: bold;"/>
+                            <Label text="Área reservada para consultar feedbacks e solicitações de troca de treinador."
+                                   wrapText="true" style="-fx-text-fill: #B8BBC4; -fx-font-size: 13px;"/>
+                            <Region VBox.vgrow="ALWAYS"/>
+                            <Button text="Verificar feedback" onAction="#verificarFeedback" maxWidth="Infinity"
+                                    style="-fx-background-color: #F5BD25; -fx-text-fill: #090909; -fx-background-radius: 22; -fx-padding: 9;"/>
+                            <Button text="Trocar treinador" onAction="#trocarTreinador" maxWidth="Infinity"
+                                    style="-fx-background-color: #858585; -fx-text-fill: #080808; -fx-background-radius: 22; -fx-padding: 8;"/>
+                        </VBox>
+                    </GridPane>
+
+                    <VBox spacing="8.0" style="-fx-background-color: #090C12; -fx-border-color: #171A22; -fx-border-radius: 12; -fx-background-radius: 12;">
+                        <padding><Insets top="16" right="18" bottom="16" left="18"/></padding>
+                        <Label text="Observação" style="-fx-text-fill: #F5BD25; -fx-font-weight: bold;"/>
+                        <Label text="A tela de Departamentos aparece no protótipo, mas os métodos de cadastro e remoção de departamentos ainda não aparecem na classe Dono enviada."
+                               wrapText="true" style="-fx-text-fill: #B8BBC4; -fx-font-size: 13px;"/>
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
