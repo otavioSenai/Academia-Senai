@@ -12,7 +12,9 @@ public class GraficoRenda {
     public void addRenda(int id) {
         if(BancoDeDados.getInstance().alunos.containsKey(id)){
             Aluno aluno = BancoDeDados.getInstance().alunos.get(id);
-            this.renda += aluno.getPlano().getValor();
+            for(int i = 0; i < aluno.getPlano().size(); i++) {
+                this.renda += aluno.getPlano().get(i).getValor();
+            }
         }
         else {
             System.out.println("Valores Inválidos");
