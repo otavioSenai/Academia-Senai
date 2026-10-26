@@ -7,7 +7,7 @@ public class FeedbackTreinador {
     public int qtdEstrelas;
 
     //Mudar o Comentário
-    public void setComentario(String comentario, int qtdEstrelas){
+    public void addComentario(String comentario, int qtdEstrelas){
 
         this.comentario = comentario;
         this.qtdEstrelas = qtdEstrelas;
