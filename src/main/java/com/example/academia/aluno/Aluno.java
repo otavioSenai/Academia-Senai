@@ -120,6 +120,7 @@ public class Aluno extends Usuario {
 
     //Pegar Plano
     public ArrayList<Plano> getPlano() {
+
         return this.planos;
     }
 
