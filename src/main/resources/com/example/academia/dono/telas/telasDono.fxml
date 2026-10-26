@@ -4,8 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #0f1219;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #04070d;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="400.0" prefWidth="100.0" style="-fx-background-color: #1d2332;">
          <children>
@@ -67,9 +68,12 @@
             </Button>
          </children>
       </VBox>
-      <VBox layoutX="111.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: #1d2332;">
+      <VBox layoutX="111.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: #0a0c10; -fx-border-color: #0e1116;">
          <children>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="remover" textFill="RED" translateX="10.0" translateY="55.0" />
+            <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: #808080;" text="Anton" translateX="10.0" translateY="55.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="acessar" translateX="90.0" translateY="30.0" />
          </children></VBox>
       <VBox layoutX="276.0" layoutY="109.0" prefHeight="87.0" prefWidth="154.0" style="-fx-background-color: #1d2332;">
