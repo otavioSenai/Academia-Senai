@@ -34,53 +34,16 @@ Scanner sc= new Scanner(System.in);
 
 
 public void CadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade){
-    System.out.println("Nome:");
-    String nomeAluno = sc.nextLine();
-    System.out.println("Id:");
-    aluno.getId();
-    System.out.println("Senha:");
-    aluno.getSenha();
-    System.out.println("CPF:");
-    aluno.getCpf();
-    System.out.println("Idade:");
-    int idadeAluno = sc.nextInt();
-
-    if(BancoDeDados.getInstance().alunos.containsKey(id) || nome.isBlank() || senha.isBlank() || cpf.isBlank() ){
+    if (id <= 0 || BancoDeDados.getInstance().alunos.containsKey(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
         System.out.println("Valores Inválidos");
-
-    }
-    else if(aluno.getId()==id){
-        aluno.setNome(nomeAluno);
-        aluno.setIdade(idadeAluno);
-        System.out.println("Este aluno já pertencema a nossa Academia");
     }
     else{
-        System.out.println("Aluno Cadastrado !");
+        // Se passou nas verificações, chama a classe para criptografar em SHA-512
+        String senhaCriptografada = CriptografarSenha.SenhaGeral(senha);
+        Aluno aluno = new Aluno(id, nome, senhaCriptografada, cpf, idade, altura, peso, plano, intensidade);
+        BancoDeDados.getInstance().alunos.put(id, aluno);
     }
 }
-public void cadastrarDepartamento(String descricao){
-    ModalidadeEnums modalidadeEnums =new ModalidadeEnums(nome,id,descricao);
-    BancoDeDados.getInstance().modalidadeEnums.add(modalidadeEnums);
-    if(BancoDeDados.getInstance().alunos == null){
-        System.out.println("Este Departamento Não Existe No Sistema");
-    }
-    else{
-        System.out.println("Este Departamento Já Existe No Sistema");
-    }
-}
-    public void excluirDepartamento(int id){
-        ModalidadeEnums depRemove=null;
-        for( ModalidadeEnums departamento:BancoDeDados.getInstance().modalidadeEnums){
-            if(departamento.getId()==id){
-                BancoDeDados.getInstance().modalidadeEnums.remove(depRemove);
-                System.out.println("Departamento Excluído");
-            }
-            else if(depRemove==null){
-                System.out.println("Valores Inválidos");
-            }
-        }
-    }
-
 public void ExpulsarAluno(int id){
 
     Aluno alRemove = null;
@@ -150,7 +113,7 @@ break;
 }
    public void RemoverPlano(int id){
     Plano plRemove=null;
-    for(Plano pl:BancoDeDados.getInstance().planos){
+    for(Plano pl:BancoDeDados.getInstance().planos.values()){
         if(pl.getId()==id){
             plRemove=pl;
             BancoDeDados.getInstance().planos.remove(plRemove);
@@ -169,13 +132,13 @@ break;
 
     public void VerficarCarteirinhaProf(String senha, double salario){
         Treinador prof=new Treinador(id, nome, senha, cpf, salario);
-        prof.mostrarCarteirinhaProfessor();
+        prof.mostrarCarteirinhaTreinador();
 
     }
 
 public void VerificarGrafico(int idade,String nome,String senha, double altura, double peso, Plano plano, String intensidade ){
         GraficoRenda grafico=new GraficoRenda();
-        System.out.println("Renda"+grafico.getRenda( id, nome, senha,  cpf, idade, altura, peso,  plano, intensidade));
+        System.out.println("Renda"+grafico.getRenda());
         System.out.println("Situação" +grafico.getSituacao());
     }
     public void cadastrarAdministrativo(int id, String nome, String senha, String cpf, double salario, String senhaCripto){
