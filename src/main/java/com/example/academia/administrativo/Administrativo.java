@@ -46,13 +46,13 @@ public class Administrativo extends Funcionario {
     }
 
     //Cadastrar Um Plano
-    public void cadatrarPlano(String nome, int id, String descricao, double valor, String validade){
+    public void cadatrarPlano(String nome, int id, String descricao, double valor){
 
-        if(nome.isBlank() || id <= 0 || BancoDeDados.getInstance().planos.containsKey(id) || descricao.isBlank() || valor <= 0 || validade.isBlank()) {
+        if(nome.isBlank() || id <= 0 || BancoDeDados.getInstance().planos.containsKey(id) || descricao.isBlank() || valor <= 0) {
             System.out.println("Valores Inválidos");
         }
         else {
-            Plano plano = new Plano(nome, id, descricao, valor, validade);
+            Plano plano = new Plano(nome, id, descricao, valor);
             BancoDeDados.getInstance().planos.put(id, plano);
             System.out.println("Plano Cadastrado");
         }
@@ -95,8 +95,18 @@ public class Administrativo extends Funcionario {
         }
     }
 
+    //Cadastrar a Assinatura do Plano
+    public void assinaturaPlano(String validade, Plano plano){
+        if(validade.isBlank() || plano == null){
+            System.out.println("Valores Inválidos");
+        }
+        else{
+            AssinaturaPlano assinaturaPlano = new AssinaturaPlano(validade, plano);
+        }
+    }
+
     //Cadastrar Um Aluno
-    public void cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade){
+    public void cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade){
 
             if (id <= 0 || BancoDeDados.getInstance().alunos.containsKey(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
                 System.out.println("Valores Inválidos");

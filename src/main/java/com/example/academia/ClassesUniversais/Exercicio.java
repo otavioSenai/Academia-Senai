@@ -66,5 +66,4 @@ public class Exercicio {
     public void setExperiencia(){
         this.experiencia=experiencia;
     }
-
 }

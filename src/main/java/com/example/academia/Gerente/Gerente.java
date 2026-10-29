@@ -33,7 +33,7 @@ public Gerente(int id, String nome, String senha, String cpf, double salario){
     }
 
     //Cadastrar Aluno
-    public void CadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade){
+    public void CadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade){
         if (id <= 0 || BancoDeDados.getInstance().alunos.containsKey(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
             System.out.println("Valores Inválidos");
         }
@@ -107,7 +107,7 @@ public Gerente(int id, String nome, String senha, String cpf, double salario){
             System.out.println("Valores Inválidos");
         }
         else{
-            Plano plano = new Plano(nome, id, descricao, valor, validade);
+            Plano plano = new Plano(nome, id, descricao, valor);
             BancoDeDados.getInstance().planos.put(id, plano);
         }
     }
@@ -123,7 +123,7 @@ public Gerente(int id, String nome, String senha, String cpf, double salario){
     }
 
     //Ver Carteirinha do Aluno
-    public void carteirinhaAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade){
+    public void carteirinhaAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade){
         Aluno aluno=new Aluno(id, nome, senha, cpf, idade, altura, peso, plano, intensidade);
         aluno.mostrarCarteirinhaAluno();
     }

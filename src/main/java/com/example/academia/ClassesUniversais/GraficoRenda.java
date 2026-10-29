@@ -40,4 +40,3 @@ public class GraficoRenda {
         this.situacao = situacao;
     }
 }
-

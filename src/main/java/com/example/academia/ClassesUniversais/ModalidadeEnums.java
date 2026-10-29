@@ -20,5 +20,4 @@ public enum ModalidadeEnums {
         return this.Modalidade;
 
     }
-
 }

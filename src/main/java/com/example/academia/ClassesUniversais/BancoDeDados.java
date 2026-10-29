@@ -13,6 +13,7 @@ public class BancoDeDados {
 
     public Modalidade[] modalidades = new Modalidade[4];
     public Map <Integer, Plano> planos = new HashMap();
+    public Map <Integer, AssinaturaPlano> assinaturaPlano = new HashMap<>();
 
     public Map <Integer, Custo> custos = new HashMap<>();
     public Map <Integer, Aluno> alunos = new HashMap<>();

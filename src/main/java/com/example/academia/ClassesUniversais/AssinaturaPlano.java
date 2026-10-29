@@ -8,11 +8,9 @@ import java.util.Map;
 
 public class AssinaturaPlano {
 
-    Plano plano;
-
+    private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.of("America/Sao_Paulo"));
     private Map<Integer, Instant> dataPagamento = new HashMap<>();
     private Instant validade;
-    private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.of("America/Sao_Paulo"));
     private String status;
     private Plano plano;
 
@@ -36,9 +34,18 @@ public class AssinaturaPlano {
         return true;
     }
 
+    public Plano getPlano(){
+        return this.plano;
+    }
+
     //Pegar Validade
     public Instant getValidade(){
         return this.validade;
+    }
+
+    //Mudar Plano
+    public void setPlano(Plano plano){
+        this.plano = plano;
     }
 
     //Mudar Validade

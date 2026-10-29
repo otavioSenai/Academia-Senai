@@ -131,13 +131,13 @@ public class Aluno extends Usuario {
     }
 
     //Adicionar Plano
-    public void adicionarPlano(String nome, int id, String descricao, double valor, String validade) {
-        if(nome.isBlank() || BancoDeDados.getInstance().planos.containsKey(id) || descricao.isBlank() || valor <= 0 || validade.isBlank()){
+    public void adicionarPlano(String nome, int id, String descricao, double valor) {
+        if(nome.isBlank() || BancoDeDados.getInstance().planos.containsKey(id) || descricao.isBlank() || valor <= 0){
             System.out.println("Valores Inválidos");
         }
         else{
-            Plano plano = new Plano(nome, id, descricao, valor, validade);
-            this.assinaturaPlanos.plano = plano;
+            Plano plano = new Plano(nome, id, descricao, valor);
+            this.assinaturaPlanos.get(id).setPlano(plano);
         }
     }
 
@@ -155,8 +155,8 @@ public class Aluno extends Usuario {
     public List<String> getModalidade(){
         List<String> listaModalidades = new ArrayList<>();
 
-        for(Plano p : this.planos){
-            listaModalidades.add(p.getModalidade());
+        for(AssinaturaPlano p : this.assinaturaPlanos){
+            listaModalidades.add(p.getPlano().getModalidade());
         }
         return listaModalidades;
     }
@@ -269,33 +269,22 @@ public class Aluno extends Usuario {
 
         ArrayList<String> nomePlanos = new ArrayList<>();
 
-        for(Plano p : this.planos){
-            nomePlanos.add(p.getNome());
+        for(AssinaturaPlano p : this.assinaturaPlanos){
+            nomePlanos.add(p.getPlano().getNome());
         }
 
-        System.out.println("========================================");
-        System.out.println("          ACADEMIA ÍCARO");
-        System.out.println("       CARTEIRINHA DO ALUNO");
-        System.out.println("========================================");
         System.out.println("NOME: " + getNome());
         System.out.println("CPF: " + getCpf());
         System.out.println("IDADE: " + idade);
         System.out.println("ALTURA: " + altura + " m");
         System.out.println("PESO CORPORAL: " + peso + " kg");
-        System.out.println("PLANO: " + (planos == null ? "Não definido" : nomePlanos));
         System.out.println("INTENSIDADE: " + intensidade);
-
-        System.out.println("----------------------------------------");
         System.out.println("MODALIDADES:");
-
         if (getModalidade().isEmpty()) {
             System.out.println("Nenhuma modalidade selecionada.");
         } else {
             System.out.println("- " + getModalidade());
         }
-
-        System.out.println("----------------------------------------");
         System.out.println("QUANTIDADE DE TREINOS: " + treinos.size());
-        System.out.println("========================================");
     }
 }
