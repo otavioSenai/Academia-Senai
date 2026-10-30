@@ -1,8 +1,20 @@
 package com.example.academia.Dono.Controller.Teste;
 
+import com.example.academia.ClassesUniversais.AssinaturaPlano;
+import com.example.academia.ClassesUniversais.Plano;
+import com.example.academia.Dono.Dono;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 public class DonoController {
-/*
-    @FXML private Label lblMensagem;
+
+    @FXML
+    private Label lblMensagem;
     @FXML private Label lblTitulo;
     @FXML private TextField txtPesquisa;
     @FXML private GridPane gridOperacoes;
@@ -171,7 +183,7 @@ public class DonoController {
                 "ID do aluno", "Nome", "Senha", "CPF", "Idade",
                 "Altura em metros", "Peso em kg", "Nome do plano",
                 "ID do plano", "Descrição do plano", "Valor do plano",
-                "Validade do plano", "Intensidade: Leve, Médio ou Intenso"
+                "Validade do plano (dd/MM/yyyy HH:mm:ss)", "Intensidade: Leve, Médio ou Intenso"
         );
         if (v == null || !camposPreenchidos(v)) return;
 
@@ -185,10 +197,18 @@ public class DonoController {
         if (id == null || idade == null || altura == null || peso == null
                 || idPlano == null || valorPlano == null) return;
 
-        Plano plano = new Plano(v[7], idPlano, v[9], valorPlano, v[11]);
-        dono.cadastrarAluno(id, v[1], v[2], v[3], idade, altura, peso, plano, v[12]);
+        // 1. Cria o Plano base com os 4 parâmetros corretos (Nome, ID, Descrição, Valor)
+        Plano planoBase = new Plano(v[7], idPlano, v[9], valorPlano);
+
+        // 2. Cria a AssinaturaPlano exigida pela classe Dono (Validade, Plano)
+        AssinaturaPlano assinatura = new AssinaturaPlano(v[11], planoBase);
+
+        // 3. Envia a assinatura para o Dono
+        dono.cadastrarAluno(id, v[1], v[2], v[3], idade, altura, peso, assinatura, v[12]);
+
         resultado("Método de cadastro de aluno chamado. Confira o console para ver o resultado da validação.");
     }
+
 
     @FXML
     private void expulsarAluno() {
@@ -405,5 +425,5 @@ public class DonoController {
         alert.setHeaderText(null);
         alert.setContentText(mensagem);
         alert.showAndWait();
-    }*/
+    }
 }
