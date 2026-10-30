@@ -1,156 +1,215 @@
-/* =========================================================
- * IDENTIDADE VISUAL: Academia Ícaro (Obsidian Gold Modern)
- * Cores Oficiais:
- * Fundo: #04070d | Painel: #0a0e16 | Destaque: #f1ba2a
- * Texto Principal: #f8fafc | Texto Secundário: #94a3b8
- * ========================================================= */
+/* ==========================================================================
+   ÍCARO ACADEMIA - SISTEMA DE DESIGN UNIFICADO (JAVAFX COMPATIBLE)
+   ========================================================================== */
 
 .root {
     -fx-background-color: #04070d;
-    -fx-font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
 }
 
-.scroll-pane {
-    -fx-background-color: #04070d;
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-}
-.scroll-pane > .viewport {
-    -fx-background-color: transparent;
-}
-
-/* --- Tipografia --- */
+/* --------------------------------------------------------------------------
+   SISTEMA TIPOGRÁFICO
+   -------------------------------------------------------------------------- */
 .headline-xl {
-    -fx-font-size: 32px;
+    -fx-font-size: 26px;
     -fx-font-weight: bold;
-    -fx-text-fill: #f8fafc;
+    -fx-text-fill: #ffffff;
 }
+
 .headline-lg {
-    -fx-font-size: 24px;
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill: #f8fafc;
+    -fx-text-fill: #ffffff;
 }
+
 .title-md {
-    -fx-font-size: 18px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-text-fill: #f8fafc;
+    -fx-text-fill: #ffffff;
 }
+
 .label-sm {
     -fx-font-size: 11px;
     -fx-font-weight: bold;
-    -fx-text-fill: #94a3b8;
-    -fx-letter-spacing: 1px;
-}
-.text-muted {
-    -fx-text-fill: #94a3b8;
-    -fx-font-size: 13px;
+    -fx-text-fill: #8d93a2;
 }
 
-/* --- Paineis e Cartões --- */
+.text-muted {
+    -fx-font-size: 13px;
+    -fx-text-fill: #94a3b8;
+}
+
+/* --------------------------------------------------------------------------
+   CARTÕES E PAINÉIS
+   -------------------------------------------------------------------------- */
 .card-panel {
-    -fx-background-color: #0a0e16;
-    -fx-border-color: #1e2638;
+    -fx-background-color: #0d121d;
+    -fx-border-color: #1e293b;
     -fx-border-width: 1px;
     -fx-border-radius: 12px;
     -fx-background-radius: 12px;
-    -fx-padding: 24px;
+    -fx-padding: 20px;
 }
+
+.card-panel:hover {
+    -fx-border-color: #334155;
+}
+
 .card-header {
-    -fx-border-color: #1e2638;
+    -fx-border-color: #1e293b;
     -fx-border-width: 0 0 1 0;
     -fx-padding: 0 0 12 0;
 }
-.card-highlight-top {
-    -fx-background-color: #f1ba2a;
-    -fx-background-radius: 12px 12px 0 0;
-    -fx-min-height: 4px;
-}
+
 .data-block {
-    -fx-background-color: #04070d;
-    -fx-border-color: #1e2638;
+    -fx-background-color: #070a12;
+    -fx-border-color: #1e293b;
+    -fx-border-width: 1px;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
     -fx-padding: 12px;
 }
 
-/* --- Inputs e Botões --- */
-.text-field-custom {
-    -fx-background-color: #04070d;
-    -fx-text-fill: #f8fafc;
-    -fx-border-color: #1e2638;
-    -fx-border-radius: 6px;
-    -fx-background-radius: 6px;
-    -fx-padding: 8px 12px;
-}
-.text-field-custom:focused {
-    -fx-border-color: #f1ba2a;
-}
-
-.search-container {
-    -fx-background-color: #0a0e16;
-    -fx-border-color: #1e2638;
-    -fx-border-radius: 9999px;
-    -fx-background-radius: 9999px;
-    -fx-padding: 8px 24px;
-}
-.search-input {
-    -fx-background-color: transparent;
-    -fx-text-fill: #f8fafc;
-    -fx-font-size: 14px;
-}
-
+/* --------------------------------------------------------------------------
+   BOTÕES E AÇÕES
+   -------------------------------------------------------------------------- */
 .btn-primary {
     -fx-background-color: #f1ba2a;
     -fx-text-fill: #04070d;
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
+    -fx-font-size: 13px;
     -fx-background-radius: 8px;
-    -fx-padding: 8px 20px;
+    -fx-padding: 10px 18px;
     -fx-cursor: hand;
 }
+
 .btn-primary:hover {
-    -fx-background-color: #f5c542;
+    -fx-background-color: #f5c747;
+}
+
+.btn-primary:armed,
+.btn-primary:pressed {
+    -fx-background-color: #d9a31e;
 }
 
 .btn-secondary {
-    -fx-background-color: transparent;
-    -fx-text-fill: #94a3b8;
-    -fx-border-color: #1e2638;
-    -fx-border-radius: 8px;
-    -fx-padding: 8px 20px;
+    -fx-background-color: #1e293b;
+    -fx-text-fill: #f8fafc;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 8px;
+    -fx-padding: 9px 14px;
     -fx-cursor: hand;
 }
+
 .btn-secondary:hover {
-    -fx-border-color: #94a3b8;
-    -fx-text-fill: #f8fafc;
+    -fx-background-color: #334155;
+    -fx-text-fill: #ffffff;
+}
+
+.btn-secondary:armed,
+.btn-secondary:pressed {
+    -fx-background-color: #0f172a;
 }
 
 .btn-danger {
-    -fx-background-color: transparent;
-    -fx-text-fill: #ef4444;
-    -fx-border-color: #ef4444;
-    -fx-border-radius: 8px;
-    -fx-padding: 8px 20px;
+    -fx-background-color: #ef4444;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 8px;
+    -fx-padding: 9px 14px;
     -fx-cursor: hand;
 }
+
 .btn-danger:hover {
-    -fx-background-color: #451a1e;
+    -fx-background-color: #dc2626;
 }
 
-/* --- Badges --- */
-.badge-success {
-    -fx-text-fill: #10b981;
-    -fx-border-color: #10b981;
-    -fx-border-radius: 4px;
-    -fx-padding: 2px 8px;
-    -fx-font-size: 10px;
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 12px 14px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
 }
-.badge-warning {
+
+.sidebar-btn:hover {
+    -fx-background-color: #1e293b;
     -fx-text-fill: #f1ba2a;
+}
+
+/* --------------------------------------------------------------------------
+   INPUTS DE PESQUISA E FORMULÁRIOS
+   -------------------------------------------------------------------------- */
+.search-container {
+    -fx-background-color: #0d121d;
+    -fx-border-color: #1e293b;
+    -fx-border-width: 1px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-padding: 4px 12px;
+}
+
+.search-container:focused,
+.search-container:hover {
     -fx-border-color: #f1ba2a;
-    -fx-border-radius: 4px;
-    -fx-padding: 2px 8px;
+}
+
+.search-input {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #64748b;
+    -fx-font-size: 13px;
+}
+
+.search-input:focused {
+    -fx-background-color: transparent;
+}
+
+.text-field-custom {
+    -fx-background-color: #0d121d;
+    -fx-border-color: #1e293b;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #64748b;
+    -fx-padding: 10px;
+}
+
+.text-field-custom:focused {
+    -fx-border-color: #f1ba2a;
+}
+
+/* --------------------------------------------------------------------------
+   BADGES E NAVEGAÇÃO
+   -------------------------------------------------------------------------- */
+.badge-warning {
+    -fx-background-color: rgba(241, 186, 42, 0.15);
+    -fx-text-fill: #f1ba2a;
     -fx-font-size: 10px;
     -fx-font-weight: bold;
+    -fx-padding: 4px 8px;
+    -fx-background-radius: 4px;
+}
+
+.badge-success {
+    -fx-background-color: rgba(16, 185, 129, 0.15);
+    -fx-text-fill: #10b981;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 4px 8px;
+    -fx-background-radius: 4px;
+}
+
+.scroll-pane {
+    -fx-background-color: #04070d;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: #04070d;
 }
