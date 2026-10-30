@@ -1,23 +1,7 @@
-package com.example.academia.Dono.Controller;
-
-import com.example.academia.ClassesUniversais.Plano;
-import com.example.academia.Dono.Dono;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+package com.example.academia.Dono.Controller.Teste;
 
 public class DonoController {
-
+/*
     @FXML private Label lblMensagem;
     @FXML private Label lblTitulo;
     @FXML private TextField txtPesquisa;
@@ -421,5 +405,5 @@ public class DonoController {
         alert.setHeaderText(null);
         alert.setContentText(mensagem);
         alert.showAndWait();
-    }
+    }*/
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class AlunoController {
-
+/*
     @FXML
     private Label lblNome;
 
@@ -150,5 +150,5 @@ public class AlunoController {
 
             lblTreinos.setText(texto.toString());
         }
-    }
+    }*/
 }

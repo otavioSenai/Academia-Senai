@@ -14,8 +14,8 @@ public class GraficoRenda {
 
 
             Aluno aluno = BancoDeDados.getInstance().alunos.get(id);
-            for(int i=0;i<aluno.getPlano().size();i++ ){
-                this.renda += aluno.getPlano().get(i).getValor();
+            for(int i=0;i<aluno.getPlano().size();i++){
+                this.renda += aluno.getPlano().get(i).getPlano().getValor();
             }
 
         }

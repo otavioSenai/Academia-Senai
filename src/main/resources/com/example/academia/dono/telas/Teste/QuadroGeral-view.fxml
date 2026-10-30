@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox style="-fx-background-color: #04070d; -fx-padding: 32px;" stylesheets="@VisaoGeral1.css" spacing="24" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.academia.Dono.Controller.Teste.QuadroFuncionalController">
+
+    <!-- Cabeçalho -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <VBox spacing="4" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label styleClass="label-sm" text="MÓDULO EXECUTIVO • QUADRO FUNCIONAL" textFill="#f1ba2a"/>
+                <Label styleClass="label-sm" text="|" textFill="#64748b"/>
+                <Label styleClass="label-sm" text="Unidade Matriz #01" textFill="#94a3b8"/>
+            </HBox>
+            <Label style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #f8fafc;" text="Carteirinhas &amp; Registros Corporativos"/>
+            <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 13px;" text="Consulta unificada de Treinadores e Corpo Administrativo homologados."/>
+        </VBox>
+        <Button styleClass="btn-secondary" text="Atualizar Quadro" onAction="#carregarTodos">
+            <graphic>
+                <FontIcon iconLiteral="fas-sync-alt" iconSize="14" iconColor="#808080"/>
+            </graphic>
+        </Button>
+    </HBox>
+
+    <!-- Filtros (Abas) e Pesquisa -->
+    <HBox spacing="16" alignment="CENTER_LEFT" styleClass="card-panel" style="-fx-padding: 12px 16px;">
+        <HBox spacing="8">
+            <Button fx:id="btnFiltroTodos" text="Visão Integrada" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-background-radius: 6px;" onAction="#carregarTodos"/>
+            <Button fx:id="btnFiltroTreinadores" text="Apenas Treinadores" style="-fx-background-color: #181c23; -fx-text-fill: #c7c6c6; -fx-background-radius: 6px;" onAction="#carregarTreinadores"/>
+            <Button fx:id="btnFiltroAdms" text="Apenas Administrativo" style="-fx-background-color: #181c23; -fx-text-fill: #c7c6c6; -fx-background-radius: 6px;" onAction="#carregarAdministrativos"/>
+        </HBox>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <HBox spacing="8" alignment="CENTER_RIGHT">
+            <FontIcon iconLiteral="fas-search" iconSize="18" iconColor="#64748b" style="-fx-translate-y: 4px;"/>
+            <TextField fx:id="txtPesquisa" promptText="Pesquisar funcionário..." style="-fx-background-color: transparent; -fx-border-width: 0; -fx-text-fill: #f8fafc; -fx-pref-width: 250px;"/>
+        </HBox>
+    </HBox>
+
+    <!-- Grid de Carteirinhas Dinâmicas -->
+    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;" VBox.vgrow="ALWAYS">
+        <FlowPane fx:id="painelFuncionarios" hgap="24" vgap="24" prefWrapLength="1000"/>
+    </ScrollPane>
+
+</VBox>

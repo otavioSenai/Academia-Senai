@@ -7,23 +7,19 @@ import java.util.Map;
 
 public class Modalidade {
 
-    static Map treinadores = new HashMap();
-    String modalidade;
+    private Map treinadores = new HashMap();
+    private String modalidade;
+    private String descricao;
+    private int capacidade;
 
     //Escolhe a Modalidade
     public void escolherModalidade(String modalidadeEscolhida){
-        boolean ModalidadeExistente = false;
 
         for(ModalidadeEnums m : BancoDeDados.getInstance().modalidadeEnums){
             if(m.name().equalsIgnoreCase(modalidadeEscolhida)){
-
                 this.modalidade = m.toString();
-                ModalidadeExistente = true;
                 break;
             }
-        }
-        if(!ModalidadeExistente){
-            System.out.println("Valores Inválidos");
         }
     }
 

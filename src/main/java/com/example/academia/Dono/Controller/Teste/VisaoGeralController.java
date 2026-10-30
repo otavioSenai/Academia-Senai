@@ -1,4 +1,4 @@
-package com.example.academia.Dono.Controller;
+package com.example.academia.Dono.Controller.Teste;
 
 import com.example.academia.ClassesUniversais.AssinaturaPlano;
 import com.example.academia.ClassesUniversais.Plano;

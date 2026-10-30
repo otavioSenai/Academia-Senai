@@ -18,12 +18,11 @@ public class Treinador extends Funcionario {
     }
 
     public void setEspecialidade(String especialidade) {
-        if (especialidade==null||especialidade.isBlank()){
+        if (especialidade == null || especialidade.isBlank()) {
             System.out.println("Dados Invalidos");
+        } else {
+            Especialidade = especialidade;
         }
-        else {
-        Especialidade = especialidade;
-         }
     }
 
     public ModalidadeEnums getModalidades(int id) {
@@ -34,25 +33,19 @@ public class Treinador extends Funcionario {
 
         boolean modalidadeExistente = false;
 
-        for(ModalidadeEnums m : BancoDeDados.getInstance().modalidadeEnums) {
-            if(m.name().equalsIgnoreCase(modalidade)){
+        for (ModalidadeEnums m : BancoDeDados.getInstance().modalidadeEnums) {
+            if (m.name().equalsIgnoreCase(modalidade)) {
                 this.modalidadeEnums.add(m);
                 modalidadeExistente = true;
                 break;
             }
         }
-        if(!modalidadeExistente){
+        if (!modalidadeExistente) {
             System.out.println("Valores Inválidos");
         }
     }
 
-    public void mostrarCarteirinhaTreinador(){
-    System.out.println("========================================");
-            System.out.println("        ACADEMIA ÍCARO");
-            System.out.println("        CARTEIRINHA DO PROFESSOR");
-            System.out.println("========================================");
-            System.out.println("----------------------------------------");
-            System.out.println("----------------------------------------");
-            System.out.println("ESPECIALIDADE: " + Especialidade);
-            System.out.println("========================================");}
+    public void mostrarCarteirinhaTreinador() {
+        System.out.println("ESPECIALIDADE: " + Especialidade);
+    }
 }

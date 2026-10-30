@@ -4,8 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.academia.Dono.Controller.DonoController" styleClass="root">
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.academia.Dono.Controller.Teste.VisaoGeralController" styleClass="root">
 
     <!-- Top Bar -->
     <top>
@@ -25,15 +26,47 @@
                 <Insets top="20" left="20" bottom="20" right="10"/>
             </BorderPane.margin>
             <Label text="NAVEGAÇÃO" styleClass="text-muted" style="-fx-font-size: 10px;"/>
-            <Button text="Visão Geral" maxWidth="Infinity" styleClass="nav-button-active" />
-            <Button text="Departamentos" maxWidth="Infinity" styleClass="nav-button" />
-            <Button text="Planos" maxWidth="Infinity" styleClass="nav-button" />
-            <Button text="Treinador" maxWidth="Infinity" styleClass="nav-button" />
-            <Button text="Alunos" maxWidth="Infinity" styleClass="nav-button" />
-            <Button text="Administrativo" maxWidth="Infinity" styleClass="nav-button" />
-            <Button text="Gerente" maxWidth="Infinity" styleClass="nav-button" />
+            <Button text="Visão Geral" maxWidth="Infinity" styleClass="nav-button-active" >
+                 <graphic>
+                    <FontIcon iconLiteral="fas-home" iconSize="18"/>
+                 </graphic>
+            </Button>
+            <Button text="Departamentos" maxWidth="Infinity" styleClass="nav-button" >
+                <graphic>
+                    <FontIcon iconLiteral="fas-building" iconSize="18"/>
+                </graphic>
+            </Button>
+            <Button text="Planos" maxWidth="Infinity" styleClass="nav-button" >
+                <graphic>
+                    <FontIcon iconLiteral="fas-clipboard-list" iconSize="18"/>
+                </graphic>
+            </Button>
+            <Button text="Treinador" maxWidth="Infinity" styleClass="nav-button" >
+                <graphic>
+                    <FontIcon iconLiteral="fas-dumbbell" iconSize="18"/>
+                </graphic>
+            </Button>
+            <Button text="Alunos" maxWidth="Infinity" styleClass="nav-button" >
+                <graphic>
+                    <FontIcon iconLiteral="fas-users" iconSize="18"/>
+                </graphic>
+            </Button>
+            <Button text="Administrativo" maxWidth="Infinity" styleClass="nav-button" >
+                <graphic>
+                    <FontIcon iconLiteral="fas-user-tie" iconSize="18"/>
+                </graphic>
+            </Button>
+            <Button text="Gerente" maxWidth="Infinity" styleClass="nav-button" >
+                <graphic>
+                    <FontIcon iconLiteral="fas-user-cog" iconSize="18"/>
+                </graphic>
+            </Button>
             <Region VBox.vgrow="ALWAYS" />
-            <Button text="Sair do Painel" maxWidth="Infinity" styleClass="nav-button" />
+            <Button text="Sair do Painel" maxWidth="Infinity" styleClass="nav-button" >
+                <graphic>
+                    <FontIcon iconLiteral="fas-sign-out-alt" iconSize="18"/>
+                </graphic>
+            </Button>
         </VBox>
     </left>
 
