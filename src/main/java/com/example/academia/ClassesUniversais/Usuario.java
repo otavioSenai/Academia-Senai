@@ -2,10 +2,10 @@ package com.example.academia.ClassesUniversais;
 
 public class Usuario {
 
-    protected final Integer id;
-    protected String nome;
+    private final Integer id;
+    private String nome;
     private String senha;
-    protected final String cpf;
+    private final String cpf;
 
     public Usuario(int id, String nome, String senha, String cpf){
         this.nome = nome;

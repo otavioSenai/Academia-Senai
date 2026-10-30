@@ -1,17 +1,18 @@
 package com.example.academia.ClassesUniversais;
-import java.time.LocalDate;
+
+import java.util.ArrayList;
 
 public class Treino {
     private final int idTreino;
     private String nomeTreino;
     private String conteudo;
-    private LocalDate data;
+    private ArrayList<Exercicio> exercicios = new ArrayList<>();
 
-    public Treino(int idTreino, String nomeTreino, String conteudo, LocalDate data) {
+    public Treino(int idTreino, String nomeTreino, String conteudo, ArrayList<Exercicio> exercicios) {
         this.idTreino = idTreino;
         this.nomeTreino = nomeTreino;
         this.conteudo = conteudo;
-        this.data = data;
+        this.exercicios = exercicios;
     }
 
     public int getIdTreino() {
@@ -34,11 +35,12 @@ public class Treino {
         this.conteudo = conteudo;
     }
 
-    public LocalDate getData() {
-        return data;
-    }
+    public void mostrarTreino(){
 
-    public void setData(LocalDate data) {
-        this.data = data;
+        System.out.println(this.nomeTreino);
+        for(int i = 0; i < this.exercicios.size(); i++){
+            System.out.println(i + " - " + this.exercicios.get(i));
+        }
+
     }
 }

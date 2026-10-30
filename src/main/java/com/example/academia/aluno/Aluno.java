@@ -130,10 +130,13 @@ public class Aluno extends Usuario {
         }
     }
 
-    //Adicionar Plano
-    public void adicionarPlano(String nome, int id, String descricao, double valor) {
-        if(nome.isBlank() || BancoDeDados.getInstance().planos.containsKey(id) || descricao.isBlank() || valor <= 0){
-            System.out.println("Valores Inválidos");
+    //Pegar Plano
+    public void adicionarPlano(int id) {
+        if(BancoDeDados.getInstance().planos.containsKey(id)){
+
+            for(int i = 0; i <= this.treinos.size(); i++){
+                System.out.println(this.treinos.get(i));
+            }
         }
         else{
             Plano plano = new Plano(nome, id, descricao, valor);

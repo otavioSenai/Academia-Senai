@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
+<!-- Importações originais mantidas -->
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.Region?>
@@ -87,7 +88,7 @@
                         <Label text="MINHA CARTEIRINHA"
                                style="-fx-text-fill: #ff5722; -fx-font-size: 14px; -fx-font-weight: bold;"/>
 
-                        <Label fx:id="lblNome"
+                        <Label fx:id="Nome"
                                text="Nome do aluno"
                                style="-fx-text-fill: white; -fx-font-size: 23px; -fx-font-weight: bold;"/>
 
@@ -95,21 +96,21 @@
                             <VBox spacing="6.0">
                                 <Label text="IDADE"
                                        style="-fx-text-fill: #999999; -fx-font-size: 11px;"/>
-                                <Label fx:id="lblIdade" text="-- anos"
+                                <Label fx:id="Idade" text="-- anos"
                                        style="-fx-text-fill: white; -fx-font-size: 16px;"/>
                             </VBox>
 
                             <VBox spacing="6.0">
                                 <Label text="ALTURA"
                                        style="-fx-text-fill: #999999; -fx-font-size: 11px;"/>
-                                <Label fx:id="lblAltura" text="-- m"
+                                <Label fx:id="Altura" text="-- m"
                                        style="-fx-text-fill: white; -fx-font-size: 16px;"/>
                             </VBox>
 
                             <VBox spacing="6.0">
                                 <Label text="PESO"
                                        style="-fx-text-fill: #999999; -fx-font-size: 11px;"/>
-                                <Label fx:id="lblPeso" text="-- kg"
+                                <Label fx:id="Peso" text="-- kg"
                                        style="-fx-text-fill: white; -fx-font-size: 16px;"/>
                             </VBox>
                         </HBox>
@@ -167,242 +168,13 @@
                                    style="-fx-text-fill: #ff7043; -fx-font-size: 13px;"/>
                         </HBox>
 
+                        <!-- TAG FECHADA CORRETAMENTE -->
                         <Label fx:id="lblTreinos"
                                text="Você ainda não possui treinos cadastrados."
-                               wrapText="true"
                                style="-fx-text-fill: #aaaaaa; -fx-font-size: 14px;"/>
-
-                        <Button text="CONSULTAR TREINOS"
-                                maxWidth="Infinity"
-                                style="-fx-background-color: #ff5722; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7; -fx-padding: 12;"/>
                     </VBox>
-
-                    <!-- CALENDÁRIO -->
-                    <VBox spacing="10.0"
-                          style="-fx-background-color: #202020; -fx-background-radius: 12;">
-                        <padding>
-                            <Insets top="20" right="20" bottom="20" left="20"/>
-                        </padding>
-
-                        <Label text="CALENDÁRIO DE TREINOS"
-                               style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
-
-                        <Label text="Consulte os treinos programados para cada dia."
-                               wrapText="true"
-                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 14px;"/>
-
-                        <Button text="ABRIR CALENDÁRIO"
-                                maxWidth="Infinity"
-                                style="-fx-background-color: #292929; -fx-text-fill: #ff7043; -fx-border-color: #ff5722; -fx-border-radius: 7; -fx-background-radius: 7; -fx-padding: 12;"/>
-                    </VBox>
-
                 </VBox>
             </content>
         </ScrollPane>
     </center>
-
-</BorderPane>
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Priority?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.academia.aluno.AlunoController"
-            prefWidth="1100.0"
-            prefHeight="720.0"
-            style="-fx-background-color: #101010;">
-
-    <!-- BARRA LATERAL -->
-    <left>
-        <VBox prefWidth="230.0" spacing="15.0"
-              style="-fx-background-color: #181818;">
-            <padding>
-                <Insets top="25" right="15" bottom="20" left="15"/>
-            </padding>
-
-            <Label text="ACADEMIA"
-                   style="-fx-text-fill: #ff5722; -fx-font-size: 25px; -fx-font-weight: bold;"/>
-
-            <Label text="ÍCARO"
-                   style="-fx-text-fill: white; -fx-font-size: 18px;"/>
-
-            <Region VBox.vgrow="ALWAYS"/>
-
-            <Button text="INÍCIO" maxWidth="Infinity"
-                    style="-fx-background-color: #ff5722; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 12;"/>
-
-            <Button text="MINHA CARTEIRINHA" maxWidth="Infinity"
-                    style="-fx-background-color: #292929; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 12;"/>
-
-            <Button text="MEUS PLANOS" maxWidth="Infinity"
-                    style="-fx-background-color: #292929; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 12;"/>
-
-            <Button text="MEUS TREINOS" maxWidth="Infinity"
-                    style="-fx-background-color: #292929; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 12;"/>
-
-            <Button text="CALENDÁRIO" maxWidth="Infinity"
-                    style="-fx-background-color: #292929; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 12;"/>
-
-            <Region VBox.vgrow="ALWAYS"/>
-
-            <Button text="SAIR" maxWidth="Infinity"
-                    style="-fx-background-color: #3a1717; -fx-text-fill: #ff7043; -fx-background-radius: 8; -fx-padding: 12;"/>
-        </VBox>
-    </left>
-
-    <!-- CONTEÚDO PRINCIPAL -->
-    <center>
-        <ScrollPane fitToWidth="true"
-                    style="-fx-background: #101010; -fx-background-color: #101010;">
-            <content>
-                <VBox spacing="22.0">
-                    <padding>
-                        <Insets top="30" right="30" bottom="30" left="30"/>
-                    </padding>
-
-                    <!-- CABECERA -->
-                    <VBox spacing="6.0">
-                        <Label text="PAINEL DO ALUNO"
-                               style="-fx-text-fill: #ff5722; -fx-font-size: 13px; -fx-font-weight: bold;"/>
-
-                        <Label text="Bem-vindo à Academia Ícaro!"
-                               style="-fx-text-fill: white; -fx-font-size: 27px; -fx-font-weight: bold;"/>
-
-                        <Label text="Acompanhe seus planos e seus treinos."
-                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 14px;"/>
-                    </VBox>
-
-                    <!-- CARTEIRINHA -->
-                    <VBox spacing="14.0"
-                          style="-fx-background-color: #202020; -fx-background-radius: 14;">
-                        <padding>
-                            <Insets top="22" right="22" bottom="22" left="22"/>
-                        </padding>
-
-                        <Label text="MINHA CARTEIRINHA"
-                               style="-fx-text-fill: #ff5722; -fx-font-size: 14px; -fx-font-weight: bold;"/>
-
-                        <Label fx:id="lblNome"
-                               text="Nome do aluno"
-                               style="-fx-text-fill: white; -fx-font-size: 23px; -fx-font-weight: bold;"/>
-
-                        <HBox spacing="35.0">
-                            <VBox spacing="6.0">
-                                <Label text="IDADE"
-                                       style="-fx-text-fill: #999999; -fx-font-size: 11px;"/>
-                                <Label fx:id="lblIdade" text="-- anos"
-                                       style="-fx-text-fill: white; -fx-font-size: 16px;"/>
-                            </VBox>
-
-                            <VBox spacing="6.0">
-                                <Label text="ALTURA"
-                                       style="-fx-text-fill: #999999; -fx-font-size: 11px;"/>
-                                <Label fx:id="lblAltura" text="-- m"
-                                       style="-fx-text-fill: white; -fx-font-size: 16px;"/>
-                            </VBox>
-
-                            <VBox spacing="6.0">
-                                <Label text="PESO"
-                                       style="-fx-text-fill: #999999; -fx-font-size: 11px;"/>
-                                <Label fx:id="lblPeso" text="-- kg"
-                                       style="-fx-text-fill: white; -fx-font-size: 16px;"/>
-                            </VBox>
-                        </HBox>
-                    </VBox>
-
-                    <!-- PLANOS E INTENSIDADE -->
-                    <HBox spacing="18.0">
-                        <VBox spacing="12.0" HBox.hgrow="ALWAYS"
-                              style="-fx-background-color: #202020; -fx-background-radius: 12;">
-                            <padding>
-                                <Insets top="20" right="20" bottom="20" left="20"/>
-                            </padding>
-
-                            <Label text="MEUS PLANOS"
-                                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 12px;"/>
-
-                            <Label fx:id="lblPlano" text="Nenhum plano"
-                                   style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
-
-                            <Button text="Ver planos" maxWidth="Infinity"
-                                    style="-fx-background-color: #ff5722; -fx-text-fill: white; -fx-background-radius: 7;"/>
-                        </VBox>
-
-                        <VBox spacing="12.0" HBox.hgrow="ALWAYS"
-                              style="-fx-background-color: #202020; -fx-background-radius: 12;">
-                            <padding>
-                                <Insets top="20" right="20" bottom="20" left="20"/>
-                            </padding>
-
-                            <Label text="INTENSIDADE"
-                                   style="-fx-text-fill: #aaaaaa; -fx-font-size: 12px;"/>
-
-                            <Label fx:id="lblIntensidade" text="Não definida"
-                                   style="-fx-text-fill: #ff7043; -fx-font-size: 20px; -fx-font-weight: bold;"/>
-
-                            <Label text="Nível de intensidade"
-                                   style="-fx-text-fill: #999999; -fx-font-size: 12px;"/>
-                        </VBox>
-                    </HBox>
-
-                    <!-- TREINOS -->
-                    <VBox spacing="14.0"
-                          style="-fx-background-color: #202020; -fx-background-radius: 12;">
-                        <padding>
-                            <Insets top="20" right="20" bottom="20" left="20"/>
-                        </padding>
-
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                            <Label text="MEUS TREINOS"
-                                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
-
-                            <Region HBox.hgrow="ALWAYS"/>
-
-                            <Label fx:id="lblQuantidadeTreinos" text="0 treinos"
-                                   style="-fx-text-fill: #ff7043; -fx-font-size: 13px;"/>
-                        </HBox>
-
-                        <Label fx:id="lblTreinos"
-                               text="Você ainda não possui treinos cadastrados."
-                               wrapText="true"
-                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 14px;"/>
-
-                        <Button text="CONSULTAR TREINOS"
-                                maxWidth="Infinity"
-                                style="-fx-background-color: #ff5722; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7; -fx-padding: 12;"/>
-                    </VBox>
-
-                    <!-- CALENDÁRIO -->
-                    <VBox spacing="10.0"
-                          style="-fx-background-color: #202020; -fx-background-radius: 12;">
-                        <padding>
-                            <Insets top="20" right="20" bottom="20" left="20"/>
-                        </padding>
-
-                        <Label text="CALENDÁRIO DE TREINOS"
-                               style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
-
-                        <Label text="Consulte os treinos programados para cada dia."
-                               wrapText="true"
-                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 14px;"/>
-
-                        <Button text="ABRIR CALENDÁRIO"
-                                maxWidth="Infinity"
-                                style="-fx-background-color: #292929; -fx-text-fill: #ff7043; -fx-border-color: #ff5722; -fx-border-radius: 7; -fx-background-radius: 7; -fx-padding: 12;"/>
-                    </VBox>
-
-                </VBox>
-            </content>
-        </ScrollPane>
-    </center>
-
 </BorderPane>
