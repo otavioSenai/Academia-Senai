@@ -14,15 +14,14 @@ public class FeedbackTreinador {
     }
 
     //Pegar o Comentário
-    public void getComentario(int idAluno){
+    public boolean getComentario(int idAluno){
 
         if(BancoDeDados.getInstance().alunos.containsKey(idAluno)){
             System.out.println("Aluno: " + BancoDeDados.getInstance().alunos.get(idAluno) + "\n");
             System.out.println(this.comentario);
             System.out.println("Estrelas: " + this.qtdEstrelas);
+            return true;
         }
-        else{
-            System.out.println("Valores Inválidos");
-        }
+        return false;
     }
 }

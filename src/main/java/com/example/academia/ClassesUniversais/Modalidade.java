@@ -7,42 +7,77 @@ import java.util.Map;
 
 public class Modalidade {
 
-    private Map treinadores = new HashMap();
-    private String modalidade;
+    private int id;
+    private Map <Integer,Treinador> treinadores = new HashMap();
+    private String Nome;
     private String descricao;
-    private int capacidade;
 
     //Escolhe a Modalidade
-    public void escolherModalidade(String modalidadeEscolhida){
-
-        for(ModalidadeEnums m : BancoDeDados.getInstance().modalidadeEnums){
-            if(m.name().equalsIgnoreCase(modalidadeEscolhida)){
-                this.modalidade = m.toString();
-                break;
-            }
+    public boolean escolherModalidade(String modalidadeEscolhida){
+        if(BancoDeDados.getInstance().validarModalidadeEnums(modalidadeEscolhida)) {
+            this.Nome = modalidadeEscolhida;
+            return true;
         }
+        return false;
+    }
+
+    //pegar id
+    public int getId(){
+        return this.id;
     }
 
     //Pega a Modalidade
-    public String getModalidade(){
-        return this.modalidade;
+    public String getNome(){
+        return this.Nome;
     }
 
-    //Adiciona um Professor
-    public void addTreinador(int id, Treinador treinador){
-        if(!treinadores.containsKey(id)){
+    //Mudar a Descricao
+    public boolean setDescricao(String descricao){
+        if(descricao.isBlank()){
+            return false;
+        }
+        this.descricao = descricao;
+        return true;
+    }
+
+    //Pegar Descricao
+    public String getDescricao(){
+        return this.descricao;
+    }
+
+    //Adiciona um Treinador
+    public boolean addTreinador(int id, Treinador treinador){
+        if(!BancoDeDados.getInstance().treinadores.containsKey(id)){
             treinadores.put(id, treinador);
+            return true;
         }
         else{
-            System.out.println("Valores Inválidos");
+            return false;
         }
+    }
+
+    //Remove Um Treinador
+    public boolean removeTreinador(int id){
+        if(BancoDeDados.getInstance().validarIdModalidade(id)){
+            treinadores.remove(id);
+            return true;
+        }
+        return false;
     }
 
     //Pega o Treinador
-    public String getTreinador(int id){
-        if(treinadores.containsKey(id)){
-            return treinadores.get(id).toString();
+    public Treinador getTreinador(int id){
+            return this.treinadores.get(id);
+    }
+
+    //Mostrar os Treinadores
+    public boolean showTreinadores(){
+        if(treinadores.isEmpty()){
+            return false;
         }
-        return "Professor Não Enontrado";
+        for(Treinador t : treinadores.values()){
+            System.out.println(t.getId() + " - " + t.getNome());
+        }
+        return true;
     }
 }

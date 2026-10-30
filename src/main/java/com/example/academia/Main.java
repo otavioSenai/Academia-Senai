@@ -20,7 +20,7 @@ public class Main extends Application {
         stage = primaryStage;
         stage.setTitle("Academia Ícaro - Painel Dono");
 
-        Parent fxmlDono = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/academia/dono/telas/Teste/dono-view.fxml")));
+        Parent fxmlDono = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/academia/dono/telas/dono-view.fxml")));
         cenaDono = new Scene(fxmlDono, 1280, 720);
 
         URL css = getClass().getResource("/com/example/academia/dono/telas/Teste/VisaoGeral1.css");

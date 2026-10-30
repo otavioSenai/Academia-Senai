@@ -4,21 +4,15 @@ import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
 import com.example.academia.Treinador.Treinador;
 
-import javax.swing.plaf.basic.BasicLookAndFeel;
-
-import java.util.Map;
-import java.util.Scanner;
-
-
 public class Gerente extends Funcionario {
 int demissoes=0;
 int contratacao=0;
 int alunosExpulsos=0;
 
 
-public Gerente(int id, String nome, String senha, String cpf, double salario){
-
-    super(id, nome, senha, cpf, salario);
+public Gerente(String nome, String senha, String cpf, double salario){
+    super(nome, senha, cpf, salario);
+    gerarId(0);
 }
 
     //Mostra a Carteirinha do Gerente
@@ -33,117 +27,122 @@ public Gerente(int id, String nome, String senha, String cpf, double salario){
     }
 
     //Cadastrar Aluno
-    public void CadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade){
-        if (id <= 0 || BancoDeDados.getInstance().alunos.containsKey(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
-            System.out.println("Valores Inválidos");
+    public boolean CadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade){
+        if (id <= 0 || BancoDeDados.getInstance().validIdAluno(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+            return false;
         }
         else{
             // Se passou nas verificações, chama a classe para criptografar em SHA-512
             String senhaCriptografada = CriptografarSenha.SenhaGeral(senha);
-            Aluno aluno = new Aluno(id, nome, senhaCriptografada, cpf, idade, altura, peso, plano, intensidade);
+            Aluno aluno = new Aluno(nome, senhaCriptografada, cpf, idade, altura, peso, plano, intensidade);
             BancoDeDados.getInstance().alunos.put(id, aluno);
+            return true;
         }
     }
 
     //Expulsar Aluno
-    public void expulsarAluno(int id){
+    public boolean expulsarAluno(int id){
         if(BancoDeDados.getInstance().alunos.containsKey(id)){
             BancoDeDados.getInstance().alunos.remove(id);
+            return true;
         }
         else{
-            System.out.println("Aluno Não Encontrado");
+            return false;
         }
     }
 
-    //Cadastrar Professor
-    public void cadastrarProfessor(int id, String nome, String senha, String cpf, double salario){
-        if(BancoDeDados.getInstance().treinadores.containsKey(id) || id <= 0 || nome.isBlank() || Verificacao.verificarSenha(senha) || Verificacao.verificarCpf(cpf) || salario <= 0){
-            System.out.println("Valores Inválidos");
+    //Cadastrar Treinador
+    public boolean cadastrarTreinador(int id, String nome, String senha, String cpf, double salario, String especialidade){
+        if(BancoDeDados.getInstance().validarIdTreinador(id) || id <= 0 || nome.isBlank() || Verificacao.verificarSenha(senha) || Verificacao.verificarCpf(cpf) || salario <= 0){
+            return false;
         }
         else{
             // Se passou nas verificações, chama a classe para criptografar em SHA-512
             String senhaCriptografada = CriptografarSenha.SenhaGeral(senha);
-            Treinador treinador = new Treinador(id, nome, senhaCriptografada, cpf, salario);
+            Treinador treinador = new Treinador(nome, senhaCriptografada, cpf, salario, especialidade);
             BancoDeDados.getInstance().treinadores.put(id, treinador);
+            return true;
         }
     }
 
-    //Demitir Professor
-    public void demitirProfessor(int id){
+    //Demitir Treinador
+    public boolean demitirTreinador(int id){
         if(BancoDeDados.getInstance().treinadores.containsKey(id)){
             BancoDeDados.getInstance().treinadores.remove(id);
+            return true;
         }
         else{
-            System.out.println("Professor Não Encontrado");
+            return false;
         }
     }
 
     //Cadastrar Administrativo
-    public void cadastrarAdministrativo(int id, String nome, String senha, String cpf, double salario){
-        if(BancoDeDados.getInstance().administrativos.containsKey(id) || id <= 0 || nome.isBlank() || Verificacao.verificarSenha(senha) || Verificacao.verificarCpf(cpf) || salario <= 0){
-            System.out.println("Valores Inválidos");
+    public boolean cadastrarAdministrativo(int id, String nome, String senha, String cpf, double salario){
+        if(BancoDeDados.getInstance().validarIdAdministrativo(id) || id <= 0 || nome.isBlank() || Verificacao.verificarSenha(senha) || Verificacao.verificarCpf(cpf) || salario <= 0){
+            return false;
         }
         else{
             // Se passou nas verificações, chama a classe para criptografar em SHA-512
             String senhaCriptografada = CriptografarSenha.SenhaGeral(senha);
-            Administrativo administrativo = new Administrativo(id, nome, senhaCriptografada, cpf, salario);
+            Administrativo administrativo = new Administrativo(nome, senhaCriptografada, cpf, salario);
             BancoDeDados.getInstance().administrativos.put(id, administrativo);
+            return true;
         }
     }
 
     //Demitir Administrativo
-    public void demitirAdministrativo(int id){
+    public boolean demitirAdministrativo(int id){
         if(BancoDeDados.getInstance().administrativos.containsKey(id)){
             BancoDeDados.getInstance().administrativos.remove(id);
+            return true;
         }
         else{
-            System.out.println("Administrativo Não Encontrado");
+            return false;
         }
     }
 
     //Adicionar Plano
-    public void addPlano(String nome, int id, String descricao, double valor, String validade){
-        if(BancoDeDados.getInstance().planos.containsKey(id) || id <= 0 || nome.isBlank() || descricao.isBlank() || valor <= 0 || validade.isBlank()){
-            System.out.println("Valores Inválidos");
+    public boolean addPlano(String nome, int id, String descricao, double valor, String validade){
+        if(BancoDeDados.getInstance().validarIdPlano(id) || id <= 0 || nome.isBlank() || descricao.isBlank() || valor <= 0 || validade.isBlank()){
+            return false;
         }
         else{
             Plano plano = new Plano(nome, id, descricao, valor);
             BancoDeDados.getInstance().planos.put(id, plano);
+            return true;
         }
     }
 
     //Remover Plano
-    public void removerPlano(int id){
+    public boolean removerPlano(int id){
         if(BancoDeDados.getInstance().planos.containsKey(id)){
             BancoDeDados.getInstance().planos.remove(id);
+            return true;
         }
         else{
-            System.out.print("Plano Não Encontrado");
+            return false;
         }
     }
 
     //Ver Carteirinha do Aluno
-    public void carteirinhaAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade){
-        Aluno aluno=new Aluno(id, nome, senha, cpf, idade, altura, peso, plano, intensidade);
-        aluno.mostrarCarteirinhaAluno();
+    public void carteirinhaAluno(int id){
+        BancoDeDados.getInstance().alunos.get(id).mostrarCarteirinhaAluno();
     }
 
     //Ver Carteirinha do Treinador
-    public void carteirinhaTreinador(String senha, double salario){
-        Treinador prof=new Treinador(id, nome, senha, cpf, salario);
-        prof.mostrarCarteirinhaTreinador();
+    public void carteirinhaTreinador(int id){
+        BancoDeDados.getInstance().treinadores.get(id).mostrarCarteirinhaTreinador();
     }
 
     //Ver Carteirinha do Administrativo
-    public void CarteirinhaAdministrativo(double salario, String senha, String cpf){
-        Administrativo administrativo = new Administrativo(id, nome, senha, cpf, salario);
-        administrativo.exibirInformacoes();
+    public void CarteirinhaAdministrativo(int id){
+        BancoDeDados.getInstance().administrativos.get(id).exibirInformacoes();
     }
 
     //Verificar Gráfico
     public void VerificarGrafico(int idade,String nome,String senha, double altura, double peso, Plano plano, String intensidade ){
         GraficoRenda grafico=new GraficoRenda();
-        System.out.println("Renda"+grafico.getRenda());
-        System.out.println("Situação" +grafico.getSituacao());
+        System.out.println("Renda: "+grafico.getRenda());
+        System.out.println("Situação: " +grafico.getSituacao());
     }
 }

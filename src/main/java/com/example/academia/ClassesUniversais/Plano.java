@@ -1,11 +1,7 @@
 package com.example.academia.ClassesUniversais;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class Plano {
 
@@ -14,7 +10,7 @@ public class Plano {
     private String descricao;
     private double valor;
 
-    private String modalidade;
+    private Map<Integer, Modalidade> modalidade = new HashMap<>();
 
     public Plano(String nome, int id, String descricao, double valor){
         this.nome = nome;
@@ -26,18 +22,34 @@ public class Plano {
     //Métodos
 
     //Definir Modalidade
-    public void setModalidade(String departamento, Scanner entrada){
+    public boolean addModalidade(String modalidadeEscolhida){
 
-        System.out.println("Insira qual departamento pertence ao plano");
-        String modalidadeEscolhida = entrada.nextLine();
+        int chaveVazia = this.modalidade.size();
+        Modalidade m = this.modalidade.get(chaveVazia);
 
-            Modalidade modalidade = new Modalidade();
-            modalidade.escolherModalidade(modalidadeEscolhida);
+        if(m == null){
+            m = new Modalidade();
+            m.escolherModalidade(modalidadeEscolhida);
+            this.modalidade.put(chaveVazia, m);
+            return true;
+        }
+        return false;
+    }
+
+    //Mudar Modalidade
+    public boolean setModalidade(String modalidadeEscolhida){
+        if(modalidadeEscolhida.isBlank()){
+            return false;
+        }
+        Modalidade m = new Modalidade();
+        m.escolherModalidade(modalidadeEscolhida);
+        this.modalidade.put(m.getId(), m);
+        return true;
     }
 
     //Pegar a Modalidade
-    public String getModalidade(){
-        return this.modalidade;
+    public Map<Integer, Modalidade> getModalidade(){
+        return modalidade;
     }
 
     //Pegar Nome
@@ -46,32 +58,31 @@ public class Plano {
     }
 
     //Mudar Nome
-    public void setNome(String nome) {
+    public boolean setNome(String nome) {
         if (nome.isBlank()) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
-            this.nome = nome;
+            return true;
         }
     }
 
     //Pegar Id
     public int getId(){
-
         return this.id;
     }
 
     //Pegar Descrição
     public String getDescricao(){
-
         return this.descricao;
     }
 
     //Mudar Descrição
-    public void setDescricao(String descricao) {
+    public boolean setDescricao(String descricao) {
         if (descricao.isBlank()) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.descricao = descricao;
+            return true;
         }
     }
 
@@ -81,11 +92,12 @@ public class Plano {
     }
 
     //Mudar Valor
-    public void setValor(double valor) {
+    public boolean setValor(double valor) {
         if (valor <= 0) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.valor = valor;
+            return true;
         }
     }
 }

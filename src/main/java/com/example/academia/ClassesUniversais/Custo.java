@@ -32,12 +32,12 @@ public class Custo {
     }
 
     //Mudar Nome
-    public void setNome(String nome) {
-
+    public boolean setNome(String nome) {
         if (nome.isBlank()) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.nome = nome;
+            return true;
         }
     }
 
@@ -52,22 +52,19 @@ public class Custo {
     }
 
     //Mudar Valor
-    public void setValor(double valor) {
+    public boolean setValor(double valor) {
         if (valor <= 0) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.valor = valor;
+            return true;
         }
     }
 
     //Pegar data
     public String getData(){
-
         ZoneId fusoBrasil = ZoneId.of("America/Sao_Paulo");
-
-        //Exibe a data em um formato específico
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-
         return this.data.atZone(fusoBrasil).format(formatador);
     }
 }

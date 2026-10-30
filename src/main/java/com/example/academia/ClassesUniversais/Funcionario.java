@@ -2,8 +2,8 @@ package com.example.academia.ClassesUniversais;
 
 public class Funcionario extends Usuario{
     double salario;
-    public Funcionario(int id, String nome, String senha, String cpf, double salario){
-        super(id, nome, senha, cpf);
+    public Funcionario(String nome, String senha, String cpf, double salario){
+        super(nome, senha, cpf);
         this.salario = salario;
     }
 
@@ -11,12 +11,12 @@ public class Funcionario extends Usuario{
         return this.salario;
     }
 
-    protected void setSalario(double salario) {
-
+    protected boolean setSalario(double salario) {
         if (salario <= 0) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.salario = salario;
+            return true;
         }
     }
 }

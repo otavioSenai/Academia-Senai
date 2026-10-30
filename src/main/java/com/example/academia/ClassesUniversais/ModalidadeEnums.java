@@ -10,14 +10,10 @@ public enum ModalidadeEnums {
     private String Modalidade;
 
     ModalidadeEnums(String modalidade){
-
         this.Modalidade = modalidade;
-
     }
 
     public String getModalidade(){
-
         return this.Modalidade;
-
     }
 }

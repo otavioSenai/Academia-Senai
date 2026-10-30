@@ -1,27 +1,23 @@
 package com.example.academia.ClassesUniversais;
 
-import java.util.Scanner;
-
-public class TrocaTreinador {
+public class TrocarTreinador {
 
     private int id;
     public String comentario;
 
     //Mudar o Comentário
-    public void setComentario(Integer idTreinador, Scanner entrada) {
-
+    public boolean setComentario(Integer idTreinador, String comentario) {
         if (BancoDeDados.getInstance().treinadores.containsKey(idTreinador)) {
-            System.out.println("Escreva Um Comentário Para Trocar De Treinador");
-            this.comentario = entrada.nextLine();
-        } else {
-            System.out.println("Treinador Não Encontrado");
+            this.comentario = comentario;
+            return true;
         }
+        return false;
     }
 
     //Pegar o Comentário
     public void getComentario (int idAluno, int idTreinador){
 
-        if (!BancoDeDados.getInstance().treinadores.containsKey(idTreinador) || !BancoDeDados.getInstance().alunos.containsKey(idAluno)) {
+        if (!BancoDeDados.getInstance().validarIdTreinador(idTreinador) || !BancoDeDados.getInstance().validIdAluno(idAluno)) {
             System.out.println("Valores Inválidos");
         } else {
             System.out.println("Aluno: " + BancoDeDados.getInstance().alunos.get(idAluno));

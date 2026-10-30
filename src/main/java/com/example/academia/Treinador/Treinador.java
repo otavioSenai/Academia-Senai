@@ -4,68 +4,79 @@ import com.example.academia.ClassesUniversais.BancoDeDados;
 import com.example.academia.ClassesUniversais.Exercicio;
 import com.example.academia.ClassesUniversais.Funcionario;
 import com.example.academia.ClassesUniversais.Treino;
+
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 public class Treinador extends Funcionario {
-    private String Especialidade;
+    private String especialidade;
 
-    public Treinador(int id, String nome, String senha, String cpf, double salario) {
-        super(id, nome, senha, cpf, salario);
+    public Treinador(String nome, String senha, String cpf, double salario, String especialidade) {
+        super(nome, senha, cpf, salario);
+        gerarId(BancoDeDados.getInstance().treinadores.size());
+        this.especialidade = especialidade;
     }
 
     //Pega a Especialidade
     public String getEspecialidade() {
-        return Especialidade;
+        return especialidade;
     }
 
     //Muda a Especialidade
-    public void setEspecialidade(String especialidade) {
+    public boolean setEspecialidade(String especialidade) {
         if (especialidade == null || especialidade.isBlank()) {
-            System.out.println("Dados Invalidos");
+            return false;
         } else {
-            Especialidade = especialidade;
+            especialidade = especialidade;
+            return true;
         }
     }
 
     //Cadastra o Exercicio
-    public void cadastrarExercicio(int idExercicio, String nomeExercicio, String descricao, int repeticaoExercicio, int serieExercicio, String experiencia){
+    public boolean cadastrarExercicio(int idExercicio, String nomeExercicio, String descricao, int repeticaoExercicio, int serieExercicio, String experiencia){
         if(idExercicio <= 0 || nomeExercicio.isBlank() || descricao.isBlank() || repeticaoExercicio <=0 || serieExercicio <= 0 || experiencia.isBlank()){
-            System.out.println("Valores Inválidos");
+            return false;
         }
         else{
             Exercicio exercicio = new Exercicio(idExercicio, nomeExercicio, descricao, repeticaoExercicio, serieExercicio, experiencia);
             BancoDeDados.getInstance().exercicios.put(idExercicio, exercicio);
+            return true;
         }
     }
 
     //Remove o Exercicio
-    public void removerExercicio(int idExercicio){
+    public boolean removerExercicio(int idExercicio){
         if(BancoDeDados.getInstance().exercicios.containsKey(idExercicio)){
             BancoDeDados.getInstance().exercicios.remove(idExercicio);
+            return true;
         }
         else{
-            System.out.println("Exercicio Não Encontrado");
+            return false;
         }
     }
 
     //Cadastra o Treino
-    public void cadastrarTreino(int idTreino, String nomeTreino, String conteudo, ArrayList<Exercicio> exercicios){
+    public boolean cadastrarTreino(String data, int idTreino, String nomeTreino, String conteudo, ArrayList<Exercicio> exercicios){
         if(idTreino <= 0 || nomeTreino.isBlank() || conteudo.isBlank() || exercicios == null){
-            System.out.println("Valores Inválidos");
+            return false;
         }
         else{
-            Treino treino = new Treino(idTreino, nomeTreino, conteudo, exercicios);
+            Treino treino = new Treino(idTreino, nomeTreino, conteudo, exercicios, data);
             BancoDeDados.getInstance().treinos.put(idTreino, treino);
+            return true;
         }
     }
 
     //Remover o Treino
-    public void removerTreino(int idTreino){
+    public boolean removerTreino(int idTreino){
         if(BancoDeDados.getInstance().treinos.containsKey(idTreino)){
             BancoDeDados.getInstance().treinos.remove(idTreino);
+            return true;
         }
         else{
-            System.out.println("Valores Inválidos");
+            return false;
         }
     }
 
@@ -73,7 +84,7 @@ public class Treinador extends Funcionario {
     public void mostrarCarteirinhaTreinador() {
         System.out.println("Nome: " + this.getNome());
         System.out.println("cpf: " + this.getCpf());
-        System.out.println("Especialidade: " + this.Especialidade);
+        System.out.println("Especialidade: " + this.especialidade);
         System.out.println("Salário: " + this.getSalario());
     }
 }

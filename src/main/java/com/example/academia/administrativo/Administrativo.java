@@ -7,8 +7,9 @@ package com.example.academia.administrativo;
 public class Administrativo extends Funcionario {
 
     //Construtor
-    public Administrativo(int id, String nome, String senha, String cpf, double salario){
-        super(id, nome, senha, cpf, salario);
+    public Administrativo(String nome, String senha, String cpf, double salario){
+        super(nome, senha, cpf, salario);
+        gerarId(BancoDeDados.getInstance().administrativos.size());
     }
 
     //Métodos
@@ -22,110 +23,113 @@ public class Administrativo extends Funcionario {
     }
 
     //Cadastrar Custo
-    public void cadastrarCusto(String nome, int id, String data, double valor){
+    public boolean cadastrarCusto(String nome, int id, String data, double valor){
 
-        if(nome.isBlank() || id <= 0 || BancoDeDados.getInstance().custos.containsKey(id) || data.isBlank() || valor <= 0){
-            System.out.println("Valores Inválidos");
+        if(nome.isBlank() || id <= 0 || BancoDeDados.getInstance().validarIdCusto(id) || data.isBlank() || valor <= 0){
+            return false;
         }
         else{
             Custo custo = new Custo(nome,id, data, valor);
             BancoDeDados.getInstance().custos.put(id, custo);
+            return true;
         }
     }
 
     //Remover Custo
-    public void removerCusto(int id){
+    public boolean removerCusto(int id){
 
-        if(BancoDeDados.getInstance().custos.containsKey(id)){
+        if(BancoDeDados.getInstance().validarIdCusto(id)){
             BancoDeDados.getInstance().custos.remove(id);
-            System.out.println("Custo Removido");
+            return true;
         }
         else{
-            System.out.println("Valores Inválidos");
+            return false;
         }
     }
 
     //Cadastrar Um Plano
-    public void cadatrarPlano(String nome, int id, String descricao, double valor){
+    public boolean cadatrarPlano(String nome, int id, String descricao, double valor){
 
-        if(nome.isBlank() || id <= 0 || BancoDeDados.getInstance().planos.containsKey(id) || descricao.isBlank() || valor <= 0) {
-            System.out.println("Valores Inválidos");
+        if(nome.isBlank() || id <= 0 || BancoDeDados.getInstance().validarIdPlano(id) || descricao.isBlank() || valor <= 0) {
+            return false;
         }
         else {
             Plano plano = new Plano(nome, id, descricao, valor);
             BancoDeDados.getInstance().planos.put(id, plano);
-            System.out.println("Plano Cadastrado");
+            return true;
         }
     }
 
     //Remover Um Plano
-    public void removerPlano(int id){
+    public boolean removerPlano(int id){
 
-        if(BancoDeDados.getInstance().planos.containsKey(id)){
+        if(BancoDeDados.getInstance().validarIdPlano(id)){
             BancoDeDados.getInstance().planos.remove(id);
-            System.out.println("Plano Removido");
+            return true;
         }
         else{
-            System.out.println("Valores Inválidos");
+            return false;
         }
     }
 
     //Cadastrar Um Treinador
-    public void cadastrarTreinador(int id, String nome, String senha, String cpf, double salario){
+    public boolean cadastrarTreinador(int id, String nome, String senha, String cpf, double salario, String especialidade){
 
-        if(id <= 0 || BancoDeDados.getInstance().treinadores.containsKey(id) || nome.isBlank() || cpf.isBlank() || salario <= 0 || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
-            System.out.println("Valores Inválidos");
+        if(id <= 0 || BancoDeDados.getInstance().validarIdTreinador(id) || especialidade.isBlank() || nome.isBlank() || cpf.isBlank() || salario <= 0 || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+            return false;
         }
         else{
-            Treinador treinador = new Treinador(id, nome, senha, cpf, salario);
+            Treinador treinador = new Treinador(nome, senha, cpf, salario, especialidade);
             BancoDeDados.getInstance().treinadores.put(id, treinador);
-            System.out.println("Treinador Cadastrado");
+            return true;
         }
     }
 
     //Demitir Um Treinador
-    public void demitirTreinador(int id){
+    public boolean demitirTreinador(int id){
 
-        if(BancoDeDados.getInstance().treinadores.containsKey(id)){
+        if(BancoDeDados.getInstance().validarIdTreinador(id)){
             BancoDeDados.getInstance().treinadores.remove(id);
-            System.out.println("Treinador Removido");
+            return true;
         }
         else{
-            System.out.println("Valores Inválidos");
+            return false;
         }
     }
 
     //Cadastrar a Assinatura do Plano
-    public void assinaturaPlano(String validade, Plano plano){
-        if(validade.isBlank() || plano == null){
-            System.out.println("Valores Inválidos");
+    public boolean cadastrarAssinaturaPlano(int id, int validade, Plano plano){
+        if(validade <= 0 || plano == null || id <= 0){
+            return false;
         }
         else{
             AssinaturaPlano assinaturaPlano = new AssinaturaPlano(validade, plano);
+            BancoDeDados.getInstance().assinaturaPlano.put(id,assinaturaPlano);
+            return true;
         }
     }
 
     //Cadastrar Um Aluno
-    public void cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade){
+    public boolean cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade){
 
-            if (id <= 0 || BancoDeDados.getInstance().alunos.containsKey(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
-                System.out.println("Valores Inválidos");
+            if (id <= 0 || BancoDeDados.getInstance().validIdAluno(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+                return false;
             } else {
-                Aluno aluno = new Aluno(id, nome, senha, cpf, idade, altura, peso, plano, intensidade);
+                Aluno aluno = new Aluno(nome, senha, cpf, idade, altura, peso, plano, intensidade);
                 BancoDeDados.getInstance().alunos.put(id, aluno);
-                System.out.println("Aluno Cadastrado");
+                return true;
             }
     }
 
     //Expulsar Um Aluno
-    public void expulsarAluno(int id) {
+    public boolean expulsarAluno(int id) {
 
         if (BancoDeDados.getInstance().alunos.containsKey(id)) {
             BancoDeDados.getInstance().alunos.remove(id);
-            System.out.println("Aluno Removido");
+            return true;
         }
         else {
-            System.out.println("Valores Inválidos");
+            return false;
         }
     }
 }
