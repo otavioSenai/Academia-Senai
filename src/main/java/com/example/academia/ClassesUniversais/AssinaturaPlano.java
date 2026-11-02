@@ -8,17 +8,26 @@ import java.util.Map;
 
 public class AssinaturaPlano {
 
-    private int id;
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
+
+    private final int id;
     private Map<Integer, Instant> dataPagamento = new HashMap<>();
     private Instant validade;
     private int mesesValidade;
-    private String status;
+    private boolean status;
     private Plano plano;
 
-    public AssinaturaPlano(int validade, Plano plano){
-        this.mesesValidade = validade;
-        this.status = "Em Dia";
+    public AssinaturaPlano(int idPlano, Plano plano){
+        this.mesesValidade = BancoDeDados.getInstance().planos.get(idPlano).getMesesValidade();
+        this.status = true;
         this.plano = plano;
+        this.id = Id(BancoDeDados.getInstance().assinaturaPlano);
 
         ZoneId fuso = ZoneId.of("America/Sao_Paulo");
         ZonedDateTime agora = ZonedDateTime.now(fuso);
@@ -45,6 +54,11 @@ public class AssinaturaPlano {
         return this.validade;
     }
 
+    //Pegar A validade me meses
+    public int getMesesValidade(){
+        return this.mesesValidade;
+    }
+
     //Mudar Validade
     public boolean addValidade(int mesesValidade){
         if(mesesValidade <= 0){
@@ -63,32 +77,34 @@ public class AssinaturaPlano {
         Instant Agora = Instant.now();
 
         if(Agora.isAfter(this.validade)){
-            this.status = "Atrasado";
+            this.status = false;
             return false;
         }
-        this.status = "Em Dia";
+        this.status = true;
         return true;
     }
 
     //Pegar Status
-    public String getStatus(){
+    public boolean getStatus(){
         return this.status;
     }
 
     //Efutuar o Pagamento do Plano
-    public boolean pagarPlano(int id){
-        if(plano.getId() != id){
+    public boolean pagarPlano(int idPlano, int idAluno){
+        if(plano.getId() != idPlano){
             return false;
         }
         Instant momentoPagamento = Instant.now();
-        this.dataPagamento.put(id, momentoPagamento);
+        this.dataPagamento.put(idPlano, momentoPagamento);
 
         ZoneId fuso = ZoneId.of("America/Sao_Paulo");
         ZonedDateTime validadeZona = this.validade.atZone(fuso);
 
         ZonedDateTime novaValidade = validadeZona.plusMonths(this.mesesValidade);
         this.validade = novaValidade.toInstant();
-        this.status = "Em Dia";
+        this.status = true;
+
+        BancoDeDados.getInstance().grafico.addRenda(idAluno);
         return true;
     }
 

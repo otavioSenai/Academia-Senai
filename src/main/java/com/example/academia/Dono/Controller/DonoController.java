@@ -101,26 +101,32 @@ public class DonoController {
     // =========================
     @FXML
     private void cadastrarTreinador() {
-        String[] v = formulario("Cadastrar treinador", "id do Treinador","id da Modalidade", "Nome", "Senha", "CPF", "Salário", "Especialidade");
+        String[] v = formulario("Cadastrar treinador", "id da Modalidade", "Nome", "Senha", "CPF", "Salário", "Especialidade");
         if (v == null || !camposPreenchidos(v)) return;
-        Double salario = decimal(v[6], "Salário");
+        Double salario = decimal(v[5], "Salário");
         if (salario == null) return;
-        String especialidade =(v[7]);
+        String especialidade =(v[6]);
         if(especialidade.isBlank()) return;
+        Integer idModalidade = inteiro(v[1], "id da Modalidade");
+        if(idModalidade < 0 || idModalidade > 3) return;
+        Integer idTreinador = BancoDeDados.getInstance().treinadores.size();
 
-        boolean sucesso = dono.CadastrarTreinador(v[1], v[2], v[3], v[4], v[5], salario, especialidade);
+
+        boolean sucesso = dono.CadastrarTreinador(idModalidade, v[2], v[3], v[4],salario, especialidade);
         if(sucesso) resultadoSucesso("Treinador " + v[3] + " cadastrado com sucesso.");
         else resultadoErro("Falha ao cadastrar. Verifique os requisitos de CPF, senha forte e se o ID já existe.");
     }
 
     @FXML
     private void demitirTreinador() {
-        String[] v = formulario("Demitir treinador", "ID do treinador");
+        String[] v = formulario("Demitir treinador", "ID do treinador", "ID da modalidade");
         if (v == null || !camposPreenchidos(v)) return;
-        Integer id = inteiro(v[0], "ID do treinador");
-        if (id == null) return;
+        Integer idTreinador = inteiro(v[0], "ID do treinador");
+        if (idTreinador == null) return;
+        Integer idModalidade = inteiro(v[1], "ID da modalidade");
+        if(idModalidade == null)return;
 
-        boolean sucesso = dono.demitirTreinador(id);
+        boolean sucesso = dono.demitirTreinador(idTreinador, idModalidade);
         if(sucesso) resultadoSucesso("Treinador removido com sucesso.");
         else resultadoErro("Falha: Treinador não encontrado.");
     }
@@ -185,11 +191,12 @@ public class DonoController {
     @FXML
     private void cadastrarPlano() {
         // Removido o campo "Validade" pois a regra atual foi para AssinaturaPlano
-        String[] v = formulario("Cadastrar plano", "Nome", "ID", "Descrição", "Valor");
+        String[] v = formulario("Cadastrar plano", "Nome", "ID", "Descrição", "Valor", "Validade", "Modalidade");
         if (v == null || !camposPreenchidos(v)) return;
         Integer id = inteiro(v[1], "ID do plano");
         Double valor = decimal(v[3], "Valor do plano");
         if (id == null || valor == null) return;
+        Integer validade = inteiro(v[5], "Validade");
 
         // Passando validade fixa "N/A" apenas para satisfazer a assinatura antiga do Dono que ainda pede String validade
         boolean sucesso = dono.cadastrarPlano(v[0], id, v[2], valor, "N/A");

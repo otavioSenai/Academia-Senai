@@ -1,21 +1,27 @@
 package com.example.academia.Treinador;
 
-import com.example.academia.ClassesUniversais.BancoDeDados;
-import com.example.academia.ClassesUniversais.Exercicio;
-import com.example.academia.ClassesUniversais.Funcionario;
-import com.example.academia.ClassesUniversais.Treino;
+import com.example.academia.ClassesUniversais.*;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Treinador extends Funcionario {
     private String especialidade;
+    private HashMap<Integer, TrocarTreinador> solicitarTroca;
+    private HashMap<Integer, FeedbackTreinador> feedback;
+
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
 
     public Treinador(String nome, String senha, String cpf, double salario, String especialidade) {
         super(nome, senha, cpf, salario);
-        gerarId(BancoDeDados.getInstance().treinadores.size());
+        gerarId(Id(BancoDeDados.getInstance().treinadores));
         this.especialidade = especialidade;
     }
 
@@ -32,6 +38,39 @@ public class Treinador extends Funcionario {
             especialidade = especialidade;
             return true;
         }
+    }
+
+    //Adicionar Solicitação de Troca
+    public boolean addTroca(String comentario, int idAluno){
+        TrocarTreinador t = new TrocarTreinador();
+        if(t.setComentario(comentario, idAluno)) {
+            solicitarTroca.put(t.getId(), t);
+            BancoDeDados.getInstance().trocarTreinadores.put(t.getId(), t);
+            return true;
+        }
+        return false;
+    }
+
+    //Pegar Solicitação de Troca
+    public Map<Integer, TrocarTreinador> getSolicitacaoTroca(){
+        return this.solicitarTroca;
+    }
+
+    //Adicionar Feedback
+    public boolean addFeedback(String comentario, int qtdEstrelas, int idAluno){
+        FeedbackTreinador f = new FeedbackTreinador();
+
+        if(f.addComentario(comentario, qtdEstrelas, idAluno)) {
+            feedback.put(f.getId(), f);
+            BancoDeDados.getInstance().feedbacksTreinadores.put(f.getId(), f);
+            return true;
+        }
+        return false;
+    }
+
+    //Pegar Feedback
+    public Map<Integer, FeedbackTreinador> getFeedback(){
+        return this.feedback;
     }
 
     //Cadastra o Exercicio

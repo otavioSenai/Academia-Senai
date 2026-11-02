@@ -7,15 +7,15 @@ import java.util.Map;
 
 public class Modalidade {
 
-    private int id;
+    private int id = BancoDeDados.getInstance().modalidades.length;
     private Map <Integer,Treinador> treinadores = new HashMap();
-    private String Nome;
+    private String nome;
     private String descricao;
 
     //Escolhe a Modalidade
     public boolean escolherModalidade(String modalidadeEscolhida){
-        if(BancoDeDados.getInstance().validarModalidadeEnums(modalidadeEscolhida)) {
-            this.Nome = modalidadeEscolhida;
+        if(BancoDeDados.getInstance().compareEnums(modalidadeEscolhida)) {
+            this.nome = modalidadeEscolhida;
             return true;
         }
         return false;
@@ -28,7 +28,7 @@ public class Modalidade {
 
     //Pega a Modalidade
     public String getNome(){
-        return this.Nome;
+        return this.nome;
     }
 
     //Mudar a Descricao
@@ -47,7 +47,7 @@ public class Modalidade {
 
     //Adiciona um Treinador
     public boolean addTreinador(int id, Treinador treinador){
-        if(!BancoDeDados.getInstance().treinadores.containsKey(id)){
+        if(BancoDeDados.getInstance().validarIdTreinador(id)){
             treinadores.put(id, treinador);
             return true;
         }
@@ -69,6 +69,9 @@ public class Modalidade {
     public Treinador getTreinador(int id){
             return this.treinadores.get(id);
     }
+
+    //Pegar os Treinadores
+    public Map<Integer, Treinador> getTreinadores(){return this.treinadores;}
 
     //Mostrar os Treinadores
     public boolean showTreinadores(){

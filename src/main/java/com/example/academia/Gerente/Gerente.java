@@ -8,6 +8,7 @@ public class Gerente extends Funcionario {
 int demissoes=0;
 int contratacao=0;
 int alunosExpulsos=0;
+int cadastroAlunos=0;
 
 
 public Gerente(String nome, String senha, String cpf, double salario){
@@ -17,25 +18,27 @@ public Gerente(String nome, String senha, String cpf, double salario){
 
     //Mostra a Carteirinha do Gerente
     public void CarteirinhaGerente(){
-        System.out.println("Nome:" + getNome());
-        System.out.println("Senha:" + getSenha());
-        System.out.println("Demissões:" + demissoes);
-        System.out.println("Contratações:" + contratacao);
-        System.out.println("Alunos Expulsos:" + alunosExpulsos);
-        System.out.println("Salario á Pagar" + getSalario());
+        System.out.println("Nome: " + this.getNome());
+        System.out.println("Demissões: " + this.demissoes);
+        System.out.println("Contratações: " + this.contratacao);
+        System.out.println("Cadastros Alunos: " + this.cadastroAlunos);
+        System.out.println("Alunos Expulsos: " + this.alunosExpulsos);
+        System.out.println("Salario á Pagar: " + this.getSalario());
 
     }
 
     //Cadastrar Aluno
-    public boolean CadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade){
-        if (id <= 0 || BancoDeDados.getInstance().validIdAluno(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+    public boolean CadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade, Treinador treinador){
+        if (id <= 0 || BancoDeDados.getInstance().validIdAluno(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank()
+                || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf) || BancoDeDados.getInstance().validarIdTreinador(treinador.getId())){
             return false;
         }
         else{
             // Se passou nas verificações, chama a classe para criptografar em SHA-512
             String senhaCriptografada = CriptografarSenha.SenhaGeral(senha);
-            Aluno aluno = new Aluno(nome, senhaCriptografada, cpf, idade, altura, peso, plano, intensidade);
+            Aluno aluno = new Aluno(nome, senhaCriptografada, cpf, idade, altura, peso, plano, intensidade, treinador);
             BancoDeDados.getInstance().alunos.put(id, aluno);
+            this.cadastroAlunos ++;
             return true;
         }
     }
@@ -44,6 +47,7 @@ public Gerente(String nome, String senha, String cpf, double salario){
     public boolean expulsarAluno(int id){
         if(BancoDeDados.getInstance().alunos.containsKey(id)){
             BancoDeDados.getInstance().alunos.remove(id);
+            this.alunosExpulsos++;
             return true;
         }
         else{
@@ -61,6 +65,7 @@ public Gerente(String nome, String senha, String cpf, double salario){
             String senhaCriptografada = CriptografarSenha.SenhaGeral(senha);
             Treinador treinador = new Treinador(nome, senhaCriptografada, cpf, salario, especialidade);
             BancoDeDados.getInstance().treinadores.put(id, treinador);
+            this.contratacao++;
             return true;
         }
     }
@@ -69,6 +74,7 @@ public Gerente(String nome, String senha, String cpf, double salario){
     public boolean demitirTreinador(int id){
         if(BancoDeDados.getInstance().treinadores.containsKey(id)){
             BancoDeDados.getInstance().treinadores.remove(id);
+            this.demissoes++;
             return true;
         }
         else{
@@ -86,6 +92,7 @@ public Gerente(String nome, String senha, String cpf, double salario){
             String senhaCriptografada = CriptografarSenha.SenhaGeral(senha);
             Administrativo administrativo = new Administrativo(nome, senhaCriptografada, cpf, salario);
             BancoDeDados.getInstance().administrativos.put(id, administrativo);
+            this.contratacao++;
             return true;
         }
     }
@@ -94,6 +101,7 @@ public Gerente(String nome, String senha, String cpf, double salario){
     public boolean demitirAdministrativo(int id){
         if(BancoDeDados.getInstance().administrativos.containsKey(id)){
             BancoDeDados.getInstance().administrativos.remove(id);
+            this.demissoes++;
             return true;
         }
         else{

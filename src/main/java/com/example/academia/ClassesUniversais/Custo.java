@@ -2,6 +2,7 @@ package com.example.academia.ClassesUniversais;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 public class Custo {
 
@@ -10,9 +11,17 @@ public class Custo {
     private final Instant data;
     private double valor;
 
-    public Custo(String nome, int id, String data, double valor){
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
+
+    public Custo(String nome, String data, double valor){
         this.nome = nome;
-        this.id = id;
+        this.id = id = Id(BancoDeDados.getInstance().custos);
         this.valor = valor;
         this.data = Instant.now();
     }

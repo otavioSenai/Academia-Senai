@@ -1,5 +1,7 @@
 package com.example.academia.ClassesUniversais;
 
+import java.util.Map;
+
 public class Exercicio {
     private final int idExercicio;
     private String descricao;
@@ -8,9 +10,16 @@ public class Exercicio {
     private int repeticaoExercicio;
     private int serieExercicio;
 
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
 
-    public Exercicio(int idExercicio, String nomeExercicio, String descricao, int repeticaoExercicio, int serieExercicio, String experiencia) {
-        this.idExercicio = idExercicio;
+    public Exercicio(String nomeExercicio, String descricao, int repeticaoExercicio, int serieExercicio, String experiencia) {
+        this.idExercicio = Id(BancoDeDados.getInstance().exercicios);
         this.nomeExercicio = nomeExercicio;
         this.descricao = descricao;
         this.repeticaoExercicio= repeticaoExercicio;

@@ -4,12 +4,22 @@ package com.example.academia.administrativo;
     import com.example.academia.aluno.Aluno;
     import com.example.academia.Treinador.Treinador;
 
+    import java.util.Map;
+
 public class Administrativo extends Funcionario {
+
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
 
     //Construtor
     public Administrativo(String nome, String senha, String cpf, double salario){
         super(nome, senha, cpf, salario);
-        gerarId(BancoDeDados.getInstance().administrativos.size());
+        gerarId(Id(BancoDeDados.getInstance().administrativos));
     }
 
     //Métodos
@@ -48,13 +58,13 @@ public class Administrativo extends Funcionario {
     }
 
     //Cadastrar Um Plano
-    public boolean cadatrarPlano(String nome, int id, String descricao, double valor){
+    public boolean cadatrarPlano(String nome, int id, String descricao, double valor, int mesesValidade){
 
-        if(nome.isBlank() || id <= 0 || BancoDeDados.getInstance().validarIdPlano(id) || descricao.isBlank() || valor <= 0) {
+        if(nome.isBlank() || id <= 0 || BancoDeDados.getInstance().validarIdPlano(id) || descricao.isBlank() || valor <= 0 || mesesValidade <= 0) {
             return false;
         }
         else {
-            Plano plano = new Plano(nome, id, descricao, valor);
+            Plano plano = new Plano(nome, id, descricao, valor, mesesValidade);
             BancoDeDados.getInstance().planos.put(id, plano);
             return true;
         }
@@ -110,12 +120,13 @@ public class Administrativo extends Funcionario {
     }
 
     //Cadastrar Um Aluno
-    public boolean cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade){
+    public boolean cadastrarAluno(int id, String nome, String senha, String cpf, int idade, double altura, double peso, AssinaturaPlano plano, String intensidade, Treinador treinador){
 
-            if (id <= 0 || BancoDeDados.getInstance().validIdAluno(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)){
+            if (id <= 0 || BancoDeDados.getInstance().validIdAluno(id)|| nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank()
+                    || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf) || BancoDeDados.getInstance().validarIdTreinador(treinador.getId())){
                 return false;
             } else {
-                Aluno aluno = new Aluno(nome, senha, cpf, idade, altura, peso, plano, intensidade);
+                Aluno aluno = new Aluno(nome, senha, cpf, idade, altura, peso, plano, intensidade, treinador);
                 BancoDeDados.getInstance().alunos.put(id, aluno);
                 return true;
             }
@@ -124,7 +135,7 @@ public class Administrativo extends Funcionario {
     //Expulsar Um Aluno
     public boolean expulsarAluno(int id) {
 
-        if (BancoDeDados.getInstance().alunos.containsKey(id)) {
+        if (BancoDeDados.getInstance().validIdAluno(id)) {
             BancoDeDados.getInstance().alunos.remove(id);
             return true;
         }

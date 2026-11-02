@@ -1,11 +1,13 @@
 package com.example.academia.ClassesUniversais;
 
+import com.example.academia.Dono.Dono;
+import com.example.academia.Gerente.Gerente;
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
 import com.example.academia.Treinador.Treinador;
-
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class BancoDeDados {
 
@@ -27,6 +29,12 @@ public class BancoDeDados {
     public Map <Integer, TrocarTreinador> trocarTreinadores = new HashMap<>();
 
     public ModalidadeEnums[] modalidadeEnums = ModalidadeEnums.values();
+
+    public GraficoRenda grafico = new GraficoRenda();
+
+    public Optional<Gerente> gerente = Optional.empty();
+
+    public Optional<Dono> dono = Optional.empty();
 
     private BancoDeDados(){}
 
@@ -75,6 +83,11 @@ public class BancoDeDados {
     //Validar Id do Plano
     public boolean validarIdPlano(int id){
         return planos.containsKey(id);
+    }
+
+    //Validar Id Da Assinatura Plano
+    public boolean validarIdAssinaturaPlano(int id){
+        return assinaturaPlano.containsKey(id);
     }
 
     //Pegar a Assinatura Dos Planos
@@ -160,5 +173,20 @@ public class BancoDeDados {
     //Validar Id Da Solicitação Para Trocar De Treinador
     public boolean validarIdTrocarTreinador(int id){
         return trocarTreinadores.containsKey(id);
+    }
+
+    //Comparar Enums
+    public boolean compareEnums(String modalidade){
+
+        ModalidadeEnums modalidade1 = ModalidadeEnums.CARDIO;
+        ModalidadeEnums modalidade2 = ModalidadeEnums.CROSSFIT;
+        ModalidadeEnums modalidade3 = ModalidadeEnums.MUSCULACAO;
+        ModalidadeEnums modalidade4 = ModalidadeEnums.PILATE;
+
+        if(modalidade1.name().equalsIgnoreCase(modalidade) || modalidade2.name().equalsIgnoreCase(modalidade)
+           || modalidade3.name().equalsIgnoreCase(modalidade) || modalidade4.name().equalsIgnoreCase(modalidade)){
+            return true;
+        }
+        return false;
     }
 }
