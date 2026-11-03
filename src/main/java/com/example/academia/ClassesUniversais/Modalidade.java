@@ -1,48 +1,100 @@
 package com.example.academia.ClassesUniversais;
 
 import com.example.academia.Treinador.Treinador;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class Modalidade {
 
-    private Map treinadores = new HashMap();
-    private String modalidade;
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
+
+    private int id;
+    private Map <Integer,Treinador> treinadores = new HashMap();
+    private String nome;
     private String descricao;
-    private int capacidade;
 
-    //Escolhe a Modalidade
-    public void escolherModalidade(String modalidadeEscolhida){
+    //Construtor
+    public Modalidade(String nome, String descricao){
+        this.id = Id(BancoDeDados.getInstance().modalidades);
+        this.nome = nome;
+        this.descricao = descricao;
+    }
 
-        for(ModalidadeEnums m : BancoDeDados.getInstance().modalidadeEnums){
-            if(m.name().equalsIgnoreCase(modalidadeEscolhida)){
-                this.modalidade = m.toString();
-                break;
-            }
+    //pegar id
+    public int getId(){
+        return this.id;
+    }
+
+    //Mudar o Nome
+    public boolean setNome(String nome){
+        if(nome.isBlank()){
+            return false;
         }
+        this.nome = nome;
+        return true;
     }
 
-    //Pega a Modalidade
-    public String getModalidade(){
-        return this.modalidade;
+    //Pega o Nome
+    public String getNome(){
+        return this.nome;
     }
 
-    //Adiciona um Professor
-    public void addTreinador(int id, Treinador treinador){
-        if(!treinadores.containsKey(id)){
+    //Mudar a Descricao
+    public boolean setDescricao(String descricao){
+        if(descricao.isBlank()){
+            return false;
+        }
+        this.descricao = descricao;
+        return true;
+    }
+
+    //Pegar Descricao
+    public String getDescricao(){
+        return this.descricao;
+    }
+
+    //Adiciona um Treinador
+    public boolean addTreinador(int id, Treinador treinador){
+        if(BancoDeDados.getInstance().validarIdTreinador(id)){
             treinadores.put(id, treinador);
+            return true;
         }
         else{
-            System.out.println("Valores Inválidos");
+            return false;
         }
+    }
+
+    //Remove Um Treinador
+    public boolean removeTreinador(int idModalidade, int idTreinador){
+        if(BancoDeDados.getInstance().validarIdModalidade(idModalidade)){
+            treinadores.remove(idTreinador);
+            return true;
+        }
+        return false;
     }
 
     //Pega o Treinador
-    public String getTreinador(int id){
-        if(treinadores.containsKey(id)){
-            return treinadores.get(id).toString();
+    public Treinador getTreinador(int id){
+            return this.treinadores.get(id);
+    }
+
+    //Pegar os Treinadores
+    public Map<Integer, Treinador> getTreinadores(){return this.treinadores;}
+
+    //Mostrar os Treinadores
+    public boolean showTreinadores(){
+        if(treinadores.isEmpty()){
+            return false;
         }
-        return "Professor Não Enontrado";
+        for(Treinador t : treinadores.values()){
+            System.out.println(t.getId() + " - " + t.getNome());
+        }
+        return true;
     }
 }

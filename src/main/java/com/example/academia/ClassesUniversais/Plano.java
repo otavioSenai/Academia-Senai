@@ -1,11 +1,7 @@
 package com.example.academia.ClassesUniversais;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class Plano {
 
@@ -13,31 +9,64 @@ public class Plano {
     private final int id;
     private String descricao;
     private double valor;
+    private int mesesValidade;
+    private double juros;
 
-    private String modalidade;
+    private Map<Integer, Modalidade> modalidade = new HashMap<>();
 
-    public Plano(String nome, int id, String descricao, double valor){
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
+
+    public Plano(String nome, String descricao, double valor, int mesesValidade, double juros){
         this.nome = nome;
-        this.id = id;
+        this.id = Id(BancoDeDados.getInstance().planos);
         this.descricao = descricao;
         this.valor = valor;
+        this.mesesValidade = mesesValidade;
+        this.juros = juros;
     }
 
     //Métodos
 
-    //Definir Modalidade
-    public void setModalidade(String departamento, Scanner entrada){
+    //Adicionar Modalidade Do Banco de Dados
+    public boolean addModalidade(int id){
+        if(BancoDeDados.getInstance().validarIdModalidade(id)){
+            Modalidade m = BancoDeDados.getInstance().modalidades.get(id);
+            this.modalidade.put(m.getId(), m);
+            return true;
+        }
+        return false;
+    }
 
-        System.out.println("Insira qual departamento pertence ao plano");
-        String modalidadeEscolhida = entrada.nextLine();
+    //Pegar Juros
+    public double getJuros(){
+        return this.juros;
+    }
 
-            Modalidade modalidade = new Modalidade();
-            modalidade.escolherModalidade(modalidadeEscolhida);
+    //Pegar a Validade
+    public int getMesesValidade(){
+        return this.mesesValidade;
+    }
+
+    //Mudar Validade
+    public boolean setMesesValidade(int mesesValidade){
+        if(mesesValidade <= 0){
+            return false;
+        }
+        else{
+            this.mesesValidade = mesesValidade;
+            return true;
+        }
     }
 
     //Pegar a Modalidade
-    public String getModalidade(){
-        return this.modalidade;
+    public Map<Integer, Modalidade> getModalidade(){
+        return modalidade;
     }
 
     //Pegar Nome
@@ -46,32 +75,32 @@ public class Plano {
     }
 
     //Mudar Nome
-    public void setNome(String nome) {
+    public boolean setNome(String nome) {
         if (nome.isBlank()) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.nome = nome;
+            return true;
         }
     }
 
     //Pegar Id
     public int getId(){
-
         return this.id;
     }
 
     //Pegar Descrição
     public String getDescricao(){
-
         return this.descricao;
     }
 
     //Mudar Descrição
-    public void setDescricao(String descricao) {
+    public boolean setDescricao(String descricao) {
         if (descricao.isBlank()) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.descricao = descricao;
+            return true;
         }
     }
 
@@ -81,11 +110,12 @@ public class Plano {
     }
 
     //Mudar Valor
-    public void setValor(double valor) {
+    public boolean setValor(double valor) {
         if (valor <= 0) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.valor = valor;
+            return true;
         }
     }
 }

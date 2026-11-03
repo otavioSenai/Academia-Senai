@@ -1,6 +1,6 @@
 package com.example.academia.ClassesUniversais;
 
-import java.time.LocalDate;
+import java.util.Map;
 
 public class Exercicio {
     private final int idExercicio;
@@ -10,9 +10,16 @@ public class Exercicio {
     private int repeticaoExercicio;
     private int serieExercicio;
 
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
 
-    public Exercicio(int idExercicio, String nomeExercicio, String descricao, int repeticaoExercicio, int serieExercicio, String experiencia) {
-        this.idExercicio = idExercicio;
+    public Exercicio(String nomeExercicio, String descricao, int repeticaoExercicio, int serieExercicio, String experiencia) {
+        this.idExercicio = Id(BancoDeDados.getInstance().exercicios);
         this.nomeExercicio = nomeExercicio;
         this.descricao = descricao;
         this.repeticaoExercicio= repeticaoExercicio;
@@ -21,49 +28,65 @@ public class Exercicio {
     }
 
     public int getIdExercicio() {
-
         return idExercicio;
     }
 
     public String getNomeExercicio() {
-
         return nomeExercicio;
     }
 
-    public void setNomeExercicio(String nomeTreino)
-    {
+    public boolean setNomeExercicio(String nomeTreino){
+        if(nomeTreino.isBlank()){
+            return false;
+        }
         this.nomeExercicio = nomeTreino;
+        return true;
     }
 
     public String getDescricao() {
-
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-
+    public boolean setDescricao(String descricao) {
+        if(descricao.isBlank()){
+            return false;
+        }
         this.descricao = descricao;
+        return true;
     }
 
-    public int getRepeticaoExercicioExercicio() {
-
+    public int getRepeticaoExercicio() {
         return repeticaoExercicio;
     }
 
-    public void setDataExercicio(int repeticaoExercicio) {
-
+    public boolean setRepeticaoExercicio(int repeticaoExercicio) {
+        if(repeticaoExercicio <= 0){
+            return false;
+        }
         this.repeticaoExercicio = repeticaoExercicio;
+        return true;
     }
+
     public int getSerieExercicio(){
         return serieExercicio;
     }
-    public void setIdExercicio(int serieExercicio){
+
+    public boolean setIdExercicio(int serieExercicio){
+        if(serieExercicio <= 0){
+            return false;
+        }
         this.serieExercicio=serieExercicio;
+        return true;
     }
     public String getExperiencia(){
         return experiencia;
     }
-    public void setExperiencia(){
+
+    public boolean setExperiencia(String experiencia){
+        if(experiencia.isBlank()){
+            return false;
+        }
         this.experiencia=experiencia;
+        return true;
     }
 }
