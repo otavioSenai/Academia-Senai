@@ -1,7 +1,5 @@
 package com.example.academia.ClassesUniversais;
 
-import com.example.academia.aluno.Aluno;
-
 public class GraficoRenda {
     private double custo;
     private double renda;

@@ -1,215 +1,156 @@
-/* ==========================================================================
-   ÍCARO ACADEMIA - SISTEMA DE DESIGN UNIFICADO (JAVAFX COMPATIBLE)
-   ========================================================================== */
-
+/* =========================================================
+ * IDENTIDADE VISUAL: Academia Ícaro (Obsidian Gold Modern)
+ * ========================================================= */
 .root {
     -fx-background-color: #04070d;
-    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+    -fx-font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
 }
 
-/* --------------------------------------------------------------------------
-   SISTEMA TIPOGRÁFICO
-   -------------------------------------------------------------------------- */
-.headline-xl {
-    -fx-font-size: 26px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
+/* --- Tipografia --- */
+.headline-xl { -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #f8fafc; }
+.title-md { -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #f8fafc; }
+.label-sm { -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #94a3b8; }
+.text-gold { -fx-text-fill: #f1ba2a; }
+
+/* --- Paineis e Estruturas --- */
+.sidebar-panel {
+    -fx-background-color: #06090e;
+    -fx-border-color: #0e1116;
+    -fx-border-width: 0 1 0 0;
 }
 
-.headline-lg {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
-}
-
-.title-md {
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
-}
-
-.label-sm {
-    -fx-font-size: 11px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #8d93a2;
-}
-
-.text-muted {
-    -fx-font-size: 13px;
-    -fx-text-fill: #94a3b8;
-}
-
-/* --------------------------------------------------------------------------
-   CARTÕES E PAINÉIS
-   -------------------------------------------------------------------------- */
-.card-panel {
-    -fx-background-color: #0d121d;
-    -fx-border-color: #1e293b;
+/* --- Popups, Alertas e Formulários (Dialogs) --- */
+.dialog-pane {
+    -fx-background-color: #06090e;
+    -fx-border-color: #0e1116;
     -fx-border-width: 1px;
-    -fx-border-radius: 12px;
-    -fx-background-radius: 12px;
+}
+.dialog-pane .label {
+    -fx-text-fill: #f8fafc;
+}
+.dialog-pane .header-panel {
+    -fx-background-color: #04070d;
+    -fx-border-color: #0e1116;
+    -fx-border-width: 0 0 1 0;
+}
+.dialog-pane .header-panel .label {
+    -fx-text-fill: #f1ba2a;
+    -fx-font-weight: bold;
+}
+.dialog-pane .button-bar .button {
+    -fx-background-color: #181c23;
+    -fx-text-fill: #94a3b8;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+.dialog-pane .button-bar .button:default {
+    -fx-background-color: #f1ba2a;
+    -fx-text-fill: #04070d;
+    -fx-font-weight: bold;
+}
+.dialog-pane .button-bar .button:hover {
+    -fx-background-color: #daa520;
+    -fx-text-fill: #04070d;
+}
+
+.header-panel {
+    -fx-background-color: #04070d;
+    -fx-border-color: #0e1116;
+    -fx-border-width: 0 0 1 0;
+}
+.card-panel {
+    -fx-background-color: #06090e;
+    -fx-border-color: #0e1116;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
     -fx-padding: 20px;
 }
 
-.card-panel:hover {
-    -fx-border-color: #334155;
-}
-
-.card-header {
-    -fx-border-color: #1e293b;
-    -fx-border-width: 0 0 1 0;
-    -fx-padding: 0 0 12 0;
-}
-
-.data-block {
-    -fx-background-color: #070a12;
-    -fx-border-color: #1e293b;
-    -fx-border-width: 1px;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-    -fx-padding: 12px;
-}
-
-/* --------------------------------------------------------------------------
-   BOTÕES E AÇÕES
-   -------------------------------------------------------------------------- */
+/* --- Botões --- */
 .btn-primary {
     -fx-background-color: #f1ba2a;
     -fx-text-fill: #04070d;
     -fx-font-weight: bold;
-    -fx-font-size: 13px;
-    -fx-background-radius: 8px;
-    -fx-padding: 10px 18px;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
     -fx-cursor: hand;
 }
-
-.btn-primary:hover {
-    -fx-background-color: #f5c747;
-}
-
-.btn-primary:armed,
-.btn-primary:pressed {
-    -fx-background-color: #d9a31e;
-}
+.btn-primary:hover { -fx-background-color: #daa520; }
 
 .btn-secondary {
-    -fx-background-color: #1e293b;
-    -fx-text-fill: #f8fafc;
-    -fx-font-weight: bold;
-    -fx-font-size: 12px;
-    -fx-background-radius: 8px;
-    -fx-padding: 9px 14px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #94a3b8;
+    -fx-border-color: #0e1116;
+    -fx-border-radius: 6px;
+    -fx-padding: 8px 16px;
     -fx-cursor: hand;
 }
-
 .btn-secondary:hover {
-    -fx-background-color: #334155;
-    -fx-text-fill: #ffffff;
+    -fx-border-color: #f1ba2a;
+    -fx-text-fill: #f8fafc;
 }
-
-.btn-secondary:armed,
-.btn-secondary:pressed {
-    -fx-background-color: #0f172a;
-}
-
 .btn-danger {
-    -fx-background-color: #ef4444;
-    -fx-text-fill: #ffffff;
-    -fx-font-weight: bold;
-    -fx-font-size: 12px;
-    -fx-background-radius: 8px;
-    -fx-padding: 9px 14px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #808080;
+    -fx-border-color: #808080;
+    -fx-border-radius: 6px;
+    -fx-padding: 8px 16px;
     -fx-cursor: hand;
 }
-
 .btn-danger:hover {
-    -fx-background-color: #dc2626;
+    -fx-background-color: #808080;
+    -fx-text-fill: #04070d;
 }
 
+/* --- Menu Lateral --- */
 .sidebar-btn {
     -fx-background-color: transparent;
     -fx-text-fill: #94a3b8;
-    -fx-font-size: 13px;
     -fx-font-weight: bold;
-    -fx-background-radius: 8px;
-    -fx-padding: 12px 14px;
     -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12px 16px;
+    -fx-background-radius: 6px;
     -fx-cursor: hand;
 }
-
 .sidebar-btn:hover {
-    -fx-background-color: #1e293b;
-    -fx-text-fill: #f1ba2a;
+    -fx-background-color: #0a0e16;
+    -fx-text-fill: #f8fafc;
+}
+.sidebar-btn-active {
+    -fx-background-color: #f1ba2a;
+    -fx-text-fill: #04070d;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12px 16px;
+    -fx-background-radius: 6px;
 }
 
-/* --------------------------------------------------------------------------
-   INPUTS DE PESQUISA E FORMULÁRIOS
-   -------------------------------------------------------------------------- */
-.search-container {
-    -fx-background-color: #0d121d;
-    -fx-border-color: #1e293b;
-    -fx-border-width: 1px;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-padding: 4px 12px;
-}
-
-.search-container:focused,
-.search-container:hover {
-    -fx-border-color: #f1ba2a;
-}
-
-.search-input {
-    -fx-background-color: transparent;
-    -fx-text-fill: #ffffff;
-    -fx-prompt-text-fill: #64748b;
-    -fx-font-size: 13px;
-}
-
-.search-input:focused {
-    -fx-background-color: transparent;
-}
-
-.text-field-custom {
-    -fx-background-color: #0d121d;
-    -fx-border-color: #1e293b;
-    -fx-border-width: 1px;
+/* --- Tabelas (TableView) --- */
+.table-view {
+    -fx-background-color: #06090e;
+    -fx-border-color: #0e1116;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
-    -fx-text-fill: #ffffff;
-    -fx-prompt-text-fill: #64748b;
-    -fx-padding: 10px;
 }
-
-.text-field-custom:focused {
-    -fx-border-color: #f1ba2a;
+.table-view .column-header-background {
+    -fx-background-color: #0a0e16;
+    -fx-border-color: #0e1116;
+    -fx-border-width: 0 0 1 0;
 }
-
-/* --------------------------------------------------------------------------
-   BADGES E NAVEGAÇÃO
-   -------------------------------------------------------------------------- */
-.badge-warning {
-    -fx-background-color: rgba(241, 186, 42, 0.15);
-    -fx-text-fill: #f1ba2a;
-    -fx-font-size: 10px;
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+.table-view .column-header .label {
+    -fx-text-fill: #94a3b8;
     -fx-font-weight: bold;
-    -fx-padding: 4px 8px;
-    -fx-background-radius: 4px;
+    -fx-font-size: 11px;
 }
-
-.badge-success {
-    -fx-background-color: rgba(16, 185, 129, 0.15);
-    -fx-text-fill: #10b981;
-    -fx-font-size: 10px;
-    -fx-font-weight: bold;
-    -fx-padding: 4px 8px;
-    -fx-background-radius: 4px;
+.table-row-cell {
+    -fx-background-color: #06090e;
+    -fx-border-color: #0e1116;
+    -fx-border-width: 0 0 1 0;
 }
-
-.scroll-pane {
-    -fx-background-color: #04070d;
-}
-
-.scroll-pane > .viewport {
-    -fx-background-color: #04070d;
-}
+.table-row-cell:odd { -fx-background-color: #0a0c10; }
+.table-row-cell:selected { -fx-background-color: #1a1e28; }
+.table-row-cell .text { -fx-fill: #f8fafc; }

@@ -1,7 +1,5 @@
 package com.example.academia.ClassesUniversais;
 
-import java.util.Map;
-
 public abstract class Usuario {
 
     private Integer id;

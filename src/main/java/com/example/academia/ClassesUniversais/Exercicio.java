@@ -81,6 +81,7 @@ public class Exercicio {
     public String getExperiencia(){
         return experiencia;
     }
+
     public boolean setExperiencia(String experiencia){
         if(experiencia.isBlank()){
             return false;

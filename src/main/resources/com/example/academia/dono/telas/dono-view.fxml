@@ -1,208 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane prefHeight="800.0" prefWidth="1360.0" styleClass="root" stylesheets="@VisaoGeral.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.academia.Dono.Controller.DonoController">
 
-    <!-- Barra Lateral de Navegação -->
+    <!-- BARRA LATERAL -->
     <left>
-        <VBox prefWidth="240.0" spacing="12.0" styleClass="sidebar-panel">
-            <padding>
-                <Insets bottom="24" left="16" right="16" top="24" />
-            </padding>
-
-            <!-- Branding / Logotipo -->
+        <VBox prefWidth="260.0" spacing="12.0" style="-fx-background-color: #06090e; -fx-border-color: #0e1116; -fx-border-width: 0 1 0 0;">
+            <padding><Insets bottom="24" left="16" right="16" top="24" /></padding>
             <HBox alignment="CENTER_LEFT" spacing="10.0">
-                <FontIcon iconColor="#f1ba2a" iconLiteral="fas-dumbbell" iconSize="22" />
-                <VBox spacing="0.0">
-                    <Label styleClass="headline-lg, text-gold" text="ÍCARO" />
-                    <Label styleClass="label-xs, text-gold" text="ACADEMIA" />
+                <Label style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 6 12; -fx-background-radius: 6;" text="Í" />
+                <VBox>
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #f8fafc;" text="Academia Ícaro" />
+                    <Label style="-fx-font-size: 11px; -fx-text-fill: #f1ba2a; -fx-font-weight: bold;" text="Painel Executivo" />
                 </VBox>
             </HBox>
-            <Region minHeight="16.0" />
-
-            <!-- Menu de Navegação Lateral -->
-            <VBox spacing="6.0" VBox.vgrow="ALWAYS">
-                <Button maxWidth="Infinity" onAction="#mostrarDepartamentos" styleClass="sidebar-btn" text="Departamentos">
-                    <graphic><FontIcon iconColor="#94a3b8" iconLiteral="fas-sitemap" iconSize="14" /></graphic>
-                </Button>
-                <Button maxWidth="Infinity" onAction="#mostrarPlanos" styleClass="sidebar-btn" text="Planos">
-                    <graphic><FontIcon iconColor="#94a3b8" iconLiteral="fas-file-invoice-dollar" iconSize="14" /></graphic>
-                </Button>
-                <Button maxWidth="Infinity" onAction="#mostrarTreinadores" styleClass="sidebar-btn" text="Treinadores">
-                    <graphic><FontIcon iconColor="#94a3b8" iconLiteral="fas-user-ninja" iconSize="14" /></graphic>
-                </Button>
-                <Button maxWidth="Infinity" onAction="#mostrarAlunos" styleClass="sidebar-btn" text="Alunos">
-                    <graphic><FontIcon iconColor="#94a3b8" iconLiteral="fas-user-graduate" iconSize="14" /></graphic>
-                </Button>
-                <Button maxWidth="Infinity" onAction="#mostrarAdministrativos" styleClass="sidebar-btn" text="Administrativo">
-                    <graphic><FontIcon iconColor="#94a3b8" iconLiteral="fas-briefcase" iconSize="14" /></graphic>
-                </Button>
-                <Button maxWidth="Infinity" onAction="#mostrarGerente" styleClass="sidebar-btn" text="Gerente / Relatórios">
-                    <graphic><FontIcon iconColor="#94a3b8" iconLiteral="fas-chart-bar" iconSize="14" /></graphic>
-                </Button>
-            </VBox>
             <Region minHeight="20.0" />
-            <Label styleClass="label-sm, text-muted" text="PAINEL ADMINISTRATIVO" />
+            <Label style="-fx-font-size: 11px; -fx-text-fill: #94a3b8; -fx-font-weight: bold;" text="NAVEGAÇÃO" />
+
+            <VBox spacing="4.0" VBox.vgrow="ALWAYS">
+                <Button fx:id="btnNavGeral" maxWidth="Infinity" onAction="#mostrarVisaoGeral" styleClass="sidebar-btn-active" text="Visão Geral" />
+                <Button fx:id="btnNavModalidades" maxWidth="Infinity" onAction="#mostrarTelaModalidades" styleClass="sidebar-btn" text="Modalidades" />
+                <Button fx:id="btnNavPlanos" maxWidth="Infinity" onAction="#mostrarTelaPlanos" styleClass="sidebar-btn" text="Planos" />
+                <Button fx:id="btnNavTreinadores" maxWidth="Infinity" onAction="#mostrarTelaTreinadores" styleClass="sidebar-btn" text="Treinadores" />
+                <Button fx:id="btnNavAlunos" maxWidth="Infinity" onAction="#mostrarTelaAlunos" styleClass="sidebar-btn" text="Alunos" />
+                <Button fx:id="btnNavAdmin" maxWidth="Infinity" onAction="#mostrarTelaAdmin" styleClass="sidebar-btn" text="Administrativo" />
+            </VBox>
         </VBox>
     </left>
 
-    <!-- Cabeçalho Superior -->
-    <top>
-        <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="header-panel">
-            <padding>
-                <Insets bottom="16" left="24" right="28" top="16" />
-            </padding>
-            <HBox alignment="CENTER_LEFT" prefWidth="360.0" spacing="8.0" styleClass="search-container">
-                <FontIcon iconColor="#94a3b8" iconLiteral="fas-search" iconSize="13" />
-                <TextField fx:id="txtPesquisa" onAction="#pesquisar" promptText="Pesquisar operações..." styleClass="search-input" HBox.hgrow="ALWAYS" />
-            </HBox>
-            <Region HBox.hgrow="ALWAYS" />
-            <HBox alignment="CENTER" spacing="12.0">
-                <VBox alignment="CENTER_RIGHT" spacing="2.0">
-                    <Label styleClass="title-md, text-primary" text="Dono" />
-                    <Label styleClass="label-sm, text-gold" text="Academia Ícaro" />
-                </VBox>
-                <FontIcon iconColor="#f1ba2a" iconLiteral="fas-user-shield" iconSize="22" />
-            </HBox>
-        </HBox>
-    </top>
-
-    <!-- Área Central -->
+    <!-- ÁREA CENTRAL -->
     <center>
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="scroll-pane">
-            <content>
-                <VBox alignment="TOP_CENTER" spacing="24.0" styleClass="main-content-padding">
-                    <VBox spacing="6.0">
-                        <HBox alignment="CENTER_LEFT" spacing="8.0">
-                            <Label styleClass="label-sm, text-gold" text="MÓDULO EXECUTIVO • PAINEL DE CONTROLE" />
+        <StackPane fx:id="areaConteudo">
+            <padding><Insets bottom="32" left="32" right="32" top="32" /></padding>
+
+            <!-- TELA 1: DASHBOARD (VISÃO GERAL) -->
+            <ScrollPane fx:id="viewDashboard" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                <VBox spacing="24.0" style="-fx-padding: 0 16 0 0;">
+                    <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Visão Geral &amp; Relatório Financeiro" />
+
+                    <HBox spacing="16">
+                        <VBox style="-fx-background-color: #06090e; -fx-padding: 24; -fx-border-color: #141923; -fx-border-radius: 12; -fx-background-radius: 12;" HBox.hgrow="ALWAYS">
+                            <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 14px;" text="Total de Alunos" />
+                            <Label fx:id="lblTotalAlunos" style="-fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: bold;" text="0" />
+                        </VBox>
+                        <VBox style="-fx-background-color: #06090e; -fx-padding: 24; -fx-border-color: #141923; -fx-border-radius: 12; -fx-background-radius: 12;" HBox.hgrow="ALWAYS">
+                            <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 14px;" text="Total de Funcionários" />
+                            <Label fx:id="lblTotalFunc" style="-fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: bold;" text="0" />
+                        </VBox>
+                    </HBox>
+
+                    <!-- Relatório Financeiro Expandido -->
+                    <VBox spacing="16" style="-fx-background-color: #06090e; -fx-padding: 32; -fx-border-color: #141923; -fx-border-radius: 12; -fx-background-radius: 12; -fx-min-height: 200;">
+                        <Label style="-fx-text-fill: #f1ba2a; -fx-font-weight: bold; -fx-font-size: 20px;" text="Balanço Financeiro Consolidado" />
+                        <HBox spacing="40" alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
+                            <VBox spacing="8">
+                                <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 14px; -fx-font-weight: bold;" text="RECEITAS (RENDA)" />
+                                <Label fx:id="lblRenda" style="-fx-text-fill: #22c55e; -fx-font-size: 24px; -fx-font-weight: bold;" text="R$ 0,00" />
+                            </VBox>
+                            <VBox spacing="8">
+                                <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 14px; -fx-font-weight: bold;" text="DESPESAS (CUSTOS)" />
+                                <Label fx:id="lblCusto" style="-fx-text-fill: #ef4444; -fx-font-size: 24px; -fx-font-weight: bold;" text="R$ 0,00" />
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS" />
+                            <VBox spacing="8" style="-fx-background-color: #0a0c10; -fx-padding: 16 32; -fx-border-color: #141923; -fx-border-radius: 8; -fx-background-radius: 8;">
+                                <Label style="-fx-text-fill: #f1ba2a; -fx-font-size: 14px; -fx-font-weight: bold;" text="RESULTADO LÍQUIDO TOTAL" />
+                                <Label fx:id="lblLucro" style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;" text="R$ 0,00" />
+                            </VBox>
                         </HBox>
-                        <Label fx:id="lblTitulo" styleClass="headline-xl" text="Painel do Dono" />
-                        <Label fx:id="lblMensagem" styleClass="text-muted, text-body" text="Selecione uma operação para gerenciar a Academia Ícaro." wrapText="true" />
+                        <Button text="Atualizar Relatório Financeiro" onAction="#atualizarDashboard" style="-fx-background-color: #181c23; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 12 24; -fx-cursor: hand;"/>
                     </VBox>
 
-                    <GridPane fx:id="gridOperacoes" hgap="24.0" vgap="24.0">
-                        <columnConstraints>
-                            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.333" />
-                            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.333" />
-                            <ColumnConstraints hgrow="ALWAYS" percentWidth="33.334" />
-                        </columnConstraints>
-
-                        <!-- Card: Treinadores -->
-                        <VBox accessibleText="treinadores professor funcionário equipe" spacing="16.0" styleClass="card-panel" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                            <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="card-header">
-                                <FontIcon iconColor="#f1ba2a" iconLiteral="fas-dumbbell" iconSize="20" />
-                                <Label styleClass="title-md" text="Treinadores" HBox.hgrow="ALWAYS" />
-                            </HBox>
-                            <Label styleClass="text-muted" text="Cadastre profissionais, consulte carteirinhas ou registre demissões." wrapText="true" />
-                            <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" onAction="#cadastrarTreinador" styleClass="btn-primary" text="Cadastrar treinador">
-                                <graphic><FontIcon iconColor="#04070d" iconLiteral="fas-user-plus" iconSize="13" /></graphic>
-                            </Button>
-                            <HBox spacing="8.0">
-                                <Button maxWidth="Infinity" onAction="#demitirTreinador" styleClass="btn-secondary" text="Demitir" HBox.hgrow="ALWAYS">
-                                    <graphic><FontIcon iconColor="#f8fafc" iconLiteral="fas-user-minus" iconSize="12" /></graphic>
-                                </Button>
-                                <Button maxWidth="Infinity" onAction="#carteirinhaTreinador" styleClass="btn-secondary" text="Carteirinha" HBox.hgrow="ALWAYS">
-                                    <graphic><FontIcon iconColor="#f8fafc" iconLiteral="fas-id-card" iconSize="12" /></graphic>
-                                </Button>
-                            </HBox>
-                        </VBox>
-
-                        <!-- Card: Alunos -->
-                        <VBox accessibleText="alunos aluno matrícula carterinha" spacing="16.0" styleClass="card-panel" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                            <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="card-header">
-                                <FontIcon iconColor="#f1ba2a" iconLiteral="fas-user-graduate" iconSize="20" />
-                                <Label styleClass="title-md" text="Alunos" HBox.hgrow="ALWAYS" />
-                            </HBox>
-                            <Label styleClass="text-muted" text="Gerencie matrículas, vincule planos e consulte carteirinhas." wrapText="true" />
-                            <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" onAction="#cadastrarAluno" styleClass="btn-primary" text="Cadastrar aluno">
-                                <graphic><FontIcon iconColor="#04070d" iconLiteral="fas-user-plus" iconSize="13" /></graphic>
-                            </Button>
-                            <HBox spacing="8.0">
-                                <Button maxWidth="Infinity" onAction="#expulsarAluno" styleClass="btn-secondary" text="Expulsar" HBox.hgrow="ALWAYS">
-                                    <graphic><FontIcon iconColor="#f8fafc" iconLiteral="fas-user-times" iconSize="12" /></graphic>
-                                </Button>
-                                <Button maxWidth="Infinity" onAction="#carteirinhaAluno" styleClass="btn-secondary" text="Carteirinha" HBox.hgrow="ALWAYS">
-                                    <graphic><FontIcon iconColor="#f8fafc" iconLiteral="fas-id-card" iconSize="12" /></graphic>
-                                </Button>
-                            </HBox>
-                        </VBox>
-
-                        <!-- Card: Planos -->
-                        <VBox accessibleText="planos assinatura mensal anual promoção" spacing="16.0" styleClass="card-panel" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                            <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="card-header">
-                                <FontIcon iconColor="#f1ba2a" iconLiteral="fas-file-invoice-dollar" iconSize="20" />
-                                <Label styleClass="title-md" text="Planos" HBox.hgrow="ALWAYS" />
-                            </HBox>
-                            <Label styleClass="text-muted" text="Cadastre e remova planos de assinatura do catálogo da academia." wrapText="true" />
-                            <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" onAction="#cadastrarPlano" styleClass="btn-primary" text="Cadastrar plano">
-                                <graphic><FontIcon iconColor="#04070d" iconLiteral="fas-plus" iconSize="13" /></graphic>
-                            </Button>
-                            <Button maxWidth="Infinity" onAction="#removerPlano" styleClass="btn-secondary" text="Remover plano">
-                                <graphic><FontIcon iconColor="#f8fafc" iconLiteral="fas-trash-alt" iconSize="12" /></graphic>
-                            </Button>
-                        </VBox>
-
-                        <!-- Card: Administrativo -->
-                        <VBox accessibleText="administrativo funcionário funcionários administração" spacing="16.0" styleClass="card-panel" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                            <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="card-header">
-                                <FontIcon iconColor="#f1ba2a" iconLiteral="fas-briefcase" iconSize="20" />
-                                <Label styleClass="title-md" text="Administrativo" HBox.hgrow="ALWAYS" />
-                            </HBox>
-                            <Label styleClass="text-muted" text="Gerencie funcionários administrativos e consulte suas carteirinhas." wrapText="true" />
-                            <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" onAction="#cadastrarAdministrativo" styleClass="btn-primary" text="Cadastrar administrativo">
-                                <graphic><FontIcon iconColor="#04070d" iconLiteral="fas-user-cog" iconSize="13" /></graphic>
-                            </Button>
-                            <HBox spacing="8.0">
-                                <Button maxWidth="Infinity" onAction="#demitirAdministrativo" styleClass="btn-secondary" text="Demitir" HBox.hgrow="ALWAYS">
-                                    <graphic><FontIcon iconColor="#f8fafc" iconLiteral="fas-user-minus" iconSize="12" /></graphic>
-                                </Button>
-                                <Button maxWidth="Infinity" onAction="#carteirinhaAdministrativo" styleClass="btn-secondary" text="Carteirinha" HBox.hgrow="ALWAYS">
-                                    <graphic><FontIcon iconColor="#f8fafc" iconLiteral="fas-id-card" iconSize="12" /></graphic>
-                                </Button>
-                            </HBox>
-                        </VBox>
-
-                        <!-- Card: Financeiro -->
-                        <VBox accessibleText="financeiro renda gráfico custos lucro despesas" spacing="16.0" styleClass="card-panel" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                            <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="card-header">
-                                <FontIcon iconColor="#f1ba2a" iconLiteral="fas-chart-line" iconSize="20" />
-                                <Label styleClass="title-md" text="Financeiro" HBox.hgrow="ALWAYS" />
-                            </HBox>
-                            <Label styleClass="text-muted" text="Consulte os dados de renda e custos cadastrados no sistema." wrapText="true" />
-                            <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" onAction="#verificarGrafico" styleClass="btn-primary" text="Ver gráfico de renda">
-                                <graphic><FontIcon iconColor="#04070d" iconLiteral="fas-chart-pie" iconSize="13" /></graphic>
-                            </Button>
-                            <Button maxWidth="Infinity" onAction="#verificarCusto" styleClass="btn-secondary" text="Verificar custo">
-                                <graphic><FontIcon iconColor="#f8fafc" iconLiteral="fas-receipt" iconSize="12" /></graphic>
-                            </Button>
-                        </VBox>
-
-                        <!-- Card: Acompanhamento -->
-                        <VBox accessibleText="feedback treinador troca acompanhar solicitações" spacing="16.0" styleClass="card-panel" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                            <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="card-header">
-                                <FontIcon iconColor="#f1ba2a" iconLiteral="fas-comments" iconSize="20" />
-                                <Label styleClass="title-md" text="Acompanhamento" HBox.hgrow="ALWAYS" />
-                            </HBox>
-                            <Label styleClass="text-muted" text="Área reservada para consultar feedbacks e solicitações operacionais." wrapText="true" />
-                            <Region VBox.vgrow="ALWAYS" />
-                            <Button maxWidth="Infinity" onAction="#verificarFeedback" styleClass="btn-primary" text="Verificar feedback">
-                                <graphic><FontIcon iconColor="#04070d" iconLiteral="fas-comment-dots" iconSize="13" /></graphic>
-                            </Button>
-                            <Button maxWidth="Infinity" onAction="#trocarTreinador" styleClass="btn-secondary" text="Trocar treinador">
-                                <graphic><FontIcon iconColor="#f8fafc" iconLiteral="fas-exchange-alt" iconSize="12" /></graphic>
-                            </Button>
-                        </VBox>
-                    </GridPane>
+                    <!-- Preview de Registros -->
+                    <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white; -fx-margin: 16 0 0 0;" text="Amostragem de Equipe e Alunos" />
+                    <FlowPane fx:id="boxRegistrosRecentes" hgap="16" vgap="16" />
                 </VBox>
-            </content>
-        </ScrollPane>
+            </ScrollPane>
+
+            <!-- TELA: MODALIDADES -->
+            <VBox fx:id="viewModalidades" spacing="20.0" visible="false">
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Modalidades Ativas" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <Button onAction="#cadastrarModalidade" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Nova Modalidade" />
+                </HBox>
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                    <FlowPane fx:id="containerModalidades" hgap="16" vgap="16" />
+                </ScrollPane>
+            </VBox>
+
+            <!-- TELA: ALUNOS -->
+            <VBox fx:id="viewAlunos" spacing="20.0" visible="false">
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Alunos Matriculados" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <Button onAction="#cadastrarAluno" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Matricular Aluno" />
+                </HBox>
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                    <FlowPane fx:id="containerAlunos" hgap="16" vgap="16" />
+                </ScrollPane>
+            </VBox>
+
+            <!-- TELA: PLANOS -->
+            <VBox fx:id="viewPlanos" spacing="20.0" visible="false">
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Catálogo de Planos" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <Button onAction="#cadastrarPlano" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Plano" />
+                </HBox>
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                    <FlowPane fx:id="containerPlanos" hgap="16" vgap="16" />
+                </ScrollPane>
+            </VBox>
+
+            <!-- TELA: TREINADORES -->
+            <VBox fx:id="viewTreinadores" spacing="20.0" visible="false">
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Equipe de Treinadores" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <Button onAction="#cadastrarTreinador" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Treinador" />
+                </HBox>
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                    <FlowPane fx:id="containerTreinadores" hgap="16" vgap="16" />
+                </ScrollPane>
+            </VBox>
+
+            <!-- TELA: ADMINISTRATIVO -->
+            <VBox fx:id="viewAdmin" spacing="20.0" visible="false">
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Equipe Administrativa" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <Button onAction="#cadastrarAdmin" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Administrativo" />
+                </HBox>
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                    <FlowPane fx:id="containerAdmin" hgap="16" vgap="16" />
+                </ScrollPane>
+            </VBox>
+
+        </StackPane>
     </center>
 </BorderPane>
