@@ -12,9 +12,9 @@ public class Aluno extends Usuario {
     private double peso;
     private String intensidade;
 
-    private ArrayList<AssinaturaPlano> assinaturaPlanos = new ArrayList<>();
-    private Map<Integer, Treino> treinos = new HashMap<>();
-    private ArrayList<Treinador> treinadores = new ArrayList<>();
+    private final Map<Integer, AssinaturaPlano> assinaturaPlanos = new HashMap<>();
+    private final Map<Integer, Treino> treinos = new HashMap<>();
+    private final Map<Integer, Treinador> treinadores = new HashMap<>();
 
     public int Id(Map<Integer, ?> mapa) {
         return mapa.keySet()
@@ -33,8 +33,8 @@ public class Aluno extends Usuario {
         this.idade = idade;
         this.altura = altura;
         this.peso = peso;
-        this.assinaturaPlanos.add(assinaturaPlano);
-        this.treinadores.add(treinador);
+        this.assinaturaPlanos.put(assinaturaPlano.getId(), assinaturaPlano);
+        this.treinadores.put(treinador.getId(),treinador);
         this.intensidade = intensidade;
     }
 
@@ -56,29 +56,16 @@ public class Aluno extends Usuario {
 
     //Mudar de Treinador
     public boolean setTreinador(int idModalidade, int idTreinadorAntigo, int idTreinadorNovo){
-        if(BancoDeDados.getInstance().validarIdTreinador(idTreinadorAntigo) && BancoDeDados.getInstance().validarIdTreinador(idTreinadorNovo) && this.treinadores.contains(BancoDeDados.getInstance().treinadores.get(idTreinadorAntigo))) {
+        if(BancoDeDados.getInstance().validarIdTreinador(idTreinadorAntigo) && BancoDeDados.getInstance().validarIdTreinador(idTreinadorNovo) && this.treinadores.containsKey(BancoDeDados.getInstance().treinadores.get(idTreinadorAntigo))) {
 
-            boolean modalidadeEncontrado = false;
-            boolean treinadorAntigoEncontrado = false;
-            boolean treinadoNovoEncontrado = false;
-
-            for (Modalidade m : BancoDeDados.getInstance().modalidades) {
-                if (m.getId() == idModalidade) {
-                    modalidadeEncontrado = true;
-                    for (Treinador t : m.getTreinadores().values()) {
-                        if (t.getId() == idTreinadorAntigo) {
-                            treinadorAntigoEncontrado = true;
-                        } else if (t.getId() == idTreinadorNovo) {
-                            treinadoNovoEncontrado = true;
-                        }
-                    }
+            Map<Integer, Modalidade> modalidade = BancoDeDados.getInstance().modalidades;
+            if (modalidade.containsKey(idModalidade)) {
+                Map<Integer, Treinador> treinadores = modalidade.get(idModalidade).getTreinadores();
+                if (treinadores.containsKey(idTreinadorAntigo) && treinadores.containsKey(idTreinadorNovo)) {
+                    BancoDeDados.getInstance().modalidades.get(idModalidade).getTreinadores().replace(idTreinadorAntigo, treinadores.get(idTreinadorNovo));
+                    return true;
                 }
             }
-            if (modalidadeEncontrado && treinadoNovoEncontrado && treinadorAntigoEncontrado) {
-                treinadores.set(idTreinadorAntigo, BancoDeDados.getInstance().modalidades[idModalidade].getTreinador(idTreinadorNovo));
-                return true;
-            }
-            return false;
         }
         return false;
     }
@@ -103,8 +90,8 @@ public class Aluno extends Usuario {
         return false;
     }
 
-    //Ver se o Plano está atrasado
-    public boolean vierPlanoAtrasado(int idPlano) {
+    //Ver se a Assinatura do Plano está atrasado
+    public boolean verAssinaturaPlanoAtrasado(int idPlano) {
         return assinaturaPlanos.get(idPlano).tempoPagar();
     }
 
@@ -151,13 +138,13 @@ public class Aluno extends Usuario {
     }
 
     //Pegar Lista De Assinaturas de  Planos
-    public ArrayList<AssinaturaPlano> getListaPlano() {
+    public Map<Integer, AssinaturaPlano> getListaAssinaturaPlano() {
         return this.assinaturaPlanos;
     }
 
     //Mostra As Assinaturas do Aluno
-    public void showPlano() {
-        for (AssinaturaPlano a : assinaturaPlanos) {
+    public void showAssinaturaPlano() {
+        for (AssinaturaPlano a : assinaturaPlanos.values()) {
             System.out.println(a.getId() + " - " + a);
         }
     }
@@ -167,43 +154,39 @@ public class Aluno extends Usuario {
         if (assinaturaPlanos.isEmpty()) {
             return false;
         }
-        for (AssinaturaPlano a : assinaturaPlanos) {
+        for (AssinaturaPlano a : assinaturaPlanos.values()) {
             a.showModalidades();
         }
         return true;
     }
 
     //Pagar Assinatura Plano
-    public boolean pagarPlano(int idAssinatura, int idData) {
-        if (BancoDeDados.getInstance().validarIdPlano(idAssinatura)) {
-            if (this.assinaturaPlanos.get(idAssinatura).tempoPagar()) {
-                assinaturaPlanos.get(idAssinatura).pagarPlano(idData, getId());
+    public boolean pagarAssinaturaPlano(int idAssinatura, int idPlano) {
+
+        if (BancoDeDados.getInstance().validarIdAssinaturaPlano(idAssinatura) && this.assinaturaPlanos.containsKey(idAssinatura)) {
+            AssinaturaPlano assinaturaPlano = this.assinaturaPlanos.get(idAssinatura);
+            if(BancoDeDados.getInstance().validarIdPlano(idPlano) && assinaturaPlano.getPlano().getId() == idPlano) {
+                assinaturaPlanos.get(idAssinatura).pagarPlano(idPlano, getId());
                 return true;
             }
-            //Se Pagar Atrasado Tera Que Pagar Uma Taxa Decidida No Plano
         }
         return false;
     }
 
     //Pegar assinaturaPlano
-    public AssinaturaPlano getPlano(int id) {
-        for (AssinaturaPlano plano : assinaturaPlanos) {
-            if (plano.getId() == id) {
-                return plano;
-            }
+    public AssinaturaPlano getAssinaturaPlano(int id) {
+        if(assinaturaPlanos.containsKey(id)){
+            return assinaturaPlanos.get(id);
         }
         return null;
     }
 
     //Remover Plano
-    public boolean removerPlano(int id) {
+    public boolean removerAssinaturaPlano(int id) {
 
-        boolean idEncontrado = false;
-        for (AssinaturaPlano plano : assinaturaPlanos) {
-            if (plano.getId() == id) {
-                assinaturaPlanos.remove(plano);
-                return true;
-            }
+        if(assinaturaPlanos.containsKey(id)){
+            assinaturaPlanos.remove(id);
+            return true;
         }
         return false;
     }
@@ -212,7 +195,7 @@ public class Aluno extends Usuario {
     public List<Map<Integer, Modalidade>> getModalidade() {
         List<Map<Integer, Modalidade>> listaModalidades = new ArrayList<>();
 
-        for (AssinaturaPlano p : this.assinaturaPlanos) {
+        for (AssinaturaPlano p : this.assinaturaPlanos.values()) {
             listaModalidades.add(p.getPlano().getModalidade());
         }
         return listaModalidades;
@@ -232,6 +215,19 @@ public class Aluno extends Usuario {
         }
         this.intensidade = intensidadeValida;
         return true;
+    }
+
+    //Pegar Treinadores
+    public Map<Integer, Treinador> getTreinadores(){
+        return this.treinadores;
+    }
+
+    //Pegar Treinador
+    public Treinador getTreinador(int id){
+        if(this.treinadores.containsKey(id)) {
+            return this.treinadores.get(id);
+        }
+        return null;
     }
 
     //Pegar Treinos
@@ -266,7 +262,7 @@ public class Aluno extends Usuario {
     public void mostrarCarteirinhaAluno() {
         ArrayList<String> nomePlanos = new ArrayList<>();
 
-        for (AssinaturaPlano p : this.assinaturaPlanos) {
+        for (AssinaturaPlano p : this.assinaturaPlanos.values()) {
             nomePlanos.add(p.getPlano().getNome());
         }
         System.out.println("NOME: " + getNome());
@@ -282,10 +278,10 @@ public class Aluno extends Usuario {
             System.out.println("- " + getModalidade());
         }
         System.out.println("PLANO:");
-        if (getListaPlano().isEmpty()) {
+        if (nomePlanos.isEmpty()) {
             System.out.print("Nenhum plano selecionado");
         } else {
-            System.out.println("- " + getListaPlano());
+            System.out.println("- " + nomePlanos);
         }
         System.out.println("QUANTIDADE DE TREINOS: " + treinos.size());
     }

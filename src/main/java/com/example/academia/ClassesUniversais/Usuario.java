@@ -2,7 +2,7 @@ package com.example.academia.ClassesUniversais;
 
 import java.util.Map;
 
-public class Usuario {
+public abstract class Usuario {
 
     private Integer id;
     private String nome;

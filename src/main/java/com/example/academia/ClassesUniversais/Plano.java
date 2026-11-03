@@ -10,6 +10,7 @@ public class Plano {
     private String descricao;
     private double valor;
     private int mesesValidade;
+    private double juros;
 
     private Map<Integer, Modalidade> modalidade = new HashMap<>();
 
@@ -21,40 +22,46 @@ public class Plano {
                 .orElse(-1) + 1;
     }
 
-    public Plano(String nome, String descricao, double valor, int mesesValidade){
+    public Plano(String nome, String descricao, double valor, int mesesValidade, double juros){
         this.nome = nome;
         this.id = Id(BancoDeDados.getInstance().planos);
         this.descricao = descricao;
         this.valor = valor;
         this.mesesValidade = mesesValidade;
+        this.juros = juros;
     }
 
     //Métodos
 
-    //Definir Modalidade
+    //Adicionar Modalidade Do Banco de Dados
     public boolean addModalidade(int id){
         if(BancoDeDados.getInstance().validarIdModalidade(id)){
-            Modalidade m = BancoDeDados.getInstance().modalidades[id];
+            Modalidade m = BancoDeDados.getInstance().modalidades.get(id);
             this.modalidade.put(m.getId(), m);
             return true;
         }
         return false;
     }
 
-    //Mudar Modalidade
-    public boolean setModalidade(String modalidadeEscolhida){
-        if(modalidadeEscolhida.isBlank()){
-            return false;
-        }
-        Modalidade m = new Modalidade();
-        m.escolherModalidade(modalidadeEscolhida);
-        this.modalidade.put(m.getId(), m);
-        return true;
+    //Pegar Juros
+    public double getJuros(){
+        return this.juros;
     }
 
     //Pegar a Validade
     public int getMesesValidade(){
         return this.mesesValidade;
+    }
+
+    //Mudar Validade
+    public boolean setMesesValidade(int mesesValidade){
+        if(mesesValidade <= 0){
+            return false;
+        }
+        else{
+            this.mesesValidade = mesesValidade;
+            return true;
+        }
     }
 
     //Pegar a Modalidade
@@ -72,6 +79,7 @@ public class Plano {
         if (nome.isBlank()) {
             return false;
         } else {
+            this.nome = nome;
             return true;
         }
     }

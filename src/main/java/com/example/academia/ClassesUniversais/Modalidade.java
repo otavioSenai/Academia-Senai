@@ -1,24 +1,29 @@
 package com.example.academia.ClassesUniversais;
 
 import com.example.academia.Treinador.Treinador;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class Modalidade {
 
-    private int id = BancoDeDados.getInstance().modalidades.length;
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
+
+    private int id;
     private Map <Integer,Treinador> treinadores = new HashMap();
     private String nome;
     private String descricao;
 
-    //Escolhe a Modalidade
-    public boolean escolherModalidade(String modalidadeEscolhida){
-        if(BancoDeDados.getInstance().compareEnums(modalidadeEscolhida)) {
-            this.nome = modalidadeEscolhida;
-            return true;
-        }
-        return false;
+    //Construtor
+    public Modalidade(String nome, String descricao){
+        this.id = Id(BancoDeDados.getInstance().modalidades);
+        this.nome = nome;
+        this.descricao = descricao;
     }
 
     //pegar id
@@ -26,7 +31,16 @@ public class Modalidade {
         return this.id;
     }
 
-    //Pega a Modalidade
+    //Mudar o Nome
+    public boolean setNome(String nome){
+        if(nome.isBlank()){
+            return false;
+        }
+        this.nome = nome;
+        return true;
+    }
+
+    //Pega o Nome
     public String getNome(){
         return this.nome;
     }
@@ -57,9 +71,9 @@ public class Modalidade {
     }
 
     //Remove Um Treinador
-    public boolean removeTreinador(int id){
-        if(BancoDeDados.getInstance().validarIdModalidade(id)){
-            treinadores.remove(id);
+    public boolean removeTreinador(int idModalidade, int idTreinador){
+        if(BancoDeDados.getInstance().validarIdModalidade(idModalidade)){
+            treinadores.remove(idTreinador);
             return true;
         }
         return false;

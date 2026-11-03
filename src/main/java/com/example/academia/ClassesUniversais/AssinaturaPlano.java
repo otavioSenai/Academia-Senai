@@ -22,18 +22,24 @@ public class AssinaturaPlano {
     private int mesesValidade;
     private boolean status;
     private Plano plano;
+    double juro;
 
     public AssinaturaPlano(int idPlano, Plano plano){
         this.mesesValidade = BancoDeDados.getInstance().planos.get(idPlano).getMesesValidade();
         this.status = true;
         this.plano = plano;
         this.id = Id(BancoDeDados.getInstance().assinaturaPlano);
+        this.juro = BancoDeDados.getInstance().planos.get(idPlano).getJuros();
 
         ZoneId fuso = ZoneId.of("America/Sao_Paulo");
         ZonedDateTime agora = ZonedDateTime.now(fuso);
         this.validade = agora.plusMonths(this.mesesValidade).toInstant();
     }
 
+    //Calcular Juros
+    public double calcularJuro(double valor){
+        return 100/juro*valor;
+    }
 
     //Pegar Id
     public int getId(){
@@ -99,12 +105,12 @@ public class AssinaturaPlano {
 
         ZoneId fuso = ZoneId.of("America/Sao_Paulo");
         ZonedDateTime validadeZona = this.validade.atZone(fuso);
-
         ZonedDateTime novaValidade = validadeZona.plusMonths(this.mesesValidade);
+
+        BancoDeDados.getInstance().grafico.addRenda(idAluno,getId());
+
         this.validade = novaValidade.toInstant();
         this.status = true;
-
-        BancoDeDados.getInstance().grafico.addRenda(idAluno);
         return true;
     }
 

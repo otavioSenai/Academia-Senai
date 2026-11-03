@@ -13,7 +13,8 @@ public class BancoDeDados {
 
     private static BancoDeDados banco;
 
-    public Modalidade[] modalidades = new Modalidade[4];
+    public HashMap<Integer, Modalidade> modalidades = new HashMap<>();
+
     public Map <Integer, Plano> planos = new HashMap<>();
     public Map <Integer, AssinaturaPlano> assinaturaPlano = new HashMap<>();
 
@@ -21,14 +22,11 @@ public class BancoDeDados {
     public Map <Integer, Aluno> alunos = new HashMap<>();
     public Map <Integer, Treinador> treinadores = new HashMap<>();
     public Map <Integer, Administrativo> administrativos = new HashMap<>();
-
     public Map <Integer, Exercicio> exercicios = new HashMap<>();
     public Map <Integer, Treino> treinos = new HashMap<>();
 
     public Map <Integer, FeedbackTreinador> feedbacksTreinadores = new HashMap<>();
     public Map <Integer, TrocarTreinador> trocarTreinadores = new HashMap<>();
-
-    public ModalidadeEnums[] modalidadeEnums = ModalidadeEnums.values();
 
     public GraficoRenda grafico = new GraficoRenda();
 
@@ -45,34 +43,14 @@ public class BancoDeDados {
         return banco;
     }
 
-    //Pegar Nomes Das Modalidades
-    public ModalidadeEnums[] getModalidadeEnums(){
-        return this.modalidadeEnums;
-    }
-
-    //Valida o Nome Da ModalidadeEnums
-    public boolean validarModalidadeEnums(String modalidadeEscolhida){
-        for(ModalidadeEnums m : modalidadeEnums){
-            if(m.name().equalsIgnoreCase(modalidadeEscolhida)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     //Pegar Modalidades
-    public Modalidade[] getModalidade(){
+    public HashMap<Integer, Modalidade> getModalidade(){
         return this.modalidades;
     }
 
     //Validar Id da Modalidade
     public boolean validarIdModalidade(int id){
-        for(Modalidade m : this.modalidades){
-            if(m.getId() == id){
-                return true;
-            }
-        }
-        return false;
+        return modalidades.containsKey(id);
     }
 
     //Pegar Planos
@@ -173,20 +151,5 @@ public class BancoDeDados {
     //Validar Id Da Solicitação Para Trocar De Treinador
     public boolean validarIdTrocarTreinador(int id){
         return trocarTreinadores.containsKey(id);
-    }
-
-    //Comparar Enums
-    public boolean compareEnums(String modalidade){
-
-        ModalidadeEnums modalidade1 = ModalidadeEnums.CARDIO;
-        ModalidadeEnums modalidade2 = ModalidadeEnums.CROSSFIT;
-        ModalidadeEnums modalidade3 = ModalidadeEnums.MUSCULACAO;
-        ModalidadeEnums modalidade4 = ModalidadeEnums.PILATE;
-
-        if(modalidade1.name().equalsIgnoreCase(modalidade) || modalidade2.name().equalsIgnoreCase(modalidade)
-           || modalidade3.name().equalsIgnoreCase(modalidade) || modalidade4.name().equalsIgnoreCase(modalidade)){
-            return true;
-        }
-        return false;
     }
 }

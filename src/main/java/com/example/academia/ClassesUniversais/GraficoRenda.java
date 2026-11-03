@@ -8,29 +8,26 @@ public class GraficoRenda {
     private double total;
     private boolean situacao;
 
-    public boolean addRenda(int id) {
-        if (BancoDeDados.getInstance().validIdAluno(id)) {
-            for(Aluno aluno : BancoDeDados.getInstance().alunos.values()){
-                for(AssinaturaPlano a : aluno.getListaPlano()) {
-                    if (!a.getStatus()){
-                        return false;
-                    }
-                    this.renda += a.getPlano().getValor();
-                }
+    public boolean addRenda(int idAluno, int idAssinaturaPlano) {
+        if(BancoDeDados.getInstance().validIdAluno(idAluno) && BancoDeDados.getInstance().validarIdAssinaturaPlano(idAssinaturaPlano)){
+
+            AssinaturaPlano assinaturaPlano = BancoDeDados.getInstance().alunos.get(idAluno).getAssinaturaPlano(idAssinaturaPlano);
+            double valor = assinaturaPlano.getPlano().getValor();
+
+            if(assinaturaPlano.getStatus()) {
+                this.renda += valor;
+            } else{
+                this.renda += valor + assinaturaPlano.calcularJuro(valor);
             }
             return true;
         }
         return false;
     }
 
-    public boolean addCusto(int id) {
-        if (BancoDeDados.getInstance().validarIdCusto(id)) {
-            for (Custo c : BancoDeDados.getInstance().custos.values()) {
-                custo += c.getValor();
-            }
-            return true;
+    public void addCusto(int idCusto) {
+        if(BancoDeDados.getInstance().validarIdCusto(idCusto)){
+            this.custo += BancoDeDados.getInstance().custos.get(idCusto).getValor();
         }
-        return false;
     }
 
     public void somarDespesas(){

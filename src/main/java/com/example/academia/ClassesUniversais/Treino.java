@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Treino {
 
@@ -14,8 +15,16 @@ public class Treino {
     private String conteudo;
     private ArrayList<Exercicio> exercicios = new ArrayList<>();
 
-    public Treino(int idTreino, String nomeTreino, String conteudo, ArrayList<Exercicio> exercicios, String data) {
-        this.idTreino = idTreino;
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
+
+    public Treino(String nomeTreino, String conteudo, ArrayList<Exercicio> exercicios, String data) {
+        this.idTreino = Id(BancoDeDados.getInstance().treinos);
         this.nomeTreino = nomeTreino;
         this.conteudo = conteudo;
         this.exercicios = exercicios;

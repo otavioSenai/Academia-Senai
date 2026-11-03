@@ -19,9 +19,9 @@ public class Custo {
                 .orElse(-1) + 1;
     }
 
-    public Custo(String nome, String data, double valor){
+    public Custo(String nome, double valor){
         this.nome = nome;
-        this.id = id = Id(BancoDeDados.getInstance().custos);
+        this.id = Id(BancoDeDados.getInstance().custos);
         this.valor = valor;
         this.data = Instant.now();
     }
