@@ -1,36 +1,23 @@
 package com.example.academia.ClassesUniversais;
 
-import com.example.academia.aluno.Aluno;
-
 public class GraficoRenda {
     private double custo;
     private double renda;
     private double total;
     private boolean situacao;
 
-    public boolean addRenda(int id) {
-        if (BancoDeDados.getInstance().validIdAluno(id)) {
-            for(Aluno aluno : BancoDeDados.getInstance().alunos.values()){
-                for(AssinaturaPlano a : aluno.getListaPlano()) {
-                    if (!a.getStatus()){
-                        return false;
-                    }
-                    this.renda += a.getPlano().getValor();
-                }
-            }
+    public boolean addRenda(int idAluno, int idPlano) {
+        if(BancoDeDados.getInstance().validIdAluno(idAluno)){
+            this.renda += BancoDeDados.getInstance().alunos.get(idAluno).getPlano(idPlano).getPlano().getValor();
             return true;
         }
         return false;
     }
 
-    public boolean addCusto(int id) {
-        if (BancoDeDados.getInstance().validarIdCusto(id)) {
-            for (Custo c : BancoDeDados.getInstance().custos.values()) {
-                custo += c.getValor();
-            }
-            return true;
+    public void addCusto(int idCusto) {
+        if(BancoDeDados.getInstance().validarIdCusto(idCusto)){
+            this.custo += BancoDeDados.getInstance().custos.get(idCusto).getValor();
         }
-        return false;
     }
 
     public void somarDespesas(){

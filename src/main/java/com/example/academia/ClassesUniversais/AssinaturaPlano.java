@@ -104,7 +104,7 @@ public class AssinaturaPlano {
         this.validade = novaValidade.toInstant();
         this.status = true;
 
-        BancoDeDados.getInstance().grafico.addRenda(idAluno);
+        BancoDeDados.getInstance().grafico.addRenda(idAluno, this.plano.getId());
         return true;
     }
 

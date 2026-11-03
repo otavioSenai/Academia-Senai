@@ -282,10 +282,10 @@ public class Aluno extends Usuario {
             System.out.println("- " + getModalidade());
         }
         System.out.println("PLANO:");
-        if (getListaPlano().isEmpty()) {
+        if (nomePlanos.isEmpty()) {
             System.out.print("Nenhum plano selecionado");
         } else {
-            System.out.println("- " + getListaPlano());
+            System.out.println("- " + nomePlanos);
         }
         System.out.println("QUANTIDADE DE TREINOS: " + treinos.size());
     }

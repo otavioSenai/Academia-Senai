@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class Treinador extends Funcionario {
     private String especialidade;
-    private HashMap<Integer, TrocarTreinador> solicitarTroca;
-    private HashMap<Integer, FeedbackTreinador> feedback;
+    private HashMap<Integer, TrocarTreinador> solicitarTroca = new HashMap<>();
+    private HashMap<Integer, FeedbackTreinador> feedback = new HashMap<>();
 
     public int Id(Map<Integer, ?> mapa) {
         return mapa.keySet()
@@ -74,13 +74,13 @@ public class Treinador extends Funcionario {
     }
 
     //Cadastra o Exercicio
-    public boolean cadastrarExercicio(int idExercicio, String nomeExercicio, String descricao, int repeticaoExercicio, int serieExercicio, String experiencia){
-        if(idExercicio <= 0 || nomeExercicio.isBlank() || descricao.isBlank() || repeticaoExercicio <=0 || serieExercicio <= 0 || experiencia.isBlank()){
+    public boolean cadastrarExercicio(String nomeExercicio, String descricao, int repeticaoExercicio, int serieExercicio, String experiencia){
+        if(nomeExercicio.isBlank() || descricao.isBlank() || repeticaoExercicio <=0 || serieExercicio <= 0 || experiencia.isBlank()){
             return false;
         }
         else{
-            Exercicio exercicio = new Exercicio(idExercicio, nomeExercicio, descricao, repeticaoExercicio, serieExercicio, experiencia);
-            BancoDeDados.getInstance().exercicios.put(idExercicio, exercicio);
+            Exercicio exercicio = new Exercicio(nomeExercicio, descricao, repeticaoExercicio, serieExercicio, experiencia);
+            BancoDeDados.getInstance().exercicios.put(exercicio.getIdExercicio(), exercicio);
             return true;
         }
     }
@@ -97,13 +97,13 @@ public class Treinador extends Funcionario {
     }
 
     //Cadastra o Treino
-    public boolean cadastrarTreino(String data, int idTreino, String nomeTreino, String conteudo, ArrayList<Exercicio> exercicios){
-        if(idTreino <= 0 || nomeTreino.isBlank() || conteudo.isBlank() || exercicios == null){
+    public boolean cadastrarTreino(String data,String nomeTreino, String conteudo, ArrayList<Exercicio> exercicios){
+        if(data.isBlank() || nomeTreino.isBlank() || conteudo.isBlank() || exercicios == null){
             return false;
         }
         else{
-            Treino treino = new Treino(idTreino, nomeTreino, conteudo, exercicios, data);
-            BancoDeDados.getInstance().treinos.put(idTreino, treino);
+            Treino treino = new Treino(nomeTreino, conteudo, exercicios, data);
+            BancoDeDados.getInstance().treinos.put(treino.getIdTreino(), treino);
             return true;
         }
     }
