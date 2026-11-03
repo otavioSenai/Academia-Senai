@@ -24,6 +24,7 @@ public class Custo {
         this.id = Id(BancoDeDados.getInstance().custos);
         this.valor = valor;
         this.data = Instant.now();
+        BancoDeDados.getInstance().grafico.addCusto(this.id);
     }
 
     //Métodos
