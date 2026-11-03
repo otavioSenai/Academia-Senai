@@ -4,14 +4,13 @@ public class Verificacao {
 
     //Verificar Se a Senha Está Correta
     public static boolean verificarSenha(String senha) {
-        CriptografarSenha cripto=new CriptografarSenha();
 
         final int MinimoLetraMaiuscula = 1;
         final int MinimoNumero = 1;
         final int MinimoCaractereEspecial = 1;
         final int TamanhoMinimo = 8;
 
-        if (senha == null || senha.length() < TamanhoMinimo) {
+        if (senha == null || senha.length() < TamanhoMinimo || senha.isBlank()) {
             return false;
         }
 
@@ -43,7 +42,7 @@ public class Verificacao {
         final int qtdNumero = 11;
         final int qtdCaractereEspecial = 3;
 
-        if (cpf == null || cpf.length() != Tamanho) {
+        if (cpf == null || cpf.length() != Tamanho || cpf.isBlank()) {
             return false;
         }
 
