@@ -1,137 +1,140 @@
 package com.example.academia.ClassesUniversais;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Plano {
+
 
     private String nome;
     private final int id;
     private String descricao;
     private double valor;
+    private int mesesValidade;
+    private double juros;
 
-    private Instant validade;
-    private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.of("America/Sao_Paulo"));
-    private boolean status;
 
-    private String modalidade;
+    private Map<Integer, Modalidade> modalidade = new HashMap<>();
 
-    public Plano(String nome, int id, String descricao, double valor, String validade){
+
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
+
+
+    public Plano(String nome, String descricao, double valor, int mesesValidade, double juros){
         this.nome = nome;
-        this.id = id;
+        this.id = Id(BancoDeDados.getInstance().planos);
         this.descricao = descricao;
         this.valor = valor;
-        this.validade = Instant.from(this.formatador.parse(validade));
+        this.mesesValidade = mesesValidade;
+        this.juros = juros;
     }
+
 
     //Métodos
 
-    //Definir Modalidade
-    public void setModalidade(String departamento, Scanner entrada){
 
-        System.out.println("Insira qual departamento pertence ao plano");
-        String modalidadeEscolhida = entrada.nextLine();
-
-            boolean ModalidadeExistente = false;
-
-            for(Modalidade m : BancoDeDados.getInstance().modalidades){
-                if(m.name().equalsIgnoreCase(modalidadeEscolhida)){
-
-                    this.modalidade = m.toString();
-                    ModalidadeExistente = true;
-                    break;
-                }
-            }
-            if(!ModalidadeExistente){
-                System.out.println("Valores Inválidos");
-            }
+    //Adicionar Modalidade Do Banco de Dados
+    public boolean addModalidade(int id){
+        if(BancoDeDados.getInstance().validarIdModalidade(id)){
+            Modalidade m = BancoDeDados.getInstance().modalidades.get(id);
+            this.modalidade.put(m.getId(), m);
+            return true;
+        }
+        return false;
     }
 
-    //Pegar a Modalidade
-    public String getModalidade(){
-        return this.modalidade;
+
+    //Pegar Juros
+    public double getJuros(){
+        return this.juros;
     }
 
-    //Ver se o tempo de pagamento passou
-    public void tempoPagar(){
-        Instant Agora = Instant.now();
 
-        if(Agora.isAfter(this.validade)){
-            System.out.println("Pagamento Atrasado");
-            this.status = false;
+    //Pegar a Validade
+    public int getMesesValidade(){
+        return this.mesesValidade;
+    }
+
+
+    //Mudar Validade
+    public boolean setMesesValidade(int mesesValidade){
+        if(mesesValidade <= 0){
+            return false;
         }
         else{
-            System.out.println("Pagamento em Dia");
-            this.status = true;
+            this.mesesValidade = mesesValidade;
+            return true;
         }
     }
+
+
+    //Pegar a Modalidade
+    public Map<Integer, Modalidade> getModalidade(){
+        return modalidade;
+    }
+
 
     //Pegar Nome
     public String getNome(){
         return this.nome;
     }
 
+
     //Mudar Nome
-    public void setNome(String nome) {
+    public boolean setNome(String nome) {
         if (nome.isBlank()) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.nome = nome;
+            return true;
         }
     }
+
 
     //Pegar Id
     public int getId(){
         return this.id;
     }
 
+
     //Pegar Descrição
     public String getDescricao(){
         return this.descricao;
     }
 
+
     //Mudar Descrição
-    public void setDescricao(String descricao) {
+    public boolean setDescricao(String descricao) {
         if (descricao.isBlank()) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.descricao = descricao;
+            return true;
         }
     }
+
 
     //Pegar Valor
     public double getValor(){
         return this.valor;
     }
 
+
     //Mudar Valor
-    public void setValor(double valor) {
+    public boolean setValor(double valor) {
         if (valor <= 0) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.valor = valor;
-        }
-    }
-
-    //Pegar Status
-    public boolean getStatus(){
-        return this.status;
-    }
-
-    //Pegar Validade
-    public Instant getValidade(){
-        return this.validade;
-    }
-
-    //Mudar Validade
-    public void addValidade(String validade){
-        if(validade.isBlank()){
-            System.out.println("Valores Inválidos");
-        }
-        else {
-            this.validade = Instant.from(this.formatador.parse(validade));
+            return true;
         }
     }
 }

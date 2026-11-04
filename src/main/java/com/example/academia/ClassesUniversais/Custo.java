@@ -2,6 +2,7 @@ package com.example.academia.ClassesUniversais;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 public class Custo {
 
@@ -10,15 +11,23 @@ public class Custo {
     private final Instant data;
     private double valor;
 
-    public Custo(String nome, int id, String data, double valor){
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
+
+    public Custo(String nome, double valor){
         this.nome = nome;
-        this.id = id;
+        this.id = Id(BancoDeDados.getInstance().custos);
         this.valor = valor;
         this.data = Instant.now();
+        BancoDeDados.getInstance().grafico.addCusto(this.id);
     }
 
     //Métodos
-
     public void mostrarCusto(){
         System.out.println("Nome:" + this.nome);
         System.out.println("Id:" + this.id);
@@ -32,12 +41,12 @@ public class Custo {
     }
 
     //Mudar Nome
-    public void setNome(String nome) {
-
+    public boolean setNome(String nome) {
         if (nome.isBlank()) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.nome = nome;
+            return true;
         }
     }
 
@@ -52,22 +61,24 @@ public class Custo {
     }
 
     //Mudar Valor
-    public void setValor(double valor) {
+    public boolean setValor(double valor) {
         if (valor <= 0) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.valor = valor;
+            return true;
         }
     }
 
     //Pegar data
     public String getData(){
-
         ZoneId fusoBrasil = ZoneId.of("America/Sao_Paulo");
-
-        //Exibe a data em um formato específico
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-
         return this.data.atZone(fusoBrasil).format(formatador);
+    }
+
+    //Pegar data bruta (usada para ordenar a Tela Custos do mais novo para o mais antigo)
+    public Instant getDataInstant(){
+        return this.data;
     }
 }

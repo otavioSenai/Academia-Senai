@@ -1,38 +1,69 @@
 package com.example.academia.ClassesUniversais;
 
-import com.example.academia.aluno.Aluno;
-
 public class GraficoRenda {
+
+    private double custo;
     private double renda;
+    private double total;
     private boolean situacao;
 
-    /*A renda precisaria do aluno, pois é ele quem paga
-    O custo seria mais um ArrayList*/
+    public boolean addRenda(int idAluno, int idAssinaturaPlano) {
+        if(BancoDeDados.getInstance().validIdAluno(idAluno) && BancoDeDados.getInstance().validarIdAssinaturaPlano(idAssinaturaPlano)){
+            AssinaturaPlano assinaturaPlano = BancoDeDados.getInstance().alunos.get(idAluno).getAssinaturaPlano(idAssinaturaPlano);
+            double valor = assinaturaPlano.getPlano().getValor();
+            if(assinaturaPlano.getStatus()) {
+                this.renda += valor;
+            } else{
+                this.renda += valor + assinaturaPlano.calcularJuro(valor);
+            }
+            return true;
+        }
+        return false;
+    }
 
-    public void addRenda(int id) {
-        if(BancoDeDados.getInstance().alunos.containsKey(id)){
-            Aluno aluno = BancoDeDados.getInstance().alunos.get(id);
-            this.renda += aluno.getPlano().getValor();
+    public void addCusto(int idCusto) {
+        if(BancoDeDados.getInstance().validarIdCusto(idCusto)){
+            this.custo += BancoDeDados.getInstance().custos.get(idCusto).getValor();
         }
-        else {
-            System.out.println("Valora Inválidos");
+    }
+
+    // Desconta um custo removido, mantendo o gráfico consistente com a Tela Custos
+    public void removerCusto(double valor) {
+        this.custo -= valor;
+        if (this.custo < 0) {
+            this.custo = 0;
         }
+    }
+
+    public void somarDespesas(){
+        total = this.renda - this.custo;
+        if(total <= 0){
+            this.situacao = false;
+            return;
+        }
+        this.situacao = true;
+    }
+
+    public void verGrafico(){
+        System.out.println("Renda: " + this.renda);
+        System.out.println("Custo: " + this.custo);
+        System.out.println("Total: " + this.total);
+        System.out.println("Situação: " + this.situacao);
     }
 
     public double getRenda(){
         return this.renda;
     }
 
-    public void setRenda(double renda) {
-        this.renda = renda;
+    public double getCusto(){
+        return this.custo;
+    }
+
+    public double getTotal(){
+        return this.total;
     }
 
     public boolean getSituacao() {
         return situacao;
     }
-
-    public void setSituacao(boolean situacao) {
-        this.situacao = situacao;
-    }
 }
-

@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 public class CriptografarSenha {
 
+
     public static String SenhaGeral(String senhaCriptografada){
         try{
             MessageDigest md = MessageDigest.getInstance("SHA-512");

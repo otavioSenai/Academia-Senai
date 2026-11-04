@@ -1,242 +1,332 @@
 package com.example.academia.aluno;
 
-import com.example.academia.ClassesUniversais.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import com.example.academia.ClassesUniversais.*;
+import com.example.academia.Treinador.Treinador;
+
+
+import java.util.*;
+
 
 public class Aluno extends Usuario {
+
 
     private int idade;
     private double altura;
     private double peso;
     private String intensidade;
 
-    private ArrayList<Plano> planos = new ArrayList<>();
-    private ArrayList<Treino> treinos = new ArrayList<>();
 
-    public Aluno(int id, String nome, String senha, String cpf,
+    private final Map<Integer, AssinaturaPlano> assinaturaPlanos = new HashMap<>();
+    private final Map<Integer, Treino> treinos = new HashMap<>();
+    private final Map<Integer, Treinador> treinadores = new HashMap<>();
+
+
+    public int Id(Map<Integer, ?> mapa) {
+        return mapa.keySet()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(-1) + 1;
+    }
+
+
+    public Aluno(String nome, String senha, String cpf,
                  int idade, double altura, double peso,
-                 Plano plano, String intensidade) {
+                 AssinaturaPlano assinaturaPlano, String intensidade, Treinador treinador) {
 
-        super(id, nome, senha, cpf);
+
+        super(nome, senha, cpf);
+        gerarId(Id(BancoDeDados.getInstance().getAlunos()));
         this.idade = idade;
         this.altura = altura;
         this.peso = peso;
-        this.planos.add(plano);
+        this.assinaturaPlanos.put(assinaturaPlano.getId(), assinaturaPlano);
+        this.treinadores.put(treinador.getId(),treinador);
         this.intensidade = intensidade;
     }
 
+
+    //Métodos
+
+
+    //Normalizar Intensidade
     private static String normalizarIntensidade(String intensidade) {
         if (intensidade == null) {
             return null;
-        }
-        else if (intensidade.equalsIgnoreCase("Leve")) {
+        } else if (intensidade.equalsIgnoreCase("Leve")) {
             return "Leve";
-        }
-        else if (intensidade.equalsIgnoreCase("Médio")) {
+        } else if (intensidade.equalsIgnoreCase("Médio")) {
             return "Médio";
-        }
-        else if (intensidade.equalsIgnoreCase("Intenso")) {
+        } else if (intensidade.equalsIgnoreCase("Intenso")) {
             return "Intenso";
         }
         return null;
     }
 
+
+    //Mudar de Treinador
+    public boolean setTreinador(int idModalidade, int idTreinadorAntigo, int idTreinadorNovo){
+        if(BancoDeDados.getInstance().validarIdTreinador(idTreinadorAntigo) && BancoDeDados.getInstance().validarIdTreinador(idTreinadorNovo) && this.treinadores.containsKey(BancoDeDados.getInstance().treinadores.get(idTreinadorAntigo))) {
+
+
+            Map<Integer, Modalidade> modalidade = BancoDeDados.getInstance().modalidades;
+            if (modalidade.containsKey(idModalidade)) {
+                Map<Integer, Treinador> treinadores = modalidade.get(idModalidade).getTreinadores();
+                if (treinadores.containsKey(idTreinadorAntigo) && treinadores.containsKey(idTreinadorNovo)) {
+                    BancoDeDados.getInstance().modalidades.get(idModalidade).getTreinadores().replace(idTreinadorAntigo, treinadores.get(idTreinadorNovo));
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    //Fazer um Feedback Para Um Professor
+    public boolean fazerFeedback(int idTreinador, String comentario, int qtdEstrelas) {
+
+
+        if (BancoDeDados.getInstance().validarIdTreinador(idTreinador)) {
+            BancoDeDados.getInstance().treinadores.get(idTreinador).addFeedback(comentario, qtdEstrelas, getId());
+            return true;
+        }
+        return false;
+    }
+
+
+    //Solicitar Trocar De Treinador
+    public boolean solicitarTroca(int idTreinador, String comentario) {
+
+
+        if (BancoDeDados.getInstance().validarIdTreinador(idTreinador)) {
+            BancoDeDados.getInstance().treinadores.get(idTreinador).addTroca(comentario, getId());
+            return true;
+        }
+        return false;
+    }
+
+
+    //Ver se a Assinatura do Plano está atrasado
+    public boolean verAssinaturaPlanoAtrasado(int idPlano) {
+        return assinaturaPlanos.get(idPlano).tempoPagar();
+    }
+
+
+    //Pegar Idade
     public int getIdade() {
         return idade;
     }
 
-    public void setIdade(int idade) {
+
+    //Mudar Idade
+    public boolean setIdade(int idade) {
         if (idade < 13 || idade > 130) {
-            System.out.println("Idade inválida!");
-            return;
+            return false;
         }
         this.idade = idade;
+        return true;
     }
 
+
+    //Pegar Altura
     public double getAltura() {
         return altura;
     }
 
-    public void setAltura(double altura) {
+
+    //Mudar Altura
+    public boolean setAltura(double altura) {
         if (!Double.isFinite(altura) || altura < 0.50 || altura > 2.50) {
-            System.out.println("Altura inválida!");
-            return;
+            return false;
         }
         this.altura = altura;
+        return true;
     }
 
+
+    //Pegar Peso
     public double getPeso() {
         return peso;
     }
 
-    public void setPeso(double peso) {
+
+    //Mudar Peso
+    public boolean setPeso(double peso) {
         if (!Double.isFinite(peso) || peso < 30 || peso > 350) {
-            System.out.println("Peso inválido!");
-            return;
+            return false;
         }
         this.peso = peso;
+        return true;
     }
 
-    public ArrayList<Plano> getPlano() {
-        return this.planos;
+
+    //Pegar Lista De Assinaturas de  Planos
+    public Map<Integer, AssinaturaPlano> getListaAssinaturaPlano() {
+        return this.assinaturaPlanos;
     }
 
-    public void adicionarPlano(String nome, int id, String descricao, double valor, String validade) {
 
-        if(nome.isBlank() || BancoDeDados.getInstance().planos.containsKey(id) || descricao.isBlank() || valor <= 0 || validade.isBlank()){
-            System.out.println("Valores Inválidos");
+    //Mostra As Assinaturas do Aluno
+    public void showAssinaturaPlano() {
+        for (AssinaturaPlano a : assinaturaPlanos.values()) {
+            System.out.println(a.getId() + " - " + a);
         }
-        else{
-            Plano plano = new Plano(nome, id, descricao, valor, validade);
-            this.planos.add(plano);
-        }
     }
 
-    public List<String> getModalidade(){
-        List<String> listaModalidades = new ArrayList<>();
 
-        for(Plano p : this.planos){
-            listaModalidades.add(p.getModalidade());
+    //Mostra As Modalidades do Aluno
+    public boolean showModalidade() {
+        if (assinaturaPlanos.isEmpty()) {
+            return false;
+        }
+        for (AssinaturaPlano a : assinaturaPlanos.values()) {
+            a.showModalidades();
+        }
+        return true;
+    }
+
+
+    //Pagar Assinatura Plano
+    public boolean pagarAssinaturaPlano(int idAssinatura, int idPlano) {
+
+
+        if (BancoDeDados.getInstance().validarIdAssinaturaPlano(idAssinatura) && this.assinaturaPlanos.containsKey(idAssinatura)) {
+            AssinaturaPlano assinaturaPlano = this.assinaturaPlanos.get(idAssinatura);
+            if(BancoDeDados.getInstance().validarIdPlano(idPlano) && assinaturaPlano.getPlano().getId() == idPlano) {
+                assinaturaPlanos.get(idAssinatura).pagarPlano(idPlano, getId());
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    //Pegar assinaturaPlano
+    public AssinaturaPlano getAssinaturaPlano(int id) {
+        if(assinaturaPlanos.containsKey(id)){
+            return assinaturaPlanos.get(id);
+        }
+        return null;
+    }
+
+
+    //Remover Plano
+    public boolean removerAssinaturaPlano(int id) {
+
+
+        if(assinaturaPlanos.containsKey(id)){
+            assinaturaPlanos.remove(id);
+            return true;
+        }
+        return false;
+    }
+
+
+    //Pegar Modalidade
+    public List<Map<Integer, Modalidade>> getModalidade() {
+        List<Map<Integer, Modalidade>> listaModalidades = new ArrayList<>();
+
+
+        for (AssinaturaPlano p : this.assinaturaPlanos.values()) {
+            listaModalidades.add(p.getPlano().getModalidade());
         }
         return listaModalidades;
     }
 
+
+    //Pegar Intensidade
     public String getIntensidade() {
         return this.intensidade;
     }
 
-    public void setIntensidade(String intensidade) {
+
+    //Mudar Intensidade
+    public boolean setIntensidade(String intensidade) {
         String intensidadeValida = normalizarIntensidade(intensidade);
 
+
         if (intensidadeValida == null) {
-            System.out.println("Intensidade inválida!");
-            return;
-        }
-        this.intensidade = intensidadeValida;
-    }
-
-    public ArrayList<Treino> getTreinos() {
-        return new ArrayList<>(treinos);
-    }
-
-    public boolean adicionarTreino(Treino treino) {
-        if (treino == null
-                || treino.getIdTreino() <= 0
-                || treino.getNomeTreino() == null
-                || treino.getNomeTreino().isBlank()
-                || treino.getConteudo() == null
-                || treino.getConteudo().isBlank()
-                || treino.getData() == null) {
-
-            System.out.println("Dados do treino inválidos!");
             return false;
         }
-
-        for (Treino existente : treinos) {
-            if (existente.getIdTreino() == treino.getIdTreino()) {
-                System.out.println("Este treino já existe!");
-                return false;
-            }
-        }
-
-        treinos.add(treino);
-        System.out.println("Treino adicionado!");
+        this.intensidade = intensidadeValida;
         return true;
     }
 
+
+    //Pegar Treinadores
+    public Map<Integer, Treinador> getTreinadores(){
+        return this.treinadores;
+    }
+
+
+    //Pegar Treinador
+    public Treinador getTreinador(int id){
+        if(this.treinadores.containsKey(id)) {
+            return this.treinadores.get(id);
+        }
+        return null;
+    }
+
+
+    //Pegar Treinos
+    public Map<Integer, Treino> getTreinos() {
+        return this.treinos;
+    }
+
+
+    //Editar Treino
     public boolean editarTreino(int idTreino, String nomeTreino,
-                                String conteudo, LocalDate data) {
+                                String conteudo, String data) {
+
 
         if (nomeTreino == null || nomeTreino.isBlank()
                 || conteudo == null || conteudo.isBlank()
-                || data == null) {
-
-            System.out.println("Dados do treino inválidos!");
+                || data == null || data.isBlank()) {
             return false;
         }
-
-        for (Treino treino : treinos) {
-            if (treino.getIdTreino() == idTreino) {
-                treino.setNomeTreino(nomeTreino);
-                treino.setConteudo(conteudo);
-                treino.setData(data);
-
-                System.out.println("Treino alterado!");
-                return true;
-            }
+        if (treinos.containsKey(idTreino)) {
+            treinos.get(idTreino).setNomeTreino(nomeTreino);
+            treinos.get(idTreino).setConteudo(conteudo);
+            treinos.get(idTreino).setData(data);
+            return true;
         }
-
-        System.out.println("Treino não encontrado neste aluno!");
         return false;
     }
 
-    public boolean removerTreino(int idTreino) {
-        for (int i = 0; i < treinos.size(); i++) {
-            if (treinos.get(i).getIdTreino() == idTreino) {
-                treinos.remove(i);
-                System.out.println("Treino removido!");
-                return true;
-            }
-        }
 
-        System.out.println("Treino não encontrado neste aluno!");
-        return false;
-    }
-
-    public ArrayList<Treino> getTreinosPorData(LocalDate data) {
-        ArrayList<Treino> treinosDoDia = new ArrayList<>();
-
-        if (data == null) {
-            return treinosDoDia;
-        }
-
-        for (Treino treino : treinos) {
-            if (data.equals(treino.getData())) {
-                treinosDoDia.add(treino);
-            }
-        }
-
-        return treinosDoDia;
-    }
-
+    //Pegar Quantidade De Treinos
     public int getQuantidadeTreinos() {
         return treinos.size();
     }
 
-    public void mostrarCarteirinhaAluno() {
 
+    //Mostrar Carteirinha
+    public void mostrarCarteirinhaAluno() {
         ArrayList<String> nomePlanos = new ArrayList<>();
 
-        for(Plano p : this.planos){
-            nomePlanos.add(p.getNome());
-        }
 
-        System.out.println("========================================");
-        System.out.println("          ACADEMIA ÍCARO");
-        System.out.println("       CARTEIRINHA DO ALUNO");
-        System.out.println("========================================");
+        for (AssinaturaPlano p : this.assinaturaPlanos.values()) {
+            nomePlanos.add(p.getPlano().getNome());
+        }
         System.out.println("NOME: " + getNome());
         System.out.println("CPF: " + getCpf());
         System.out.println("IDADE: " + idade);
         System.out.println("ALTURA: " + altura + " m");
         System.out.println("PESO CORPORAL: " + peso + " kg");
-        System.out.println("PLANO: " + (planos == null ? "Não definido" : nomePlanos));
         System.out.println("INTENSIDADE: " + intensidade);
-
-        System.out.println("----------------------------------------");
         System.out.println("MODALIDADES:");
-
         if (getModalidade().isEmpty()) {
             System.out.println("Nenhuma modalidade selecionada.");
         } else {
             System.out.println("- " + getModalidade());
         }
-
-        System.out.println("----------------------------------------");
+        System.out.println("PLANO:");
+        if (nomePlanos.isEmpty()) {
+            System.out.print("Nenhum plano selecionado");
+        } else {
+            System.out.println("- " + nomePlanos);
+        }
         System.out.println("QUANTIDADE DE TREINOS: " + treinos.size());
-        System.out.println("========================================");
     }
 }
