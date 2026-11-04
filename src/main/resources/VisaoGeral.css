@@ -1,0 +1,164 @@
+/* =========================================================
+* IDENTIDADE VISUAL: Academia Ícaro (Obsidian Gold Modern)
+* ========================================================= */
+.root {
+    -fx-background-color: #04070d;
+    -fx-font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+}
+
+
+/* --- Tipografia --- */
+.headline-xl { -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #f8fafc; }
+.title-md { -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #f8fafc; }
+.label-sm { -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #94a3b8; }
+.text-gold { -fx-text-fill: #f1ba2a; }
+
+
+/* --- Paineis e Estruturas --- */
+.sidebar-panel {
+    -fx-background-color: #06090e;
+    -fx-border-color: #0e1116;
+    -fx-border-width: 0 1 0 0;
+}
+
+
+/* --- Popups, Alertas e Formulários (Dialogs) --- */
+.dialog-pane {
+    -fx-background-color: #06090e;
+    -fx-border-color: #0e1116;
+    -fx-border-width: 1px;
+}
+.dialog-pane .label {
+    -fx-text-fill: #f8fafc;
+}
+.dialog-pane .header-panel {
+    -fx-background-color: #04070d;
+    -fx-border-color: #0e1116;
+    -fx-border-width: 0 0 1 0;
+}
+.dialog-pane .header-panel .label {
+    -fx-text-fill: #f1ba2a;
+    -fx-font-weight: bold;
+}
+.dialog-pane .button-bar .button {
+    -fx-background-color: #181c23;
+    -fx-text-fill: #94a3b8;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+.dialog-pane .button-bar .button:default {
+    -fx-background-color: #f1ba2a;
+    -fx-text-fill: #04070d;
+    -fx-font-weight: bold;
+}
+.dialog-pane .button-bar .button:hover {
+    -fx-background-color: #daa520;
+    -fx-text-fill: #04070d;
+}
+
+
+.header-panel {
+    -fx-background-color: #04070d;
+    -fx-border-color: #0e1116;
+    -fx-border-width: 0 0 1 0;
+}
+.card-panel {
+    -fx-background-color: #06090e;
+    -fx-border-color: #0e1116;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 20px;
+}
+
+
+/* --- Botões --- */
+.btn-primary {
+    -fx-background-color: #f1ba2a;
+    -fx-text-fill: #04070d;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+.btn-primary:hover { -fx-background-color: #daa520; }
+
+
+.btn-secondary {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94a3b8;
+    -fx-border-color: #0e1116;
+    -fx-border-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+.btn-secondary:hover {
+    -fx-border-color: #f1ba2a;
+    -fx-text-fill: #f8fafc;
+}
+.btn-danger {
+    -fx-background-color: transparent;
+    -fx-text-fill: #808080;
+    -fx-border-color: #808080;
+    -fx-border-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+.btn-danger:hover {
+    -fx-background-color: #808080;
+    -fx-text-fill: #04070d;
+}
+
+
+/* --- Menu Lateral --- */
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94a3b8;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12px 16px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+.sidebar-btn:hover {
+    -fx-background-color: #0a0e16;
+    -fx-text-fill: #f8fafc;
+}
+.sidebar-btn-active {
+    -fx-background-color: #f1ba2a;
+    -fx-text-fill: #04070d;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12px 16px;
+    -fx-background-radius: 6px;
+}
+
+
+/* --- Tabelas (TableView) --- */
+.table-view {
+    -fx-background-color: #06090e;
+    -fx-border-color: #0e1116;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+.table-view .column-header-background {
+    -fx-background-color: #0a0e16;
+    -fx-border-color: #0e1116;
+    -fx-border-width: 0 0 1 0;
+}
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+.table-view .column-header .label {
+    -fx-text-fill: #94a3b8;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+}
+.table-row-cell {
+    -fx-background-color: #06090e;
+    -fx-border-color: #0e1116;
+    -fx-border-width: 0 0 1 0;
+}
+.table-row-cell:odd { -fx-background-color: #0a0c10; }
+.table-row-cell:selected { -fx-background-color: #1a1e28; }
+.table-row-cell .text { -fx-fill: #f8fafc; }

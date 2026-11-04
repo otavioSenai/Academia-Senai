@@ -1,25 +1,26 @@
 package com.example.academia.ClassesUniversais;
 
-import com.example.academia.aluno.Aluno;
+public abstract class Funcionario extends Usuario{
 
-public class Funcionario extends Usuario{
-    String departamento;
     double salario;
-    public Funcionario(int id, String nome, String senha, String cpf, double salario){
-        super(id, nome, senha, cpf);
+
+    public Funcionario(String nome, String senha, String cpf, double salario){
+        super(nome, senha, cpf);
         this.salario = salario;
     }
 
-    protected double getSalario(){
+    //Pega o Salário
+    public double getSalario(){
         return this.salario;
     }
 
-    protected void setSalario(double salario) {
-
+    //Muda o Salário
+    public boolean setSalario(double salario) {
         if (salario <= 0) {
-            System.out.println("Valores Inválidos");
+            return false;
         } else {
             this.salario = salario;
+            return true;
         }
     }
 }

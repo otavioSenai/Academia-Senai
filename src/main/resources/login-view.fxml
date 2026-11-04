@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<StackPane prefHeight="800.0" prefWidth="1360.0" styleClass="root" stylesheets="@VisaoGeral.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.academia.Dono.Controller.LoginController">
+
+    <!-- Botão de fechar a App -->
+    <Button text="X" onAction="#fecharApp" StackPane.alignment="TOP_RIGHT" style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-font-weight: bold; -fx-font-size: 20px; -fx-cursor: hand;">
+        <StackPane.margin>
+            <javafx.geometry.Insets top="20" right="30" />
+        </StackPane.margin>
+    </Button>
+
+    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="420.0" spacing="16.0" style="-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 40;">
+        <Label style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-font-size: 22px; -fx-padding: 8 16; -fx-background-radius: 8;" text="Í" />
+        <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #f8fafc;" text="Academia Ícaro" />
+        <Label style="-fx-font-size: 12px; -fx-text-fill: #f1ba2a; -fx-font-weight: bold;" text="Acesso do Dono" />
+        <Region minHeight="8.0" />
+
+        <VBox spacing="6.0">
+            <Label style="-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 12px;" text="CPF" />
+            <TextField fx:id="txtCpf" onAction="#entrar" promptText="000.000.000-00" style="-fx-background-color: #04070d; -fx-text-fill: white; -fx-prompt-text-fill: #64748b; -fx-border-color: #141923; -fx-padding: 10px; -fx-background-radius: 6;" />
+        </VBox>
+
+        <!-- NOVA SECÇÃO DA SENHA COM O OLHO -->
+        <VBox spacing="6.0">
+            <Label style="-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 12px;" text="Senha" />
+            <StackPane alignment="CENTER_RIGHT">
+                <TextField fx:id="txtSenhaVisivel" onAction="#entrar" promptText="Sua senha" visible="false" style="-fx-background-color: #04070d; -fx-text-fill: white; -fx-prompt-text-fill: #64748b; -fx-border-color: #141923; -fx-padding: 10 40 10 10; -fx-background-radius: 6;" />
+                <PasswordField fx:id="txtSenha" onAction="#entrar" promptText="Sua senha" style="-fx-background-color: #04070d; -fx-text-fill: white; -fx-prompt-text-fill: #64748b; -fx-border-color: #141923; -fx-padding: 10 40 10 10; -fx-background-radius: 6;" />
+
+                <!-- O botão antigo foi substituído por este bloco -->
+                <Button onAction="#alternarVisibilidadeSenha" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0 12 0 0;">
+                    <graphic>
+                        <FontIcon fx:id="iconOlho" iconLiteral="fas-eye-slash" iconSize="20" iconColor="#94a3b8" />
+                    </graphic>
+                </Button>
+            </StackPane>
+        </VBox>
+
+        <Label fx:id="lblErro" style="-fx-text-fill: #ef4444; -fx-font-weight: bold; -fx-font-size: 13px;" text="" visible="false" />
+        <Button maxWidth="Infinity" onAction="#entrar" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 12 20; -fx-cursor: hand; -fx-background-radius: 6;" text="Entrar" />
+    </VBox>
+</StackPane>
