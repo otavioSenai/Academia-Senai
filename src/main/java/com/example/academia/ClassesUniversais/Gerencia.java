@@ -112,7 +112,7 @@ public abstract class Gerencia extends Funcionario{
     //Cadastrar o Aluno
     public boolean cadastrarAluno(String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade, Treinador treinador) {
 
-        if (nome.isBlank() || cpf.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha)
+        if (nome.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade.isBlank() || !Verificacao.verificarSenha(senha)
                 || !Verificacao.verificarCpf(cpf) || !BancoDeDados.getInstance().validarIdTreinador(treinador.getId()) || !BancoDeDados.getInstance().validarIdAssinaturaPlano(plano.getId())
                 || !BancoDeDados.getInstance().validarIdPlano(BancoDeDados.getInstance().assinaturaPlano.get(plano.getId()).getPlano().getId())){
             return false;
