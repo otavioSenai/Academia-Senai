@@ -7,7 +7,6 @@ import com.example.academia.Gerente.Gerente;
 import com.example.academia.Treinador.Treinador;
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
