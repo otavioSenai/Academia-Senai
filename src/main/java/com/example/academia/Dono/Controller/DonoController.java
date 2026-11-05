@@ -15,11 +15,13 @@ import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class DonoController {
     @FXML private Button btnNavGeral, btnNavAlunos, btnNavPlanos, btnNavTreinadores, btnNavModalidades, btnNavAdmin, btnNavCustos;
@@ -30,7 +32,6 @@ public class DonoController {
     @FXML private FlowPane boxRegistrosRecentes;
 
     private Dono dono;
-
     private final String cardStyle = "-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16; -fx-min-width: 280; -fx-max-width: 320;";
     private final String btnDangerStyle = "-fx-background-color: transparent; -fx-border-color: #ef4444; -fx-text-fill: #ef4444; -fx-border-radius: 6; -fx-cursor: hand; -fx-padding: 8;";
     private final String btnAcessarStyle = "-fx-background-color: transparent; -fx-border-color: #f1ba2a; -fx-text-fill: #f1ba2a; -fx-border-radius: 6; -fx-cursor: hand; -fx-padding: 8;";
@@ -220,6 +221,7 @@ public class DonoController {
         lblLucro.setStyle("-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: " + (t >= 0 ? "#22c55e" : "#ef4444") + ";");
         boxRegistrosRecentes.getChildren().clear();
 
+        // Gerente
         Optional<Gerente> ger = BancoDeDados.getInstance().gerente;
         if(ger.isPresent()) {
             VBox cGerente = new VBox(5); cGerente.setStyle(cardStyle);
@@ -268,7 +270,6 @@ public class DonoController {
         l.setStyle("-fx-text-fill: " + cor + "; -fx-font-weight: bold; -fx-font-size: " + tamanho + "px;");
         return l;
     }
-
     private Label criarTextoNormal(String texto) {
         Label l = new Label(texto);
         l.setStyle("-fx-text-fill: #94a3b8; -fx-font-size: 13px;");
@@ -291,6 +292,7 @@ public class DonoController {
         if (BancoDeDados.getInstance().getPlano().isEmpty() || BancoDeDados.getInstance().getTreinadores().isEmpty()) {
             mostrarAlertaErro("Cadastre pelo menos 1 Plano e 1 Treinador antes de matricular alunos."); return;
         }
+
         Stage stage = criarJanela("Matricular Novo Aluno");
         GridPane grid = (GridPane) stage.getUserData();
 
@@ -345,6 +347,7 @@ public class DonoController {
                 if (cbPlano.getValue() == null || cbTreinador.getValue() == null || cbIntensidade.getValue() == null) {
                     lblErro.setText("Selecione os campos nas caixas de opção."); lblErro.setVisible(true); return;
                 }
+
                 double altura = Double.parseDouble(txtAltura.getText().replace(",", "."));
                 double peso = Double.parseDouble(txtPeso.getText().replace(",", "."));
                 int idade = Integer.parseInt(txtIdade.getText());
@@ -397,7 +400,7 @@ public class DonoController {
         adicionarLinhaForm(grid, 2, "Valor Mensal (R$):", txtValor);
         adicionarLinhaForm(grid, 3, "Validade (Meses):", txtValidade);
         adicionarLinhaForm(grid, 4, "Juros Atraso (%):", txtJuros);
-        adicionarLinhaForm(grid, 5, "Modalidades (1 ou mais):", listaModalidades);
+        adicionarLinhaForm(grid, 5, "Modalidade Associada:", cbMod);
 
         Label lblErro = new Label();
         lblErro.setStyle("-fx-text-fill: #ef4444; -fx-font-weight: bold;");
@@ -463,7 +466,7 @@ public class DonoController {
 
         adicionarLinhaForm(grid, 0, "Nome:", txtNome); adicionarLinhaForm(grid, 1, "Senha (Estrita):", txtSenha);
         adicionarLinhaForm(grid, 2, "CPF (Com Pontos):", txtCpf); adicionarLinhaForm(grid, 3, "Salário (R$):", txtSalario);
-        adicionarLinhaForm(grid, 4, "Especialidade:", txtEsp); adicionarLinhaForm(grid, 5, "Modalidades (1 ou mais):", listaModalidades);
+        adicionarLinhaForm(grid, 4, "Especialidade:", txtEsp); adicionarLinhaForm(grid, 5, "Modalidade:", cbMod);
 
         Label lblErro = new Label();
         lblErro.setStyle("-fx-text-fill: #ef4444; -fx-font-weight: bold;");
@@ -1163,6 +1166,7 @@ public class DonoController {
         lbl.setStyle("-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 14px;");
         grid.add(lbl, 0, linha);
         grid.add(controle, 1, linha);
+
         if (controle instanceof ComboBox) {
             controle.setStyle("-fx-background-color: #04070d; -fx-text-fill: white; -fx-border-color: #141923; -fx-padding: 4px;");
             ((ComboBox<?>) controle).setPrefWidth(300);

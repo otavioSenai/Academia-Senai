@@ -1,11 +1,14 @@
 package com.example.academia.ClassesUniversais;
 
+
 import com.example.academia.aluno.Aluno;
 
 
 import java.util.Map;
 
+
 public class TrocarTreinador {
+
 
     public int Id(Map<Integer, ?> mapa) {
         return mapa.keySet()
@@ -15,9 +18,11 @@ public class TrocarTreinador {
                 .orElse(-1) + 1;
     }
 
+
     private int id = Id(BancoDeDados.getInstance().trocarTreinadores);
     private Aluno aluno;
     public String comentario;
+
 
     //Mudar o Comentário
     public boolean setComentario(String comentario, int idAluno) {
@@ -30,8 +35,10 @@ public class TrocarTreinador {
         return false;
     }
 
+
     //Pegar a Solicitação de Troca
     public void getSolicitacaoTroca (int idTreinador){
+
 
         if (!BancoDeDados.getInstance().validarIdTreinador(idTreinador)) {
             System.out.println("Valores Inválidos");
@@ -42,10 +49,12 @@ public class TrocarTreinador {
         }
     }
 
+
     //Pegar o id do comentário
     public int getId(){
         return this.id;
     }
+
 
     //Pegar o Aluno
     public Aluno getAluno(){

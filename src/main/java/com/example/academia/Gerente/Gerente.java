@@ -21,6 +21,7 @@ public class Gerente extends Gerencia {
         System.out.println("Cadastros Alunos: " + this.cadastroAlunos);
         System.out.println("Alunos Expulsos: " + this.alunosExpulsos);
         System.out.println("Salario á Pagar: " + this.getSalario());
+
     }
 
     //Cadastrar Administrativo
