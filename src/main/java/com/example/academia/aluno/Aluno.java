@@ -1,26 +1,21 @@
 package com.example.academia.aluno;
 
-
 import com.example.academia.ClassesUniversais.*;
 import com.example.academia.Treinador.Treinador;
 
 
 import java.util.*;
 
-
 public class Aluno extends Usuario {
-
 
     private int idade;
     private double altura;
     private double peso;
     private String intensidade;
 
-
     private final Map<Integer, AssinaturaPlano> assinaturaPlanos = new HashMap<>();
     private final Map<Integer, Treino> treinos = new HashMap<>();
     private final Map<Integer, Treinador> treinadores = new HashMap<>();
-
 
     public int Id(Map<Integer, ?> mapa) {
         return mapa.keySet()
@@ -30,11 +25,9 @@ public class Aluno extends Usuario {
                 .orElse(-1) + 1;
     }
 
-
     public Aluno(String nome, String senha, String cpf,
                  int idade, double altura, double peso,
                  AssinaturaPlano assinaturaPlano, String intensidade, Treinador treinador) {
-
 
         super(nome, senha, cpf);
         gerarId(Id(BancoDeDados.getInstance().getAlunos()));
@@ -46,9 +39,7 @@ public class Aluno extends Usuario {
         this.intensidade = intensidade;
     }
 
-
     //Métodos
-
 
     //Normalizar Intensidade
     private static String normalizarIntensidade(String intensidade) {
@@ -63,7 +54,6 @@ public class Aluno extends Usuario {
         }
         return null;
     }
-
 
     //Mudar de Treinador
     public boolean setTreinador(int idModalidade, int idTreinadorAntigo, int idTreinadorNovo){
@@ -82,10 +72,8 @@ public class Aluno extends Usuario {
         return false;
     }
 
-
     //Fazer um Feedback Para Um Professor
     public boolean fazerFeedback(int idTreinador, String comentario, int qtdEstrelas) {
-
 
         if (BancoDeDados.getInstance().validarIdTreinador(idTreinador)) {
             BancoDeDados.getInstance().treinadores.get(idTreinador).addFeedback(comentario, qtdEstrelas, getId());
@@ -93,7 +81,6 @@ public class Aluno extends Usuario {
         }
         return false;
     }
-
 
     //Solicitar Trocar De Treinador
     public boolean solicitarTroca(int idTreinador, String comentario) {
@@ -106,18 +93,15 @@ public class Aluno extends Usuario {
         return false;
     }
 
-
     //Ver se a Assinatura do Plano está atrasado
     public boolean verAssinaturaPlanoAtrasado(int idPlano) {
         return assinaturaPlanos.get(idPlano).tempoPagar();
     }
 
-
     //Pegar Idade
     public int getIdade() {
         return idade;
     }
-
 
     //Mudar Idade
     public boolean setIdade(int idade) {
@@ -128,12 +112,10 @@ public class Aluno extends Usuario {
         return true;
     }
 
-
     //Pegar Altura
     public double getAltura() {
         return altura;
     }
-
 
     //Mudar Altura
     public boolean setAltura(double altura) {
@@ -144,12 +126,10 @@ public class Aluno extends Usuario {
         return true;
     }
 
-
     //Pegar Peso
     public double getPeso() {
         return peso;
     }
-
 
     //Mudar Peso
     public boolean setPeso(double peso) {
@@ -159,7 +139,6 @@ public class Aluno extends Usuario {
         this.peso = peso;
         return true;
     }
-
 
     //Pegar Lista De Assinaturas de  Planos
     public Map<Integer, AssinaturaPlano> getListaAssinaturaPlano() {
@@ -174,7 +153,6 @@ public class Aluno extends Usuario {
         }
     }
 
-
     //Mostra As Modalidades do Aluno
     public boolean showModalidade() {
         if (assinaturaPlanos.isEmpty()) {
@@ -185,7 +163,6 @@ public class Aluno extends Usuario {
         }
         return true;
     }
-
 
     //Pagar Assinatura Plano
     public boolean pagarAssinaturaPlano(int idAssinatura, int idPlano) {
@@ -201,7 +178,6 @@ public class Aluno extends Usuario {
         return false;
     }
 
-
     //Pegar assinaturaPlano
     public AssinaturaPlano getAssinaturaPlano(int id) {
         if(assinaturaPlanos.containsKey(id)){
@@ -209,7 +185,6 @@ public class Aluno extends Usuario {
         }
         return null;
     }
-
 
     //Remover Plano
     public boolean removerAssinaturaPlano(int id) {
@@ -222,7 +197,6 @@ public class Aluno extends Usuario {
         return false;
     }
 
-
     //Pegar Modalidade
     public List<Map<Integer, Modalidade>> getModalidade() {
         List<Map<Integer, Modalidade>> listaModalidades = new ArrayList<>();
@@ -234,12 +208,10 @@ public class Aluno extends Usuario {
         return listaModalidades;
     }
 
-
     //Pegar Intensidade
     public String getIntensidade() {
         return this.intensidade;
     }
-
 
     //Mudar Intensidade
     public boolean setIntensidade(String intensidade) {
@@ -253,12 +225,10 @@ public class Aluno extends Usuario {
         return true;
     }
 
-
     //Pegar Treinadores
     public Map<Integer, Treinador> getTreinadores(){
         return this.treinadores;
     }
-
 
     //Pegar Treinador
     public Treinador getTreinador(int id){
@@ -268,12 +238,10 @@ public class Aluno extends Usuario {
         return null;
     }
 
-
     //Pegar Treinos
     public Map<Integer, Treino> getTreinos() {
         return this.treinos;
     }
-
 
     //Editar Treino
     public boolean editarTreino(int idTreino, String nomeTreino,
@@ -294,17 +262,14 @@ public class Aluno extends Usuario {
         return false;
     }
 
-
     //Pegar Quantidade De Treinos
     public int getQuantidadeTreinos() {
         return treinos.size();
     }
 
-
     //Mostrar Carteirinha
     public void mostrarCarteirinhaAluno() {
         ArrayList<String> nomePlanos = new ArrayList<>();
-
 
         for (AssinaturaPlano p : this.assinaturaPlanos.values()) {
             nomePlanos.add(p.getPlano().getNome());
