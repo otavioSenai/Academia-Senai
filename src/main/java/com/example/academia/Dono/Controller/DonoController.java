@@ -7,6 +7,7 @@ import com.example.academia.Gerente.Gerente;
 import com.example.academia.Treinador.Treinador;
 import com.example.academia.administrativo.Administrativo;
 import com.example.academia.aluno.Aluno;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.StringConverter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -366,8 +368,9 @@ public class DonoController {
         });
 
         HBox boxBotao = new HBox(btnSalvar);
-        boxBotao.setAlignment(Pos.CENTER);
-        grid.add(boxBotao, 0, 10, 2, 1);
+        boxBotao.setAlignment(Pos.CENTER_RIGHT);
+        grid.add(boxBotao, 1, 10);
+
         stage.showAndWait();
     }
 
@@ -418,8 +421,9 @@ public class DonoController {
         });
 
         HBox boxBotao = new HBox(btnSalvar);
-        boxBotao.setAlignment(Pos.CENTER);
-        grid.add(boxBotao, 0, 10, 2, 1);
+        boxBotao.setAlignment(Pos.CENTER_RIGHT);
+        grid.add(boxBotao, 1, 7);
+
         stage.showAndWait();
     }
 
@@ -437,8 +441,8 @@ public class DonoController {
         });
 
         HBox boxBotao = new HBox(btnSalvar);
-        boxBotao.setAlignment(Pos.CENTER);
-        grid.add(boxBotao, 0, 10, 2, 1);
+        boxBotao.setAlignment(Pos.CENTER_RIGHT);
+        grid.add(boxBotao, 1, 2);
         stage.showAndWait();
     }
 
@@ -483,8 +487,8 @@ public class DonoController {
         });
 
         HBox boxBotao = new HBox(btnSalvar);
-        boxBotao.setAlignment(Pos.CENTER);
-        grid.add(boxBotao, 0, 10, 2, 1);
+        boxBotao.setAlignment(Pos.CENTER_RIGHT);
+        grid.add(boxBotao, 1, 7);
         stage.showAndWait();
     }
 
@@ -519,8 +523,8 @@ public class DonoController {
         });
 
         HBox boxBotao = new HBox(btnSalvar);
-        boxBotao.setAlignment(Pos.CENTER);
-        grid.add(boxBotao, 0, 10, 2, 1);
+        boxBotao.setAlignment(Pos.CENTER_RIGHT);
+        grid.add(boxBotao, 1, 5);
         stage.showAndWait();
     }
 
@@ -550,8 +554,8 @@ public class DonoController {
         });
 
         HBox boxBotao = new HBox(btnSalvar);
-        boxBotao.setAlignment(Pos.CENTER);
-        grid.add(boxBotao, 0, 10, 2, 1);
+        boxBotao.setAlignment(Pos.CENTER_RIGHT);
+        grid.add(boxBotao, 1, 3);
         stage.showAndWait();
     }
 

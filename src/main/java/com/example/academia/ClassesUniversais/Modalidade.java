@@ -14,7 +14,6 @@ public class Modalidade {
     }
 
     private int id;
-    // Corrigido: adicionado o operador diamante <>
     private Map <Integer,Treinador> treinadores = new HashMap<>();
     private String nome;
     private String descricao;
@@ -40,11 +39,12 @@ public class Modalidade {
         return true;
     }
 
-    // Pega o Nome
+    //Pega o Nome
     public String getNome(){
         return this.nome;
     }
-    // Mudar a Descricao
+
+    //Mudar a Descricao
     public boolean setDescricao(String descricao){
         if(descricao.isBlank()){
             return false;
@@ -53,11 +53,12 @@ public class Modalidade {
         return true;
     }
 
-    // Pegar Descricao
+    //Pegar Descricao
     public String getDescricao(){
         return this.descricao;
     }
-    // Adiciona um Treinador
+
+    //Adiciona um Treinador
     public boolean addTreinador(int id, Treinador treinador){
         if(BancoDeDados.getInstance().validarIdTreinador(id)){
             treinadores.put(id, treinador);
@@ -67,7 +68,7 @@ public class Modalidade {
             return false;
         }
     }
-    // Remove Um Treinador
+    //Remove Um Treinador
     public boolean removeTreinador(int idModalidade, int idTreinador){
         if(BancoDeDados.getInstance().validarIdModalidade(idModalidade)){
             treinadores.remove(idTreinador);
@@ -75,15 +76,16 @@ public class Modalidade {
         }
         return false;
     }
-    // Pega o Treinador
+
+    //Pega o Treinador
     public Treinador getTreinador(int id){
         return this.treinadores.get(id);
     }
 
-    // Pegar os Treinadores
+    //Pegar os Treinadores
     public Map<Integer, Treinador> getTreinadores(){return this.treinadores;}
 
-    // Mostrar os Treinadores
+    //Mostrar os Treinadores
     public boolean showTreinadores(){
         if(treinadores.isEmpty()){
             return false;

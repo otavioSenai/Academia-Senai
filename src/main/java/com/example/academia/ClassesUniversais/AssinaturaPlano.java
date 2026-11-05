@@ -33,12 +33,12 @@ public class AssinaturaPlano {
         this.validade = agora.plusMonths(this.mesesValidade).toInstant();
     }
 
-    // Calcular Juros (Corrigido)
+    //Calcular Juros
     public double calcularJuro(double valor){
         return (juro / 100.0) * valor;
     }
 
-    // Pegar Id
+    //Pegar Id
     public int getId(){
         return this.id;
     }
