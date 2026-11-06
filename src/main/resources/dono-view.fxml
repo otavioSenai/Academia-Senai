@@ -118,7 +118,7 @@
                 <VBox fx:id="viewModalidades" spacing="20.0" visible="false">
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
                         <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Modalidades Ativas" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                        <Button focusTraversable="false" onAction="#cadastrarModalidade" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Nova Modalidade" />
+                        <Button defaultButton="true" onAction="#cadastrarModalidade" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Nova Modalidade" />
                     </HBox>
                     <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
                         <FlowPane fx:id="containerModalidades" hgap="16" vgap="16" />
@@ -129,7 +129,7 @@
                 <VBox fx:id="viewAlunos" spacing="20.0" visible="false">
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
                         <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Alunos Matriculados" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                        <Button focusTraversable="false" onAction="#cadastrarAluno" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Matricular Aluno" />
+                        <Button defaultButton="true" onAction="#cadastrarAluno" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Matricular Aluno" />
                     </HBox>
                     <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
                         <FlowPane fx:id="containerAlunos" hgap="16" vgap="16" />
@@ -140,7 +140,7 @@
                 <VBox fx:id="viewPlanos" spacing="20.0" visible="false">
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
                         <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Catálogo de Planos" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                        <Button focusTraversable="false" onAction="#cadastrarPlano" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Plano" />
+                        <Button defaultButton="true" onAction="#cadastrarPlano" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Plano" />
                     </HBox>
                     <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
                         <FlowPane fx:id="containerPlanos" hgap="16" vgap="16" />
@@ -151,7 +151,7 @@
                 <VBox fx:id="viewTreinadores" spacing="20.0" visible="false">
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
                         <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Equipe de Treinadores" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                        <Button focusTraversable="false" onAction="#cadastrarTreinador" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Treinador" />
+                        <Button defaultButton="true" onAction="#cadastrarTreinador" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Treinador" />
                     </HBox>
                     <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
                         <FlowPane fx:id="containerTreinadores" hgap="16" vgap="16" />
@@ -162,7 +162,7 @@
                 <VBox fx:id="viewAdmin" spacing="20.0" visible="false">
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
                         <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Equipe Administrativa" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                        <Button focusTraversable="false" onAction="#cadastrarAdmin" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Administrativo" />
+                        <Button defaultButton="true" onAction="#cadastrarAdmin" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Administrativo" />
                     </HBox>
                     <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
                         <FlowPane fx:id="containerAdmin" hgap="16" vgap="16" />
@@ -173,7 +173,7 @@
                 <VBox fx:id="viewCustos" spacing="20.0" visible="false">
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
                         <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Custos da Academia" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-                        <Button focusTraversable="false" onAction="#cadastrarCusto" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Custo" />
+                        <Button defaultButton="true" onAction="#cadastrarCusto" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Custo" />
                     </HBox>
                     <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
                         <FlowPane fx:id="containerCustos" hgap="16" vgap="16" />

@@ -180,7 +180,7 @@ public class DonoController {
     }
 
     // ==========================================
-    // NAVEGAÇÃO E ATUALIZAÇÃO
+    // NAVEGAÇÃO E ATUALIZAÇÃO (PÚBLICOS PARA O FXML)
     // ==========================================
     private void alternarTela(javafx.scene.Node telaAtiva, Button btnAtivo) {
         if (viewDashboard != null) viewDashboard.setVisible(false);
@@ -296,7 +296,7 @@ public class DonoController {
     }
 
     @FXML
-    private void atualizarDashboard() {
+    public void atualizarDashboard() {
         int qtdAlunos = BancoDeDados.getInstance().getAlunos().size();
         int qtdFunc = BancoDeDados.getInstance().getTreinadores().size() + BancoDeDados.getInstance().getAdministrativos().size();
         if(lblTotalAlunos != null) lblTotalAlunos.setText(String.valueOf(qtdAlunos));
@@ -361,13 +361,19 @@ public class DonoController {
         });
     }
 
-    private void estilizarComboBox(ComboBox<?> cb) {
+    // MÉTODO GENÉRICO ATUALIZADO: Verifica o conversor antes de converter para texto!
+    private <T> void estilizarComboBox(ComboBox<T> cb) {
         cb.setStyle("-fx-background-color: #04070d; -fx-text-fill: white; -fx-border-color: #141923; -fx-padding: 4px;");
-        cb.setButtonCell(new ListCell() {
-            @Override protected void updateItem(Object item, boolean empty) {
+        cb.setButtonCell(new ListCell<T>() {
+            @Override
+            protected void updateItem(T item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item == null) { setText(""); }
-                else { setText(item.toString()); setStyle("-fx-text-fill: white; -fx-font-size: 14px; -fx-background-color: transparent;"); }
+                if (empty || item == null) {
+                    setText("");
+                } else {
+                    setText(cb.getConverter() != null ? cb.getConverter().toString(item) : item.toString());
+                    setStyle("-fx-text-fill: white; -fx-font-size: 14px; -fx-background-color: transparent;");
+                }
             }
         });
     }
@@ -384,11 +390,17 @@ public class DonoController {
         TextField txtPeso = criarInput("Ex: 80.5"); aplicarMascaraNumerica(txtPeso, true);
 
         ComboBox<Plano> cbPlano = new ComboBox<>(); cbPlano.getItems().addAll(BancoDeDados.getInstance().getPlano().values());
-        cbPlano.setConverter(new StringConverter<>() { @Override public String toString(Plano p) { return p == null ? "" : p.getNome(); } @Override public Plano fromString(String s) { return null; }});
+        cbPlano.setConverter(new StringConverter<Plano>() {
+            @Override public String toString(Plano p) { return p == null ? "" : p.getNome(); }
+            @Override public Plano fromString(String s) { return null; }
+        });
         estilizarComboBox(cbPlano);
 
         ComboBox<Treinador> cbTreinador = new ComboBox<>(); cbTreinador.getItems().addAll(BancoDeDados.getInstance().getTreinadores().values());
-        cbTreinador.setConverter(new StringConverter<>() { @Override public String toString(Treinador t) { return t == null ? "" : t.getNome(); } @Override public Treinador fromString(String s) { return null; }});
+        cbTreinador.setConverter(new StringConverter<Treinador>() {
+            @Override public String toString(Treinador t) { return t == null ? "" : t.getNome(); }
+            @Override public Treinador fromString(String s) { return null; }
+        });
         estilizarComboBox(cbTreinador);
 
         ComboBox<String> cbIntensidade = new ComboBox<>(); cbIntensidade.getItems().addAll("Leve", "Médio", "Intenso");
@@ -598,6 +610,7 @@ public class DonoController {
         Stage stage = criarJanela("Editar Aluno — " + a.getNome()); GridPane grid = (GridPane) stage.getUserData();
         TextField txtAltura = criarInput("Ex: 1.75"); txtAltura.setText(String.valueOf(a.getAltura())); aplicarMascaraNumerica(txtAltura, true);
         TextField txtPeso = criarInput("Ex: 80.5"); txtPeso.setText(String.valueOf(a.getPeso())); aplicarMascaraNumerica(txtPeso, true);
+
         ComboBox<String> cbIntensidade = new ComboBox<>(); cbIntensidade.getItems().addAll("Leve", "Médio", "Intenso"); cbIntensidade.setValue(a.getIntensidade());
         estilizarComboBox(cbIntensidade);
 
@@ -853,11 +866,28 @@ public class DonoController {
     }
 
     private void mostrarAlertaErro(String msg) {
-        Alert a = new Alert(Alert.AlertType.ERROR, msg); a.setHeaderText("Aviso do Sistema");
-        DialogPane dp = a.getDialogPane(); dp.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923;");
-        dp.lookupAll(".label").forEach(n -> n.setStyle("-fx-text-fill: #ef4444; -fx-font-weight: bold;"));
-        Button okButton = (Button) dp.lookupButton(ButtonType.OK);
-        if (okButton != null) { okButton.setStyle("-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-cursor: hand;"); }
-        a.getDialogPane().getScene().setOnKeyPressed(e -> { if (e.getCode() == KeyCode.ENTER && okButton != null) okButton.fire(); }); a.showAndWait();
+        Stage stage = criarJanela("Aviso do Sistema");
+        GridPane grid = (GridPane) stage.getUserData();
+
+        Label lblMsg = new Label(msg);
+        lblMsg.setStyle("-fx-text-fill: #ef4444; -fx-font-weight: bold; -fx-font-size: 15px;");
+        lblMsg.setWrapText(true);
+        lblMsg.setPrefWidth(380);
+
+        Button btnOk = criarBotao("OK Entendi", "-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;", () -> stage.close());
+
+        HBox boxBotao = new HBox(btnOk);
+        boxBotao.setAlignment(Pos.CENTER);
+        grid.add(lblMsg, 0, 0);
+        Region espaco = new Region();
+        espaco.setMinHeight(10);
+        grid.add(espaco, 0, 1);
+
+        grid.add(boxBotao, 0, 2);
+
+        stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), btnOk::fire);
+        Platform.runLater(btnOk::requestFocus);
+
+        stage.showAndWait();
     }
 }
