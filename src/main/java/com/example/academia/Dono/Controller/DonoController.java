@@ -32,7 +32,7 @@ public class DonoController {
     @FXML private ScrollPane viewDashboard;
     @FXML private VBox viewAlunos, viewPlanos, viewTreinadores, viewModalidades, viewAdmin, viewCustos;
     @FXML private FlowPane containerAlunos, containerPlanos, containerTreinadores, containerModalidades, containerAdmin, containerCustos;
-    @FXML private Label lblTotalAlunos, lblTotalFunc, lblRenda, lblCusto, lblLucro, lblNomeUsuarioTop;
+    @FXML private Label lblTotalAlunos, lblTotalFunc, lblRenda, lblCusto, lblLucro;
     @FXML private FlowPane boxRegistrosRecentes;
 
     // Componentes de Pesquisa
@@ -52,7 +52,6 @@ public class DonoController {
     @FXML
     private void initialize() {
         dono = LoginController.obterDono();
-        if (dono != null && lblNomeUsuarioTop != null) lblNomeUsuarioTop.setText(dono.getNome());
         mostrarVisaoGeral();
         configurarPesquisa();
 
@@ -154,19 +153,19 @@ public class DonoController {
                 });
             } else if (r.tipo.equals("Aluno")) {
                 btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalheAluno((Aluno) r.ref));
-                btnRemover = criarBotao("Expulsar", btnDangerStyle, () -> { if(confirmarExclusao()){ dono.ExpulsarAluno(r.id); executarBusca();} });
+                btnRemover = criarBotao("Expulsar", btnDangerStyle, () -> { if(expulsarAlunoSeguro(r.id)){ executarBusca(); } });
             } else if (r.tipo.equals("Treinador")) {
                 btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalheTreinador((Treinador) r.ref));
-                btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(confirmarExclusao()){ dono.demitirTreinadorCompleto(r.id); executarBusca();} });
+                btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(demitirTreinadorSeguro(r.id)){ executarBusca(); } });
             } else if (r.tipo.equals("Modalidade")) {
                 btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalheModalidade((Modalidade) r.ref));
-                btnRemover = criarBotao("Apagar", btnDangerStyle, () -> { if(confirmarExclusao()){ bd.modalidades.remove(r.id); executarBusca();} });
+                btnRemover = criarBotao("Apagar", btnDangerStyle, () -> { if(apagarModalidadeSegura(r.id)){ executarBusca(); } });
             } else if (r.tipo.equals("Plano")) {
                 btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalhePlano((Plano) r.ref));
-                btnRemover = criarBotao("Apagar", btnDangerStyle, () -> { if(confirmarExclusao()){ dono.removerPlano(r.id); executarBusca();} });
+                btnRemover = criarBotao("Apagar", btnDangerStyle, () -> { if(apagarPlanoSeguro(r.id)){ executarBusca(); } });
             } else if (r.tipo.equals("Administrativo")) {
                 btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalheAdministrativo((Administrativo) r.ref));
-                btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(confirmarExclusao()){ dono.demitirAdministrativo(r.id); executarBusca();} });
+                btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(demitirAdminSeguro(r.id)){ executarBusca(); } });
             }
 
             HBox acoes = new HBox(8); acoes.setAlignment(Pos.CENTER_LEFT);
@@ -177,6 +176,83 @@ public class DonoController {
             card.getChildren().add(acoes);
             containerBusca.getChildren().add(card);
         }
+    }
+
+    // ==========================================
+    // SISTEMA DE EXCLUSÃO SEGURA
+    // ==========================================
+    private boolean apagarModalidadeSegura(int id) {
+        BancoDeDados bd = BancoDeDados.getInstance();
+        for (Plano p : bd.getPlano().values()) {
+            if (p.getModalidade().containsKey(id)) {
+                mostrarAlertaErro("Bloqueado!\nNão é possível apagar esta Modalidade pois ela faz parte do Plano: '" + p.getNome() + "'. Retire-a do plano primeiro.");
+                return false;
+            }
+        }
+        for (Treinador t : bd.getTreinadores().values()) {
+            if (dono.modalidadesDoTreinador(t.getId()).stream().anyMatch(mod -> mod.getId() == id)) {
+                mostrarAlertaErro("Bloqueado!\nNão é possível apagar. O treinador '" + t.getNome() + "' está vinculado a esta modalidade. Edite o treinador primeiro.");
+                return false;
+            }
+        }
+        if (confirmarExclusao()) {
+            bd.getModalidade().remove(id);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean apagarPlanoSeguro(int id) {
+        List<Aluno> alunos = dono.alunosDoPlano(id);
+        if (!alunos.isEmpty()) {
+            mostrarAlertaErro("Bloqueado!\nExistem " + alunos.size() + " aluno(s) a usar este plano. Transfira os alunos para outro plano antes de apagar.");
+            return false;
+        }
+        if (confirmarExclusao()) {
+            dono.removerPlano(id);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean demitirTreinadorSeguro(int id) {
+        List<Aluno> alunos = dono.alunosDoTreinador(id);
+        if (!alunos.isEmpty()) {
+            mostrarAlertaErro("Bloqueado!\nEste treinador possui " + alunos.size() + " aluno(s) associado(s). Transfira os alunos para outro treinador antes da demissão.");
+            return false;
+        }
+        if (confirmarExclusao()) {
+            for (Modalidade m : BancoDeDados.getInstance().getModalidade().values()) {
+                m.getTreinadores().remove(id);
+            }
+            dono.demitirTreinadorCompleto(id);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean expulsarAlunoSeguro(int id) {
+        if (confirmarExclusao()) {
+            dono.ExpulsarAluno(id);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean demitirAdminSeguro(int id) {
+        if (confirmarExclusao()) {
+            dono.demitirAdministrativo(id);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean apagarCustoSeguro(int id) {
+        if (confirmarExclusao()) {
+            dono.removerCusto(id);
+            return true;
+        }
+        return false;
     }
 
     // ==========================================
@@ -224,7 +300,7 @@ public class DonoController {
             alinharCardEsquerda(card);
             Button btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalheAluno(a));
             Button btnEditar = criarBotao("Editar", btnEditarStyle, () -> abrirEdicaoAluno(a));
-            Button btnRemover = criarBotao("Expulsar", btnDangerStyle, () -> { if(confirmarExclusao()) { dono.ExpulsarAluno(a.getId()); renderizarAlunos(); atualizarDashboard(); } });
+            Button btnRemover = criarBotao("Expulsar", btnDangerStyle, () -> { if(expulsarAlunoSeguro(a.getId())) { renderizarAlunos(); atualizarDashboard(); } });
             card.getChildren().add(criarLinhaAcoes(btnRemover, btnEditar, btnAcessar)); containerAlunos.getChildren().add(card);
         }
     }
@@ -237,7 +313,7 @@ public class DonoController {
             alinharCardEsquerda(card);
             Button btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalhePlano(p));
             Button btnEditar = criarBotao("Editar", btnEditarStyle, () -> abrirEdicaoPlano(p));
-            Button btnRemover = criarBotao("Apagar", btnDangerStyle, () -> { if(confirmarExclusao()) { dono.removerPlano(p.getId()); renderizarPlanos(); } });
+            Button btnRemover = criarBotao("Apagar", btnDangerStyle, () -> { if(apagarPlanoSeguro(p.getId())) { renderizarPlanos(); atualizarDashboard(); } });
             card.getChildren().add(criarLinhaAcoes(btnRemover, btnEditar, btnAcessar)); containerPlanos.getChildren().add(card);
         }
     }
@@ -250,7 +326,7 @@ public class DonoController {
             alinharCardEsquerda(card);
             Button btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalheTreinador(t));
             Button btnEditar = criarBotao("Editar", btnEditarStyle, () -> abrirEdicaoTreinador(t));
-            Button btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(confirmarExclusao()) { dono.demitirTreinadorCompleto(t.getId()); renderizarTreinadores(); atualizarDashboard(); } });
+            Button btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(demitirTreinadorSeguro(t.getId())) { renderizarTreinadores(); atualizarDashboard(); } });
             card.getChildren().add(criarLinhaAcoes(btnRemover, btnEditar, btnAcessar)); containerTreinadores.getChildren().add(card);
         }
     }
@@ -263,20 +339,46 @@ public class DonoController {
             alinharCardEsquerda(card);
             Button btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalheModalidade(m));
             Button btnEditar = criarBotao("Editar", btnEditarStyle, () -> abrirEdicaoModalidade(m));
-            Button btnRemover = criarBotao("Apagar", btnDangerStyle, () -> { if(confirmarExclusao()) { BancoDeDados.getInstance().modalidades.remove(m.getId()); renderizarModalidades(); } });
+            Button btnRemover = criarBotao("Apagar", btnDangerStyle, () -> { if(apagarModalidadeSegura(m.getId())) { renderizarModalidades(); atualizarDashboard(); } });
             card.getChildren().add(criarLinhaAcoes(btnRemover, btnEditar, btnAcessar)); containerModalidades.getChildren().add(card);
         }
     }
 
     private void renderizarAdmin() {
         containerAdmin.getChildren().clear();
+
+        // MOSTRAR O GERENTE ESPECIAL (SE EXISTIR)
+        Optional<Gerente> ger = BancoDeDados.getInstance().gerente;
+        if(ger.isPresent()) {
+            Gerente g = ger.get();
+            VBox card = new VBox(8); card.setStyle(cardStyle + " -fx-border-color: #f1ba2a;");
+            card.getChildren().addAll(criarTextoDestaque("👑 " + g.getNome(), "#f1ba2a", 18), criarTextoNormal("CPF: " + g.getCpf()), criarTextoNormal(String.format("Salário: R$ %.2f", g.getSalario())));
+            alinharCardEsquerda(card);
+
+            Button btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> {
+                VBox c = novoConteudoDetalhe();
+                c.getChildren().addAll(criarSecao("Informações (Gerente)"), criarItem("Nome: " + g.getNome()), criarItem("CPF: " + g.getCpf()), criarItem(String.format("Salário: R$ %.2f", g.getSalario())));
+                mostrarJanelaDetalhe("Gerente Geral: " + g.getNome(), c);
+            });
+            Button btnRemover = criarBotao("Demitir", btnDangerStyle, () -> {
+                if(confirmarExclusao()) {
+                    BancoDeDados.getInstance().gerente = Optional.empty();
+                    renderizarAdmin();
+                    atualizarDashboard();
+                }
+            });
+            card.getChildren().add(criarLinhaAcoes(btnRemover, btnAcessar));
+            containerAdmin.getChildren().add(card);
+        }
+
+        // MOSTRAR OS OUTROS ADMINISTRATIVOS
         for (Administrativo a : BancoDeDados.getInstance().getAdministrativos().values()) {
             VBox card = new VBox(8); card.setStyle(cardStyle);
             card.getChildren().addAll(criarTextoDestaque(a.getNome(), "#f8fafc", 18), criarTextoNormal("CPF: " + a.getCpf()), criarTextoNormal(String.format("Salário: R$ %.2f", a.getSalario())));
             alinharCardEsquerda(card);
             Button btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalheAdministrativo(a));
             Button btnEditar = criarBotao("Editar", btnEditarStyle, () -> abrirEdicaoAdministrativo(a));
-            Button btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(confirmarExclusao()) { dono.demitirAdministrativo(a.getId()); renderizarAdmin(); atualizarDashboard(); } });
+            Button btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(demitirAdminSeguro(a.getId())) { renderizarAdmin(); atualizarDashboard(); } });
             card.getChildren().add(criarLinhaAcoes(btnRemover, btnEditar, btnAcessar)); containerAdmin.getChildren().add(card);
         }
     }
@@ -290,13 +392,13 @@ public class DonoController {
             card.getChildren().addAll(criarTextoDestaque(c.getNome(), "#f8fafc", 18), criarTextoDestaque(String.format("R$ %.2f", c.getValor()), "#ef4444", 16), criarTextoNormal("Data: " + c.getData()));
             alinharCardEsquerda(card);
             Button btnEditar = criarBotao("Editar", btnEditarStyle, () -> abrirEdicaoCusto(c));
-            Button btnRemover = criarBotao("Apagar", btnDangerStyle, () -> { if(confirmarExclusao()) { dono.removerCusto(c.getId()); renderizarCustos(); atualizarDashboard(); } });
+            Button btnRemover = criarBotao("Apagar", btnDangerStyle, () -> { if(apagarCustoSeguro(c.getId())) { renderizarCustos(); atualizarDashboard(); } });
             card.getChildren().add(criarLinhaAcoes(btnRemover, btnEditar)); containerCustos.getChildren().add(card);
         }
     }
 
     @FXML
-    private void atualizarDashboard() {
+    public void atualizarDashboard() {
         int qtdAlunos = BancoDeDados.getInstance().getAlunos().size();
         int qtdFunc = BancoDeDados.getInstance().getTreinadores().size() + BancoDeDados.getInstance().getAdministrativos().size();
         if(lblTotalAlunos != null) lblTotalAlunos.setText(String.valueOf(qtdAlunos));
@@ -361,13 +463,18 @@ public class DonoController {
         });
     }
 
-    private void estilizarComboBox(ComboBox<?> cb) {
+    private <T> void estilizarComboBox(ComboBox<T> cb) {
         cb.setStyle("-fx-background-color: #04070d; -fx-text-fill: white; -fx-border-color: #141923; -fx-padding: 4px;");
-        cb.setButtonCell(new ListCell() {
-            @Override protected void updateItem(Object item, boolean empty) {
+        cb.setButtonCell(new ListCell<T>() {
+            @Override
+            protected void updateItem(T item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item == null) { setText(""); }
-                else { setText(item.toString()); setStyle("-fx-text-fill: white; -fx-font-size: 14px; -fx-background-color: transparent;"); }
+                if (empty || item == null) {
+                    setText("");
+                } else {
+                    setText(cb.getConverter() != null ? cb.getConverter().toString(item) : item.toString());
+                    setStyle("-fx-text-fill: white; -fx-font-size: 14px; -fx-background-color: transparent;");
+                }
             }
         });
     }
@@ -384,11 +491,17 @@ public class DonoController {
         TextField txtPeso = criarInput("Ex: 80.5"); aplicarMascaraNumerica(txtPeso, true);
 
         ComboBox<Plano> cbPlano = new ComboBox<>(); cbPlano.getItems().addAll(BancoDeDados.getInstance().getPlano().values());
-        cbPlano.setConverter(new StringConverter<>() { @Override public String toString(Plano p) { return p == null ? "" : p.getNome(); } @Override public Plano fromString(String s) { return null; }});
+        cbPlano.setConverter(new StringConverter<Plano>() {
+            @Override public String toString(Plano p) { return p == null ? "" : p.getNome(); }
+            @Override public Plano fromString(String s) { return null; }
+        });
         estilizarComboBox(cbPlano);
 
         ComboBox<Treinador> cbTreinador = new ComboBox<>(); cbTreinador.getItems().addAll(BancoDeDados.getInstance().getTreinadores().values());
-        cbTreinador.setConverter(new StringConverter<>() { @Override public String toString(Treinador t) { return t == null ? "" : t.getNome(); } @Override public Treinador fromString(String s) { return null; }});
+        cbTreinador.setConverter(new StringConverter<Treinador>() {
+            @Override public String toString(Treinador t) { return t == null ? "" : t.getNome(); }
+            @Override public Treinador fromString(String s) { return null; }
+        });
         estilizarComboBox(cbTreinador);
 
         ComboBox<String> cbIntensidade = new ComboBox<>(); cbIntensidade.getItems().addAll("Leve", "Médio", "Intenso");
@@ -500,6 +613,36 @@ public class DonoController {
     }
 
     @FXML
+    private void cadastrarGerente() {
+        if (BancoDeDados.getInstance().gerente.isPresent()) {
+            mostrarAlertaErro("Bloqueado!\nA academia já possui um Gerente Geral ativo. Demita o gerente atual antes de nomear um novo.");
+            return;
+        }
+
+        Stage stage = criarJanela("Nomear Gerente Geral"); GridPane grid = (GridPane) stage.getUserData();
+
+        TextField txtNome = criarInput("Nome Completo"); TextField txtSenha = criarInput("Mín. 8, 1 Maiúscula, 1 Número, 1 Especial (@)");
+        TextField txtCpf = criarInput("000.000.000-00"); TextField txtSalario = criarInput("Ex: 5000.00"); aplicarMascaraNumerica(txtSalario, true);
+
+        adicionarLinhaForm(grid, 0, "Nome:", txtNome); adicionarLinhaForm(grid, 1, "Senha:", txtSenha);
+        adicionarLinhaForm(grid, 2, "CPF (Com Pontos):", txtCpf); adicionarLinhaForm(grid, 3, "Salário (R$):", txtSalario);
+
+        Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 4, 2, 1);
+
+        Button btnSalvar = criarBotaoSalvar("Nomear", () -> {
+            try {
+                double salario = Double.parseDouble(txtSalario.getText().replace(",", "."));
+                boolean sucesso = dono.cadastrarGerente(txtNome.getText(), txtSenha.getText(), txtCpf.getText(), salario);
+                if(sucesso) { stage.close(); renderizarAdmin(); atualizarDashboard(); } else { lblErro.setText("Erro! O CPF ou Senha informados não cumprem as regras."); }
+            } catch (Exception ex) { lblErro.setText("Salário inválido."); }
+        });
+
+        HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER); grid.add(boxBotao, 0, 5, 2, 1);
+        forcarFocoEEnter(stage, btnSalvar);
+        stage.showAndWait();
+    }
+
+    @FXML
     private void cadastrarAdmin() {
         Stage stage = criarJanela("Novo Administrativo"); GridPane grid = (GridPane) stage.getUserData();
 
@@ -598,6 +741,7 @@ public class DonoController {
         Stage stage = criarJanela("Editar Aluno — " + a.getNome()); GridPane grid = (GridPane) stage.getUserData();
         TextField txtAltura = criarInput("Ex: 1.75"); txtAltura.setText(String.valueOf(a.getAltura())); aplicarMascaraNumerica(txtAltura, true);
         TextField txtPeso = criarInput("Ex: 80.5"); txtPeso.setText(String.valueOf(a.getPeso())); aplicarMascaraNumerica(txtPeso, true);
+
         ComboBox<String> cbIntensidade = new ComboBox<>(); cbIntensidade.getItems().addAll("Leve", "Médio", "Intenso"); cbIntensidade.setValue(a.getIntensidade());
         estilizarComboBox(cbIntensidade);
 
@@ -853,11 +997,28 @@ public class DonoController {
     }
 
     private void mostrarAlertaErro(String msg) {
-        Alert a = new Alert(Alert.AlertType.ERROR, msg); a.setHeaderText("Aviso do Sistema");
-        DialogPane dp = a.getDialogPane(); dp.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923;");
-        dp.lookupAll(".label").forEach(n -> n.setStyle("-fx-text-fill: #ef4444; -fx-font-weight: bold;"));
-        Button okButton = (Button) dp.lookupButton(ButtonType.OK);
-        if (okButton != null) { okButton.setStyle("-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-cursor: hand;"); }
-        a.getDialogPane().getScene().setOnKeyPressed(e -> { if (e.getCode() == KeyCode.ENTER && okButton != null) okButton.fire(); }); a.showAndWait();
+        Stage stage = criarJanela("Aviso do Sistema");
+        GridPane grid = (GridPane) stage.getUserData();
+
+        Label lblMsg = new Label(msg);
+        lblMsg.setStyle("-fx-text-fill: #ef4444; -fx-font-weight: bold; -fx-font-size: 15px;");
+        lblMsg.setWrapText(true);
+        lblMsg.setPrefWidth(380);
+
+        Button btnOk = criarBotao("OK Entendi", "-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;", () -> stage.close());
+
+        HBox boxBotao = new HBox(btnOk);
+        boxBotao.setAlignment(Pos.CENTER);
+        grid.add(lblMsg, 0, 0);
+        Region espaco = new Region();
+        espaco.setMinHeight(10);
+        grid.add(espaco, 0, 1);
+
+        grid.add(boxBotao, 0, 2);
+
+        stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), btnOk::fire);
+        Platform.runLater(btnOk::requestFocus);
+
+        stage.showAndWait();
     }
 }
