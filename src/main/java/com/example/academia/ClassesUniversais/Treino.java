@@ -78,12 +78,4 @@ public class Treino {
         this.conteudo = conteudo;
         return true;
     }
-
-
-    public void mostrarTreino(){
-        System.out.println(this.nomeTreino);
-        for(int i = 0; i < this.exercicios.size(); i++){
-            System.out.println(i + " - " + this.exercicios.get(i));
-        }
-    }
 }

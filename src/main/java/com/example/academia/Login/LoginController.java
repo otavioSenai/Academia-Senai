@@ -17,13 +17,12 @@ public class LoginController {
     @FXML private PasswordField txtSenha;
     @FXML private Label lblErro;
 
-    // Conta do Dono (criada uma única vez; a senha fica guardada criptografada em SHA-512)
+    // Conta do Dono
     public static Dono obterDono() {
-        BancoDeDados bd = BancoDeDados.getInstance();
-        if (bd.dono.isEmpty()) {
-            bd.dono = Optional.of(new Dono("Dono Master", CriptografarSenha.SenhaGeral("Senha@123"), "52998224725", 5000.0));
+        if (BancoDeDados.getInstance().dono.isEmpty()) {
+            BancoDeDados.getInstance().dono = Optional.of(new Dono("Dono", CriptografarSenha.SenhaGeral("Senha@123"), "11111111111", 5000.0));
         }
-        return bd.dono.get();
+        return BancoDeDados.getInstance().dono.get();
     }
 
     @FXML

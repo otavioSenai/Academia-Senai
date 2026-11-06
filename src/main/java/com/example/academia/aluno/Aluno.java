@@ -59,7 +59,6 @@ public class Aluno extends Usuario {
     public boolean setTreinador(int idModalidade, int idTreinadorAntigo, int idTreinadorNovo){
         if(BancoDeDados.getInstance().validarIdTreinador(idTreinadorAntigo) && BancoDeDados.getInstance().validarIdTreinador(idTreinadorNovo) && this.treinadores.containsKey(BancoDeDados.getInstance().treinadores.get(idTreinadorAntigo))) {
 
-
             Map<Integer, Modalidade> modalidade = BancoDeDados.getInstance().modalidades;
             if (modalidade.containsKey(idModalidade)) {
                 Map<Integer, Treinador> treinadores = modalidade.get(idModalidade).getTreinadores();
@@ -147,26 +146,18 @@ public class Aluno extends Usuario {
 
 
     //Mostra As Assinaturas do Aluno
-    public void showAssinaturaPlano() {
-        for (AssinaturaPlano a : assinaturaPlanos.values()) {
-            System.out.println(a.getId() + " - " + a);
-        }
-    }
-
-    //Mostra As Modalidades do Aluno
-    public boolean showModalidade() {
-        if (assinaturaPlanos.isEmpty()) {
+    public boolean showAssinaturaPlano() {
+        if(assinaturaPlanos.isEmpty()){
             return false;
         }
         for (AssinaturaPlano a : assinaturaPlanos.values()) {
-            a.showModalidades();
+            System.out.println(a.getId() + " - " + a);
         }
         return true;
     }
 
     //Pagar Assinatura Plano
     public boolean pagarAssinaturaPlano(int idAssinatura, int idPlano) {
-
 
         if (BancoDeDados.getInstance().validarIdAssinaturaPlano(idAssinatura) && this.assinaturaPlanos.containsKey(idAssinatura)) {
             AssinaturaPlano assinaturaPlano = this.assinaturaPlanos.get(idAssinatura);
@@ -189,7 +180,6 @@ public class Aluno extends Usuario {
     //Remover Plano
     public boolean removerAssinaturaPlano(int id) {
 
-
         if(assinaturaPlanos.containsKey(id)){
             assinaturaPlanos.remove(id);
             return true;
@@ -200,7 +190,6 @@ public class Aluno extends Usuario {
     //Pegar Modalidade
     public List<Map<Integer, Modalidade>> getModalidade() {
         List<Map<Integer, Modalidade>> listaModalidades = new ArrayList<>();
-
 
         for (AssinaturaPlano p : this.assinaturaPlanos.values()) {
             listaModalidades.add(p.getPlano().getModalidade());
@@ -216,7 +205,6 @@ public class Aluno extends Usuario {
     //Mudar Intensidade
     public boolean setIntensidade(String intensidade) {
         String intensidadeValida = normalizarIntensidade(intensidade);
-
 
         if (intensidadeValida == null) {
             return false;
@@ -246,7 +234,6 @@ public class Aluno extends Usuario {
     //Editar Treino
     public boolean editarTreino(int idTreino, String nomeTreino,
                                 String conteudo, String data) {
-
 
         if (nomeTreino == null || nomeTreino.isBlank()
                 || conteudo == null || conteudo.isBlank()

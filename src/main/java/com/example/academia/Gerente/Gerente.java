@@ -13,17 +13,6 @@ public class Gerente extends Gerencia {
         gerarId(0);
     }
 
-    //Mostra a Carteirinha do Gerente
-    public void CarteirinhaGerente(){
-        System.out.println("Nome: " + this.getNome());
-        System.out.println("Demissões: " + this.demissoes);
-        System.out.println("Contratações: " + this.contratacao);
-        System.out.println("Cadastros Alunos: " + this.cadastroAlunos);
-        System.out.println("Alunos Expulsos: " + this.alunosExpulsos);
-        System.out.println("Salario á Pagar: " + this.getSalario());
-
-    }
-
     //Cadastrar Administrativo
     public boolean cadastrarAdministrativo(String nome, String senha, String cpf, double salario){
         if(nome.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf) || salario <= 0){
@@ -49,10 +38,5 @@ public class Gerente extends Gerencia {
         else{
             return false;
         }
-    }
-
-    //Ver Carteirinha do Administrativo
-    public void CarteirinhaAdministrativo(int id){
-        BancoDeDados.getInstance().administrativos.get(id).exibirInformacoes();
     }
 }

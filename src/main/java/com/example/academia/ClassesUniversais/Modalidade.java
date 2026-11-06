@@ -84,15 +84,4 @@ public class Modalidade {
 
     //Pegar os Treinadores
     public Map<Integer, Treinador> getTreinadores(){return this.treinadores;}
-
-    //Mostrar os Treinadores
-    public boolean showTreinadores(){
-        if(treinadores.isEmpty()){
-            return false;
-        }
-        for(Treinador t : treinadores.values()){
-            System.out.println(t.getId() + " - " + t.getNome());
-        }
-        return true;
-    }
 }

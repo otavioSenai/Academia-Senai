@@ -27,14 +27,6 @@ public class Custo {
         BancoDeDados.getInstance().grafico.addCusto(this.id);
     }
 
-    //Métodos
-    public void mostrarCusto(){
-        System.out.println("Nome:" + this.nome);
-        System.out.println("Id:" + this.id);
-        System.out.println("Data:" + this.data);
-        System.out.println("Valor:" + this.valor);
-    }
-
     //Pegar Nome
     public String getNome(){
         return this.nome;

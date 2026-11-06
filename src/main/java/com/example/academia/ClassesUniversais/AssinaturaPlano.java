@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AssinaturaPlano {
+
     public int Id(Map<Integer, ?> mapa) {
         return mapa.keySet()
                 .stream()
@@ -42,6 +43,7 @@ public class AssinaturaPlano {
     public int getId(){
         return this.id;
     }
+    //Pegar Plano
     public Plano getPlano(){
         return this.plano;
     }
@@ -58,7 +60,7 @@ public class AssinaturaPlano {
         return this.mesesValidade;
     }
     // Mudar Validade
-    public boolean addValidade(int mesesValidade){
+    public boolean setValidade(int mesesValidade){
         if(mesesValidade <= 0){
             return false;
         }
@@ -83,7 +85,7 @@ public class AssinaturaPlano {
     public boolean getStatus(){
         return this.status;
     }
-    // Efutuar o Pagamento do Plano
+    // Efetuar o Pagamento do Plano
     public boolean pagarPlano(int idPlano, int idAluno){
         if(plano.getId() != idPlano){
             return false;
@@ -91,8 +93,7 @@ public class AssinaturaPlano {
         Instant momentoPagamento = Instant.now();
         this.dataPagamento.put(idPlano, momentoPagamento);
         ZoneId fuso = ZoneId.of("America/Sao_Paulo");
-        ZonedDateTime validadeZona = this.validade.atZone(fuso);
-        ZonedDateTime novaValidade = validadeZona.plusMonths(this.mesesValidade);
+        ZonedDateTime novaValidade = this.validade.atZone(fuso).plusMonths(this.mesesValidade);
         BancoDeDados.getInstance().grafico.addRenda(idAluno,getId());
         this.validade = novaValidade.toInstant();
         this.status = true;
@@ -101,17 +102,5 @@ public class AssinaturaPlano {
     // Pegar a Data Em Que o Pagamento Foi Realizado
     public Instant getDataPagamento(int id){
         return this.dataPagamento.get(id);
-    }
-    // Mostrar as Modalidade
-    public boolean showModalidades(){
-        if(plano.getModalidade().isEmpty()){
-            return false;
-        }
-        for(Modalidade m : plano.getModalidade().values()){
-            System.out.println(m.getId() + " - " + m.getNome());
-            System.out.println(m.getDescricao());
-            m.showTreinadores();
-        }
-        return true;
     }
 }

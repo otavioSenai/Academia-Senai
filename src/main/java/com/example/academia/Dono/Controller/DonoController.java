@@ -157,7 +157,7 @@ public class DonoController {
                 btnRemover = criarBotao("Expulsar", btnDangerStyle, () -> { if(confirmarExclusao()){ dono.ExpulsarAluno(r.id); executarBusca();} });
             } else if (r.tipo.equals("Treinador")) {
                 btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalheTreinador((Treinador) r.ref));
-                btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(confirmarExclusao()){ dono.demitirTreinadorCompleto(r.id); executarBusca();} });
+                btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(confirmarExclusao()){ dono.demitirTreinador(r.id); executarBusca();} });
             } else if (r.tipo.equals("Modalidade")) {
                 btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalheModalidade((Modalidade) r.ref));
                 btnRemover = criarBotao("Apagar", btnDangerStyle, () -> { if(confirmarExclusao()){ bd.modalidades.remove(r.id); executarBusca();} });
@@ -250,7 +250,7 @@ public class DonoController {
             alinharCardEsquerda(card);
             Button btnAcessar = criarBotao("Acessar", btnAcessarStyle, () -> abrirDetalheTreinador(t));
             Button btnEditar = criarBotao("Editar", btnEditarStyle, () -> abrirEdicaoTreinador(t));
-            Button btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(confirmarExclusao()) { dono.demitirTreinadorCompleto(t.getId()); renderizarTreinadores(); atualizarDashboard(); } });
+            Button btnRemover = criarBotao("Demitir", btnDangerStyle, () -> { if(confirmarExclusao()) { dono.demitirTreinador(t.getId()); renderizarTreinadores(); atualizarDashboard(); } });
             card.getChildren().add(criarLinhaAcoes(btnRemover, btnEditar, btnAcessar)); containerTreinadores.getChildren().add(card);
         }
     }
@@ -375,39 +375,80 @@ public class DonoController {
     @FXML
     private void cadastrarAluno() {
         if (BancoDeDados.getInstance().getPlano().isEmpty() || BancoDeDados.getInstance().getTreinadores().isEmpty()) { mostrarAlertaErro("Cadastre pelo menos 1 Plano e 1 Treinador antes."); return; }
-        Stage stage = criarJanela("Matricular Novo Aluno"); GridPane grid = (GridPane) stage.getUserData();
+        Stage stage = criarJanela("Matricular Novo Aluno");
+        GridPane grid = (GridPane) stage.getUserData();
 
-        TextField txtNome = criarInput("Ex: Kauan Silva"); TextField txtSenha = criarInput("Mín. 8 letras, 1 Maiúscula, 1 Número, 1 Especial (@)");
+        TextField txtNome = criarInput("Ex: Kauan Silva");
+        TextField txtSenha = criarInput("Mín. 8 letras, 1 Maiúscula, 1 Número, 1 Especial (@)");
         TextField txtCpf = criarInput("Formato exato: 000.000.000-00");
-        TextField txtIdade = criarInput("Apenas números (Ex: 24)"); aplicarMascaraNumerica(txtIdade, false);
-        TextField txtAltura = criarInput("Ex: 1.75"); aplicarMascaraNumerica(txtAltura, true);
-        TextField txtPeso = criarInput("Ex: 80.5"); aplicarMascaraNumerica(txtPeso, true);
+        TextField txtIdade = criarInput("Apenas números (Ex: 24)");
+        aplicarMascaraNumerica(txtIdade, false);
+        TextField txtAltura = criarInput("Ex: 1.75");
+        aplicarMascaraNumerica(txtAltura, true);
+        TextField txtPeso = criarInput("Ex: 80.5");
+        aplicarMascaraNumerica(txtPeso, true);
 
-        ComboBox<Plano> cbPlano = new ComboBox<>(); cbPlano.getItems().addAll(BancoDeDados.getInstance().getPlano().values());
-        cbPlano.setConverter(new StringConverter<>() { @Override public String toString(Plano p) { return p == null ? "" : p.getNome(); } @Override public Plano fromString(String s) { return null; }});
+        ComboBox<Plano> cbPlano = new ComboBox<>();
+        cbPlano.getItems().addAll(BancoDeDados.getInstance().getPlano().values());
+        cbPlano.setConverter(new StringConverter<>() {
+            @Override public String toString(Plano p) {
+                return p == null ? "" : p.getNome();
+            }
+            @Override public Plano fromString(String s) {
+                return null;
+            }
+        });
         estilizarComboBox(cbPlano);
 
-        ComboBox<Treinador> cbTreinador = new ComboBox<>(); cbTreinador.getItems().addAll(BancoDeDados.getInstance().getTreinadores().values());
-        cbTreinador.setConverter(new StringConverter<>() { @Override public String toString(Treinador t) { return t == null ? "" : t.getNome(); } @Override public Treinador fromString(String s) { return null; }});
+        ComboBox<Treinador> cbTreinador = new ComboBox<>();
+        cbTreinador.getItems().addAll(BancoDeDados.getInstance().getTreinadores().values());
+        cbTreinador.setConverter(new StringConverter<>() {
+            @Override public String toString(Treinador t) {
+                return t == null ? "" : t.getNome();
+            }
+            @Override public Treinador fromString(String s) {
+                return null;
+            }
+        });
         estilizarComboBox(cbTreinador);
 
-        ComboBox<String> cbIntensidade = new ComboBox<>(); cbIntensidade.getItems().addAll("Leve", "Médio", "Intenso");
+        ComboBox<String> cbIntensidade = new ComboBox<>();
+        cbIntensidade.getItems().addAll("Leve", "Médio", "Intenso");
         estilizarComboBox(cbIntensidade);
 
-        adicionarLinhaForm(grid, 0, "Nome Completo:", txtNome); adicionarLinhaForm(grid, 1, "Senha (Obrigatória):", txtSenha);
-        adicionarLinhaForm(grid, 2, "CPF (Com Pontos e Traço):", txtCpf); adicionarLinhaForm(grid, 3, "Idade:", txtIdade);
-        adicionarLinhaForm(grid, 4, "Altura (m):", txtAltura); adicionarLinhaForm(grid, 5, "Peso (kg):", txtPeso);
-        adicionarLinhaForm(grid, 6, "Plano:", cbPlano); adicionarLinhaForm(grid, 7, "Treinador:", cbTreinador); adicionarLinhaForm(grid, 8, "Intensidade:", cbIntensidade);
+        adicionarLinhaForm(grid, 0, "Nome Completo:", txtNome);
+        adicionarLinhaForm(grid, 1, "Senha (Obrigatória):", txtSenha);
+        adicionarLinhaForm(grid, 2, "CPF (Com Pontos e Traço):", txtCpf);
+        adicionarLinhaForm(grid, 3, "Idade:", txtIdade);
+        adicionarLinhaForm(grid, 4, "Altura (m):", txtAltura);
+        adicionarLinhaForm(grid, 5, "Peso (kg):", txtPeso);
+        adicionarLinhaForm(grid, 6, "Plano:", cbPlano);
+        adicionarLinhaForm(grid, 7, "Treinador:", cbTreinador);
+        adicionarLinhaForm(grid, 8, "Intensidade:", cbIntensidade);
 
-        Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 9, 2, 1);
+        Label lblErro = criarLabelErro();
+        grid.add(lblErro, 0, 9, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Concluir Matrícula", () -> {
             try {
-                if (cbPlano.getValue() == null || cbTreinador.getValue() == null || cbIntensidade.getValue() == null) { lblErro.setText("Selecione os campos nas caixas de opção."); return; }
-                double altura = Double.parseDouble(txtAltura.getText().replace(",", ".")); double peso = Double.parseDouble(txtPeso.getText().replace(",", ".")); int idade = Integer.parseInt(txtIdade.getText());
+                if (cbPlano.getValue() == null || cbTreinador.getValue() == null || cbIntensidade.getValue() == null) {
+                    lblErro.setText("Selecione os campos nas caixas de opção.");
+                    return;
+                }
+                double altura = Double.parseDouble(txtAltura.getText().replace(",", "."));
+                double peso = Double.parseDouble(txtPeso.getText().replace(",", "."));
+                int idade = Integer.parseInt(txtIdade.getText());
                 boolean sucesso = dono.cadastrarAluno(txtNome.getText(), txtSenha.getText(), txtCpf.getText(), idade, altura, peso, cbPlano.getValue(), cbIntensidade.getValue(), cbTreinador.getValue());
-                if (sucesso) { stage.close(); renderizarAlunos(); atualizarDashboard(); } else { lblErro.setText("Regras Violadas! CPF incorreto ou Senha fraca."); }
-            } catch (Exception ex) { lblErro.setText("Preencha todos os números corretamente."); }
+                if (sucesso) {
+                    stage.close();
+                    renderizarAlunos();
+                    atualizarDashboard();
+                } else {
+                    lblErro.setText("Regras Violadas! CPF incorreto ou Senha fraca.");
+                }
+            } catch (Exception ex) {
+                lblErro.setText("Preencha todos os números corretamente.");
+            }
         });
 
         HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER); grid.add(boxBotao, 0, 10, 2, 1);
@@ -417,33 +458,58 @@ public class DonoController {
 
     @FXML
     private void cadastrarPlano() {
-        if (BancoDeDados.getInstance().getModalidade().isEmpty()) { mostrarAlertaErro("Crie uma Modalidade antes."); return; }
-        Stage stage = criarJanela("Novo Plano de Acesso"); GridPane grid = (GridPane) stage.getUserData();
+        if (BancoDeDados.getInstance().getModalidade().isEmpty()) {
+            mostrarAlertaErro("Crie uma Modalidade antes.");
+            return;
+        }
+        Stage stage = criarJanela("Novo Plano de Acesso");
+        GridPane grid = (GridPane) stage.getUserData();
 
-        TextField txtNome = criarInput("Ex: VIP Anual"); TextField txtDesc = criarInput("Ex: Acesso Total");
-        TextField txtValor = criarInput("Ex: 150.00"); aplicarMascaraNumerica(txtValor, true);
-        TextField txtValidade = criarInput("Meses. Ex: 12"); aplicarMascaraNumerica(txtValidade, false);
-        TextField txtJuros = criarInput("Ex: 5.0"); aplicarMascaraNumerica(txtJuros, true);
+        TextField txtNome = criarInput("Ex: VIP Anual");
+        TextField txtDesc = criarInput("Ex: Acesso Total");
+        TextField txtValor = criarInput("Ex: 150.00");
+        aplicarMascaraNumerica(txtValor, true);
+        TextField txtValidade = criarInput("Meses. Ex: 12");
+        aplicarMascaraNumerica(txtValidade, false);
+        TextField txtJuros = criarInput("Ex: 5.0");
+        aplicarMascaraNumerica(txtJuros, true);
 
-        List<CheckBox> checkboxes = new ArrayList<>(); ScrollPane listaModalidades = criarListaModalidades(checkboxes);
+        List<CheckBox> checkboxes = new ArrayList<>();
+        ScrollPane listaModalidades = criarListaModalidades(checkboxes);
 
-        adicionarLinhaForm(grid, 0, "Nome do Plano:", txtNome); adicionarLinhaForm(grid, 1, "Descrição:", txtDesc);
-        adicionarLinhaForm(grid, 2, "Valor Mensal (R$):", txtValor); adicionarLinhaForm(grid, 3, "Validade (Meses):", txtValidade);
-        adicionarLinhaForm(grid, 4, "Juros Atraso (%):", txtJuros); adicionarLinhaForm(grid, 5, "Modalidades (1 ou mais):", listaModalidades);
+        adicionarLinhaForm(grid, 0, "Nome do Plano:", txtNome);
+        adicionarLinhaForm(grid, 1, "Descrição:", txtDesc);
+        adicionarLinhaForm(grid, 2, "Valor Mensal (R$):", txtValor);
+        adicionarLinhaForm(grid, 3, "Validade (Meses):", txtValidade);
+        adicionarLinhaForm(grid, 4, "Juros Atraso (%):", txtJuros);
+        adicionarLinhaForm(grid, 5, "Modalidades (1 ou mais):", listaModalidades);
 
         Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 6, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar Plano", () -> {
             try {
                 List<Integer> idsModalidades = idsSelecionados(checkboxes);
-                if (idsModalidades.isEmpty()) { lblErro.setText("Selecione ao menos uma modalidade."); return; }
-                double valor = Double.parseDouble(txtValor.getText().replace(",", ".")); double juros = Double.parseDouble(txtJuros.getText().replace(",", "."));
+                if (idsModalidades.isEmpty()) {
+                    lblErro.setText("Selecione ao menos uma modalidade.");
+                    return;
+                }
+                double valor = Double.parseDouble(txtValor.getText().replace(",", "."));
+                double juros = Double.parseDouble(txtJuros.getText().replace(",", "."));
                 boolean sucesso = dono.cadastrarPlano(txtNome.getText(), txtDesc.getText(), valor, idsModalidades, Integer.parseInt(txtValidade.getText()), juros);
-                if(sucesso) { stage.close(); renderizarPlanos(); } else { lblErro.setText("Erro ao cadastrar plano. Verifique os dados."); }
-            } catch (Exception ex) { lblErro.setText("Preencha Valor, Validade e Juros apenas com números."); }
+                if(sucesso) {
+                    stage.close();
+                    renderizarPlanos();
+                } else {
+                    lblErro.setText("Erro ao cadastrar plano. Verifique os dados.");
+                }
+            } catch (Exception ex) {
+                lblErro.setText("Preencha Valor, Validade e Juros apenas com números.");
+            }
         });
 
-        HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER); grid.add(boxBotao, 0, 7, 2, 1);
+        HBox boxBotao = new HBox(btnSalvar);
+        boxBotao.setAlignment(Pos.CENTER);
+        grid.add(boxBotao, 0, 7, 2, 1);
         forcarFocoEEnter(stage, btnSalvar);
         stage.showAndWait();
     }
@@ -452,17 +518,25 @@ public class DonoController {
     private void cadastrarModalidade() {
         Stage stage = criarJanela("Nova Modalidade"); GridPane grid = (GridPane) stage.getUserData();
 
-        TextField txtNome = criarInput("Ex: Musculação"); TextField txtDesc = criarInput("Ex: Área de peso livre");
-        adicionarLinhaForm(grid, 0, "Nome:", txtNome); adicionarLinhaForm(grid, 1, "Descrição:", txtDesc);
+        TextField txtNome = criarInput("Ex: Musculação");
+        TextField txtDesc = criarInput("Ex: Área de peso livre");
+
+        adicionarLinhaForm(grid, 0, "Nome:", txtNome);
+        adicionarLinhaForm(grid, 1, "Descrição:", txtDesc);
 
         Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 2, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar Modalidade", () -> {
-            if (txtNome.getText().isBlank() || txtDesc.getText().isBlank()) { lblErro.setText("Preencha todos os campos."); return; }
-            dono.escolherModalidade(txtNome.getText(), txtDesc.getText()); stage.close(); renderizarModalidades();
+            if (txtNome.getText().isBlank() || txtDesc.getText().isBlank()) {
+                lblErro.setText("Preencha todos os campos.");
+                return;
+            }
+            dono.cadastrarModalidade(txtNome.getText(), txtDesc.getText()); stage.close(); renderizarModalidades();
         });
 
-        HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER); grid.add(boxBotao, 0, 3, 2, 1);
+        HBox boxBotao = new HBox(btnSalvar);
+        boxBotao.setAlignment(Pos.CENTER);
+        grid.add(boxBotao, 0, 3, 2, 1);
         forcarFocoEEnter(stage, btnSalvar);
         stage.showAndWait();
     }
@@ -501,13 +575,19 @@ public class DonoController {
 
     @FXML
     private void cadastrarAdmin() {
-        Stage stage = criarJanela("Novo Administrativo"); GridPane grid = (GridPane) stage.getUserData();
+        Stage stage = criarJanela("Novo Administrativo");
+        GridPane grid = (GridPane) stage.getUserData();
 
-        TextField txtNome = criarInput("Nome Completo"); TextField txtSenha = criarInput("Mín. 8, 1 Maiúscula, 1 Número, 1 Especial (@)");
-        TextField txtCpf = criarInput("000.000.000-00"); TextField txtSalario = criarInput("Ex: 2500.00"); aplicarMascaraNumerica(txtSalario, true);
+        TextField txtNome = criarInput("Nome Completo");
+        TextField txtSenha = criarInput("Mín. 8, 1 Maiúscula, 1 Número, 1 Especial (@)");
+        TextField txtCpf = criarInput("000.000.000-00");
+        TextField txtSalario = criarInput("Ex: 2500.00");
+        aplicarMascaraNumerica(txtSalario, true);
 
-        adicionarLinhaForm(grid, 0, "Nome:", txtNome); adicionarLinhaForm(grid, 1, "Senha:", txtSenha);
-        adicionarLinhaForm(grid, 2, "CPF (Com Pontos):", txtCpf); adicionarLinhaForm(grid, 3, "Salário (R$):", txtSalario);
+        adicionarLinhaForm(grid, 0, "Nome:", txtNome);
+        adicionarLinhaForm(grid, 1, "Senha:", txtSenha);
+        adicionarLinhaForm(grid, 2, "CPF (Com Pontos):", txtCpf);
+        adicionarLinhaForm(grid, 3, "Salário (R$):", txtSalario);
 
         Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 4, 2, 1);
 
@@ -519,7 +599,9 @@ public class DonoController {
             } catch (Exception ex) { lblErro.setText("Salário inválido."); }
         });
 
-        HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER); grid.add(boxBotao, 0, 5, 2, 1);
+        HBox boxBotao = new HBox(btnSalvar);
+        boxBotao.setAlignment(Pos.CENTER);
+        grid.add(boxBotao, 0, 5, 2, 1);
         forcarFocoEEnter(stage, btnSalvar);
         stage.showAndWait();
     }
@@ -582,9 +664,9 @@ public class DonoController {
         VBox conteudo = novoConteudoDetalhe();
         conteudo.getChildren().addAll(criarSecao("Informações"), criarItem("ID: " + m.getId()), criarItem("Descrição: " + m.getDescricao()), criarSecao("Treinadores"));
         if (m.getTreinadores().isEmpty()) conteudo.getChildren().add(criarTextoNormal("Nenhum treinador cadastrado."));
-        else for (Treinador t : m.getTreinadores().values()) conteudo.getChildren().add(criarItem("• ID: " + t.getId() + " - " + t.getNome()));
+        else for (Treinador t : m.getTreinadores().values()) conteudo.getChildren().add(criarItem("• " + t.getNome() + " (ID " + t.getNome() + ")"));
         conteudo.getChildren().add(criarSecao("Alunos"));
-        for (Aluno a : dono.alunosDaModalidade(m.getId())) conteudo.getChildren().add(criarItem("• " + a.getNome() + " (ID " + a.getId() + ")"));
+        for (Aluno a : dono.showAlunosDaModalidade(m.getId())) conteudo.getChildren().add(criarItem("• " + a.getNome() + " (ID " + a.getId() + ")"));
         mostrarJanelaDetalhe("Modalidade: " + m.getNome(), conteudo);
     }
 
@@ -761,11 +843,11 @@ public class DonoController {
     // ==========================================
     // UTILITÁRIOS
     // ==========================================
-    private void aplicarMascaraNumerica(TextField txt, boolean permiteDecimal) {
-        txt.textProperty().addListener((obs, velho, novo) -> {
+    private void aplicarMascaraNumerica(TextField texto, boolean permiteDecimal) {
+        texto.textProperty().addListener((obs, velho, novo) -> {
             if (novo == null || novo.isEmpty()) return;
             String regex = permiteDecimal ? "\\d*([.,]\\d*)?" : "\\d*";
-            if (!novo.matches(regex)) txt.setText(velho);
+            if (!novo.matches(regex)) texto.setText(velho);
         });
     }
 
@@ -853,11 +935,18 @@ public class DonoController {
     }
 
     private void mostrarAlertaErro(String msg) {
-        Alert a = new Alert(Alert.AlertType.ERROR, msg); a.setHeaderText("Aviso do Sistema");
-        DialogPane dp = a.getDialogPane(); dp.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923;");
+        Alert a = new Alert(Alert.AlertType.ERROR, msg);
+        a.setHeaderText("Aviso do Sistema");
+        DialogPane dp = a.getDialogPane();
+        dp.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923;");
         dp.lookupAll(".label").forEach(n -> n.setStyle("-fx-text-fill: #ef4444; -fx-font-weight: bold;"));
         Button okButton = (Button) dp.lookupButton(ButtonType.OK);
-        if (okButton != null) { okButton.setStyle("-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-cursor: hand;"); }
-        a.getDialogPane().getScene().setOnKeyPressed(e -> { if (e.getCode() == KeyCode.ENTER && okButton != null) okButton.fire(); }); a.showAndWait();
+        if (okButton != null) {
+            okButton.setStyle("-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-cursor: hand;");
+        }
+        a.getDialogPane().getScene().setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER && okButton != null) okButton.fire();
+        });
+        a.showAndWait();
     }
 }

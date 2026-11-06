@@ -1,14 +1,9 @@
 package com.example.academia;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.Objects;
 
 public class Main extends Application {
 
@@ -43,7 +38,7 @@ public class Main extends Application {
             }
             Parent raiz = javafx.fxml.FXMLLoader.load(fxmlUrl);
 
-            // Se a cena ainda não existir (primeira vez), cria uma. Se já existir, apenas troca o recheio.
+            // Se a cena ainda não existir (primeira vez), cria uma. Se já existir, troca de tela
             if (stage.getScene() == null) {
                 Scene cena = new Scene(raiz);
                 stage.setScene(cena);

@@ -1,12 +1,9 @@
 package com.example.academia.ClassesUniversais;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class Plano {
-
 
     private String nome;
     private final int id;
@@ -15,9 +12,7 @@ public class Plano {
     private int mesesValidade;
     private double juros;
 
-
     private Map<Integer, Modalidade> modalidade = new HashMap<>();
-
 
     public int Id(Map<Integer, ?> mapa) {
         return mapa.keySet()
@@ -26,7 +21,6 @@ public class Plano {
                 .max()
                 .orElse(-1) + 1;
     }
-
 
     public Plano(String nome, String descricao, double valor, int mesesValidade, double juros){
         this.nome = nome;
@@ -37,9 +31,7 @@ public class Plano {
         this.juros = juros;
     }
 
-
     //Métodos
-
 
     //Adicionar Modalidade Do Banco de Dados
     public boolean addModalidade(int id){
@@ -51,18 +43,15 @@ public class Plano {
         return false;
     }
 
-
     //Pegar Juros
     public double getJuros(){
         return this.juros;
     }
 
-
     //Pegar a Validade
     public int getMesesValidade(){
         return this.mesesValidade;
     }
-
 
     //Mudar Validade
     public boolean setMesesValidade(int mesesValidade){
@@ -75,18 +64,15 @@ public class Plano {
         }
     }
 
-
     //Pegar a Modalidade
     public Map<Integer, Modalidade> getModalidade(){
         return modalidade;
     }
 
-
     //Pegar Nome
     public String getNome(){
         return this.nome;
     }
-
 
     //Mudar Nome
     public boolean setNome(String nome) {
@@ -98,18 +84,15 @@ public class Plano {
         }
     }
 
-
     //Pegar Id
     public int getId(){
         return this.id;
     }
 
-
     //Pegar Descrição
     public String getDescricao(){
         return this.descricao;
     }
-
 
     //Mudar Descrição
     public boolean setDescricao(String descricao) {
@@ -121,12 +104,10 @@ public class Plano {
         }
     }
 
-
     //Pegar Valor
     public double getValor(){
         return this.valor;
     }
-
 
     //Mudar Valor
     public boolean setValor(double valor) {
