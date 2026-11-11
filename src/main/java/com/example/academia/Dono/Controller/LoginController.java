@@ -89,6 +89,10 @@ public class LoginController {
             return;
         }
 
-        Main.abrirPainelDono();
+        try {
+            Main.abrirPainelDono();
+        } catch (Exception e){
+            e.printStackTrace(); // Imprime o erro vermelho no terminal do Intellij/Eclipse
+        }
     }
 }

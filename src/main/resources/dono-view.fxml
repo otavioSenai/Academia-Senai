@@ -169,7 +169,7 @@
                         <FlowPane fx:id="containerAdmin" hgap="16" vgap="16" />
                     </ScrollPane>
                 </VBox>
-3
+
                 <!-- TELA: CUSTOS -->
                 <VBox fx:id="viewCustos" spacing="20.0" visible="false">
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
