@@ -67,7 +67,7 @@ public class LoginController {
         String cpfDigitadoCru = txtCpf.getText() == null ? "" : txtCpf.getText().trim();
         String senhaDigitada = txtSenha.getText() == null ? "" : txtSenha.getText();
 
-        // 1. VALIDAÇÃO DE FORMATO DO CPF E DA SENHA UTILIZANDO A SUA CLASSE
+        // VALIDAÇÃO DE FORMATO DO CPF E DA SENHA UTILIZANDO A SUA CLASSE
         if (!Verificacao.verificarCpf(cpfDigitadoCru) || !Verificacao.verificarSenha(senhaDigitada)) {
             lblErro.setText("Formato de CPF ou Senha inválido.");
             lblErro.setVisible(true);
@@ -75,7 +75,7 @@ public class LoginController {
             return;
         }
 
-        // 2. COMPARAÇÃO DE CREDENCIAIS
+        // COMPARAÇÃO DE CREDENCIAIS
         String cpfDigitado = cpfDigitadoCru.replaceAll("\\D", "");
         String cpfDono = d.getCpf().replaceAll("\\D", "");
 
@@ -88,7 +88,6 @@ public class LoginController {
             txtSenha.clear();
             return;
         }
-
         Main.abrirPainelDono();
     }
 }

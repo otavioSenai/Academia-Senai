@@ -31,7 +31,6 @@
                 <TextField fx:id="txtSenhaVisivel" onAction="#entrar" promptText="Sua senha" visible="false" style="-fx-background-color: #04070d; -fx-text-fill: white; -fx-prompt-text-fill: #64748b; -fx-border-color: #141923; -fx-padding: 10 40 10 10; -fx-background-radius: 6;" />
                 <PasswordField fx:id="txtSenha" onAction="#entrar" promptText="Sua senha" style="-fx-background-color: #04070d; -fx-text-fill: white; -fx-prompt-text-fill: #64748b; -fx-border-color: #141923; -fx-padding: 10 40 10 10; -fx-background-radius: 6;" />
 
-                <!-- O botão antigo foi substituído por este bloco -->
                 <Button onAction="#alternarVisibilidadeSenha" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-padding: 0 12 0 0;">
                     <graphic>
                         <FontIcon fx:id="iconOlho" iconLiteral="fas-eye-slash" iconSize="20" iconColor="#94a3b8" />
