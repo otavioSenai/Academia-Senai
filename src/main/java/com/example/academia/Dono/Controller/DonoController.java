@@ -869,6 +869,34 @@ public class DonoController {
         forcarFocoEEnter(stage, btnSalvar); stage.showAndWait();
     }
 
+    private void abrirEdicaoGerente(Gerente g) {
+        Stage stage = criarJanela("Editar Gerente — " + g.getNome()); GridPane grid = (GridPane) stage.getUserData();
+        TextField txtSalario = criarInput("Ex: 2500.00"); 
+        txtSalario.setText(String.valueOf(g.getSalario())); 
+        aplicarMascaraNumerica(txtSalario, true);
+        Label lblErro = criarLabelErro();
+        adicionarLinhaForm(grid, 0, "Nome (não editável):", criarTextoDestaque(g.getNome(), "#f8fafc", 14)); 
+        adicionarLinhaForm(grid, 1, "Salário (R$):", txtSalario);
+        grid.add(lblErro, 0, 2, 2, 1);
+
+        Button btnSalvar = criarBotaoSalvar("Salvar Alterações", () -> {
+            try {
+                if (!g.setSalario(Double.parseDouble(txtSalario.getText().replace(",", ".")))) { 
+                    lblErro.setText("O salário deve ser maior que zero."); 
+                    return; 
+                }
+                stage.close(); 
+                renderizarAdmin(); 
+                atualizarDashboard();
+            } catch (Exception ex) { lblErro.setText("Salário inválido."); }
+        });
+        HBox boxBotao = new HBox(btnSalvar); 
+        boxBotao.setAlignment(Pos.CENTER); 
+        grid.add(boxBotao, 0, 3, 2, 1);
+        forcarFocoEEnter(stage, btnSalvar); 
+        stage.showAndWait();
+    }
+    
     private void abrirEdicaoCusto(Custo c) {
         Stage stage = criarJanela("Editar Custo — " + c.getNome()); GridPane grid = (GridPane) stage.getUserData();
         TextField txtValor = criarInput("Novo valor (R$)"); txtValor.setText(String.valueOf(c.getValor())); aplicarMascaraNumerica(txtValor, true);
