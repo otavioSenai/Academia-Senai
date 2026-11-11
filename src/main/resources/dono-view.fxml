@@ -24,7 +24,7 @@
                 <Button fx:id="btnNavPlanos" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaPlanos" styleClass="sidebar-btn" text="Planos" />
                 <Button fx:id="btnNavTreinadores" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaTreinadores" styleClass="sidebar-btn" text="Treinadores" />
                 <Button fx:id="btnNavAlunos" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaAlunos" styleClass="sidebar-btn" text="Alunos" />
-                <Button fx:id="btnNavAdmin" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaAdmin" styleClass="sidebar-btn" text="Administrativo" />
+                <Button fx:id="btnNavAdmin" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaAdmin" styleClass="sidebar-btn" text="Administração" />
                 <Button fx:id="btnNavCustos" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaCustos" styleClass="sidebar-btn" text="Custos" />
             </VBox>
             <Button focusTraversable="false" maxWidth="Infinity" onAction="#sair" style="-fx-background-color: transparent; -fx-border-color: #ef4444; -fx-text-fill: #ef4444; -fx-border-radius: 6; -fx-cursor: hand; -fx-padding: 10 16; -fx-font-weight: bold;" text="Sair" />
@@ -169,7 +169,7 @@
                         <FlowPane fx:id="containerAdmin" hgap="16" vgap="16" />
                     </ScrollPane>
                 </VBox>
-
+3
                 <!-- TELA: CUSTOS -->
                 <VBox fx:id="viewCustos" spacing="20.0" visible="false">
                     <HBox alignment="CENTER_LEFT" spacing="20.0">
