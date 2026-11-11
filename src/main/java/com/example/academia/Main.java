@@ -13,29 +13,58 @@ import java.util.Objects;
 public class Main extends Application {
 
     private static Stage stage;
-    private static Scene cenaDono;
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) {
         stage = primaryStage;
-        stage.setTitle("Academia Ícaro - Painel Dono");
-
-        Parent fxmlDono = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/academia/dono/telas/dono-view.fxml")));
-        cenaDono = new Scene(fxmlDono, 1280, 720);
-
-        URL css = getClass().getResource("/com/example/academia/dono/telas/Teste/VisaoGeral1.css");
-
-        if(css != null){
-            cenaDono.getStylesheets().add(css.toExternalForm());
-        }
-        else{
-            System.out.println("Erro: Sistema CSS não encontrado");
-        }
-
-        stage.setScene(cenaDono);
-        stage.setMinWidth(1024);
-        stage.setMinHeight(768);
+        stage.initStyle(javafx.stage.StageStyle.UNDECORATED); // Remove botões do Windows
+        mostrarLogin();
         stage.show();
+    }
+
+    public static void mostrarLogin() {
+        trocarCena("/login-view.fxml", "Academia Ícaro - Login");
+    }
+
+    // Só é chamado pelo LoginController depois que CPF e senha foram validados
+    public static void abrirPainelDono() {
+        trocarCena("/dono-view.fxml", "Academia Ícaro - Painel Dono");
+    }
+
+    public static Stage getStage() {
+        return stage;
+    }
+
+    private static void trocarCena(String caminhoFxml, String titulo) {
+        try {
+            java.net.URL fxmlUrl = Main.class.getResource(caminhoFxml);
+            if (fxmlUrl == null) {
+                throw new RuntimeException("O ARQUIVO NÃO FOI ENCONTRADO: " + caminhoFxml);
+            }
+            Parent raiz = javafx.fxml.FXMLLoader.load(fxmlUrl);
+
+            // Se a cena ainda não existir (primeira vez), cria uma. Se já existir, apenas troca o recheio.
+            if (stage.getScene() == null) {
+                Scene cena = new Scene(raiz);
+                stage.setScene(cena);
+            } else {
+                stage.getScene().setRoot(raiz);
+            }
+            // Aplica o CSS na cena atual
+            java.net.URL css = Main.class.getResource("/VisaoGeral.css");
+            if (css != null) {
+                stage.getScene().getStylesheets().clear();
+                stage.getScene().getStylesheets().add(css.toExternalForm());
+            }
+            stage.setTitle(titulo);
+
+            // Garante que a tela cheia se mantém sem interrupções
+            stage.setFullScreenExitHint("");
+            stage.setFullScreen(true);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao carregar a tela: " + caminhoFxml, e);
+        }
     }
 
     public static void main(String[] args) {

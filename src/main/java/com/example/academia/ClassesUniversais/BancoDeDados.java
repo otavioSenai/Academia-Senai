@@ -1,5 +1,6 @@
 package com.example.academia.ClassesUniversais;
 
+
 import com.example.academia.Dono.Dono;
 import com.example.academia.Gerente.Gerente;
 import com.example.academia.administrativo.Administrativo;
@@ -9,9 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+
 public class BancoDeDados {
 
+
     private static BancoDeDados banco;
+
 
     public HashMap<Integer, Modalidade> modalidades = new HashMap<>();
 

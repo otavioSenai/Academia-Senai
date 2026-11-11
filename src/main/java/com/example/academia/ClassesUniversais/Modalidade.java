@@ -1,5 +1,4 @@
 package com.example.academia.ClassesUniversais;
-
 import com.example.academia.Treinador.Treinador;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +14,7 @@ public class Modalidade {
     }
 
     private int id;
-    private Map <Integer,Treinador> treinadores = new HashMap();
+    private Map <Integer,Treinador> treinadores = new HashMap<>();
     private String nome;
     private String descricao;
 
@@ -26,12 +25,12 @@ public class Modalidade {
         this.descricao = descricao;
     }
 
-    //pegar id
+    // pegar id
     public int getId(){
         return this.id;
     }
 
-    //Mudar o Nome
+    // Mudar o Nome
     public boolean setNome(String nome){
         if(nome.isBlank()){
             return false;
@@ -69,7 +68,6 @@ public class Modalidade {
             return false;
         }
     }
-
     //Remove Um Treinador
     public boolean removeTreinador(int idModalidade, int idTreinador){
         if(BancoDeDados.getInstance().validarIdModalidade(idModalidade)){
@@ -81,7 +79,7 @@ public class Modalidade {
 
     //Pega o Treinador
     public Treinador getTreinador(int id){
-            return this.treinadores.get(id);
+        return this.treinadores.get(id);
     }
 
     //Pegar os Treinadores

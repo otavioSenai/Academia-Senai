@@ -1,12 +1,9 @@
 package com.example.academia.administrativo;
-    import com.example.academia.ClassesUniversais.*;
-    import com.example.academia.aluno.Aluno;
-    import com.example.academia.Treinador.Treinador;
+import com.example.academia.ClassesUniversais.*;
 
-    import java.util.Map;
+import java.util.Map;
 
 public class Administrativo extends Gerencia {
-
     public int Id(Map<Integer, ?> mapa) {
         return mapa.keySet()
                 .stream()
@@ -14,7 +11,6 @@ public class Administrativo extends Gerencia {
                 .max()
                 .orElse(-1) + 1;
     }
-
     //Construtor
     public Administrativo(String nome, String senha, String cpf, double salario){
         super(nome, senha, cpf, salario);

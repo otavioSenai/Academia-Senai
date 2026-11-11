@@ -3,6 +3,7 @@ package com.example.academia.aluno;
 import com.example.academia.ClassesUniversais.*;
 import com.example.academia.Treinador.Treinador;
 
+
 import java.util.*;
 
 public class Aluno extends Usuario {
@@ -58,6 +59,7 @@ public class Aluno extends Usuario {
     public boolean setTreinador(int idModalidade, int idTreinadorAntigo, int idTreinadorNovo){
         if(BancoDeDados.getInstance().validarIdTreinador(idTreinadorAntigo) && BancoDeDados.getInstance().validarIdTreinador(idTreinadorNovo) && this.treinadores.containsKey(BancoDeDados.getInstance().treinadores.get(idTreinadorAntigo))) {
 
+
             Map<Integer, Modalidade> modalidade = BancoDeDados.getInstance().modalidades;
             if (modalidade.containsKey(idModalidade)) {
                 Map<Integer, Treinador> treinadores = modalidade.get(idModalidade).getTreinadores();
@@ -82,6 +84,7 @@ public class Aluno extends Usuario {
 
     //Solicitar Trocar De Treinador
     public boolean solicitarTroca(int idTreinador, String comentario) {
+
 
         if (BancoDeDados.getInstance().validarIdTreinador(idTreinador)) {
             BancoDeDados.getInstance().treinadores.get(idTreinador).addTroca(comentario, getId());
@@ -142,6 +145,7 @@ public class Aluno extends Usuario {
         return this.assinaturaPlanos;
     }
 
+
     //Mostra As Assinaturas do Aluno
     public void showAssinaturaPlano() {
         for (AssinaturaPlano a : assinaturaPlanos.values()) {
@@ -162,6 +166,7 @@ public class Aluno extends Usuario {
 
     //Pagar Assinatura Plano
     public boolean pagarAssinaturaPlano(int idAssinatura, int idPlano) {
+
 
         if (BancoDeDados.getInstance().validarIdAssinaturaPlano(idAssinatura) && this.assinaturaPlanos.containsKey(idAssinatura)) {
             AssinaturaPlano assinaturaPlano = this.assinaturaPlanos.get(idAssinatura);
@@ -184,6 +189,7 @@ public class Aluno extends Usuario {
     //Remover Plano
     public boolean removerAssinaturaPlano(int id) {
 
+
         if(assinaturaPlanos.containsKey(id)){
             assinaturaPlanos.remove(id);
             return true;
@@ -194,6 +200,7 @@ public class Aluno extends Usuario {
     //Pegar Modalidade
     public List<Map<Integer, Modalidade>> getModalidade() {
         List<Map<Integer, Modalidade>> listaModalidades = new ArrayList<>();
+
 
         for (AssinaturaPlano p : this.assinaturaPlanos.values()) {
             listaModalidades.add(p.getPlano().getModalidade());
@@ -209,6 +216,7 @@ public class Aluno extends Usuario {
     //Mudar Intensidade
     public boolean setIntensidade(String intensidade) {
         String intensidadeValida = normalizarIntensidade(intensidade);
+
 
         if (intensidadeValida == null) {
             return false;
@@ -238,6 +246,7 @@ public class Aluno extends Usuario {
     //Editar Treino
     public boolean editarTreino(int idTreino, String nomeTreino,
                                 String conteudo, String data) {
+
 
         if (nomeTreino == null || nomeTreino.isBlank()
                 || conteudo == null || conteudo.isBlank()

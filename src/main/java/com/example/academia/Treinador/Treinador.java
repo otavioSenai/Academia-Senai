@@ -1,15 +1,19 @@
 package com.example.academia.Treinador;
 
+
 import com.example.academia.ClassesUniversais.*;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class Treinador extends Funcionario {
     private String especialidade;
     private HashMap<Integer, TrocarTreinador> solicitarTroca = new HashMap<>();
     private HashMap<Integer, FeedbackTreinador> feedback = new HashMap<>();
+
 
     public int Id(Map<Integer, ?> mapa) {
         return mapa.keySet()
@@ -19,16 +23,19 @@ public class Treinador extends Funcionario {
                 .orElse(-1) + 1;
     }
 
+
     public Treinador(String nome, String senha, String cpf, double salario, String especialidade) {
         super(nome, senha, cpf, salario);
         gerarId(Id(BancoDeDados.getInstance().treinadores));
         this.especialidade = especialidade;
     }
 
+
     //Pega a Especialidade
     public String getEspecialidade() {
         return especialidade;
     }
+
 
     //Muda a Especialidade
     public boolean setEspecialidade(String especialidade) {
@@ -39,6 +46,7 @@ public class Treinador extends Funcionario {
             return true;
         }
     }
+
 
     //Adicionar Solicitação de Troca
     public boolean addTroca(String comentario, int idAluno){
@@ -51,14 +59,17 @@ public class Treinador extends Funcionario {
         return false;
     }
 
+
     //Pegar Solicitação de Troca
     public Map<Integer, TrocarTreinador> getSolicitacaoTroca(){
         return this.solicitarTroca;
     }
 
+
     //Adicionar Feedback
     public boolean addFeedback(String comentario, int qtdEstrelas, int idAluno){
         FeedbackTreinador f = new FeedbackTreinador();
+
 
         if(f.addComentario(comentario, qtdEstrelas, idAluno)) {
             feedback.put(f.getId(), f);
@@ -68,10 +79,12 @@ public class Treinador extends Funcionario {
         return false;
     }
 
+
     //Pegar Feedback
     public Map<Integer, FeedbackTreinador> getFeedback(){
         return this.feedback;
     }
+
 
     //Cadastra o Exercicio
     public boolean cadastrarExercicio(String nomeExercicio, String descricao, int repeticaoExercicio, int serieExercicio, String experiencia){
@@ -85,6 +98,7 @@ public class Treinador extends Funcionario {
         }
     }
 
+
     //Remove o Exercicio
     public boolean removerExercicio(int idExercicio){
         if(BancoDeDados.getInstance().exercicios.containsKey(idExercicio)){
@@ -95,6 +109,7 @@ public class Treinador extends Funcionario {
             return false;
         }
     }
+
 
     //Cadastra o Treino
     public boolean cadastrarTreino(String data,String nomeTreino, String conteudo, ArrayList<Exercicio> exercicios){
@@ -108,6 +123,7 @@ public class Treinador extends Funcionario {
         }
     }
 
+
     //Remover o Treino
     public boolean removerTreino(int idTreino){
         if(BancoDeDados.getInstance().treinos.containsKey(idTreino)){
@@ -118,6 +134,7 @@ public class Treinador extends Funcionario {
             return false;
         }
     }
+
 
     //Mostra a Carteirinha
     public void mostrarCarteirinhaTreinador() {

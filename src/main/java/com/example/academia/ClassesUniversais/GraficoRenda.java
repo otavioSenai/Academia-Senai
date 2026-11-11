@@ -1,6 +1,7 @@
 package com.example.academia.ClassesUniversais;
 
 public class GraficoRenda {
+
     private double custo;
     private double renda;
     private double total;
@@ -8,10 +9,8 @@ public class GraficoRenda {
 
     public boolean addRenda(int idAluno, int idAssinaturaPlano) {
         if(BancoDeDados.getInstance().validIdAluno(idAluno) && BancoDeDados.getInstance().validarIdAssinaturaPlano(idAssinaturaPlano)){
-
             AssinaturaPlano assinaturaPlano = BancoDeDados.getInstance().alunos.get(idAluno).getAssinaturaPlano(idAssinaturaPlano);
             double valor = assinaturaPlano.getPlano().getValor();
-
             if(assinaturaPlano.getStatus()) {
                 this.renda += valor;
             } else{
@@ -25,6 +24,14 @@ public class GraficoRenda {
     public void addCusto(int idCusto) {
         if(BancoDeDados.getInstance().validarIdCusto(idCusto)){
             this.custo += BancoDeDados.getInstance().custos.get(idCusto).getValor();
+        }
+    }
+
+    // Desconta um custo removido, mantendo o gráfico consistente com a Tela Custos
+    public void removerCusto(double valor) {
+        this.custo -= valor;
+        if (this.custo < 0) {
+            this.custo = 0;
         }
     }
 

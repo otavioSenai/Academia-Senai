@@ -1,10 +1,11 @@
 /* =========================================================
- * IDENTIDADE VISUAL: Academia Ícaro (Obsidian Gold Modern)
- * ========================================================= */
+* IDENTIDADE VISUAL: Academia Ícaro (Obsidian Gold Modern)
+* ========================================================= */
 .root {
     -fx-background-color: #04070d;
     -fx-font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
 }
+
 
 /* --- Tipografia --- */
 .headline-xl { -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #f8fafc; }
@@ -12,12 +13,14 @@
 .label-sm { -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #94a3b8; }
 .text-gold { -fx-text-fill: #f1ba2a; }
 
+
 /* --- Paineis e Estruturas --- */
 .sidebar-panel {
     -fx-background-color: #06090e;
     -fx-border-color: #0e1116;
     -fx-border-width: 0 1 0 0;
 }
+
 
 /* --- Popups, Alertas e Formulários (Dialogs) --- */
 .dialog-pane {
@@ -54,6 +57,7 @@
     -fx-text-fill: #04070d;
 }
 
+
 .header-panel {
     -fx-background-color: #04070d;
     -fx-border-color: #0e1116;
@@ -67,6 +71,7 @@
     -fx-padding: 20px;
 }
 
+
 /* --- Botões --- */
 .btn-primary {
     -fx-background-color: #f1ba2a;
@@ -77,6 +82,7 @@
     -fx-cursor: hand;
 }
 .btn-primary:hover { -fx-background-color: #daa520; }
+
 
 .btn-secondary {
     -fx-background-color: transparent;
@@ -103,6 +109,7 @@
     -fx-text-fill: #04070d;
 }
 
+
 /* --- Menu Lateral --- */
 .sidebar-btn {
     -fx-background-color: transparent;
@@ -125,6 +132,7 @@
     -fx-padding: 12px 16px;
     -fx-background-radius: 6px;
 }
+
 
 /* --- Tabelas (TableView) --- */
 .table-view {

@@ -1,17 +1,21 @@
 package com.example.academia.ClassesUniversais;
 
 public abstract class Funcionario extends Usuario{
+
     double salario;
+
     public Funcionario(String nome, String senha, String cpf, double salario){
         super(nome, senha, cpf);
         this.salario = salario;
     }
 
+    //Pega o Salário
     public double getSalario(){
         return this.salario;
     }
 
-    protected boolean setSalario(double salario) {
+    //Muda o Salário
+    public boolean setSalario(double salario) {
         if (salario <= 0) {
             return false;
         } else {

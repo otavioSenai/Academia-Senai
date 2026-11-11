@@ -1,5 +1,4 @@
 package com.example.academia.ClassesUniversais;
-
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -7,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AssinaturaPlano {
-
     public int Id(Map<Integer, ?> mapa) {
         return mapa.keySet()
                 .stream()
@@ -30,7 +28,6 @@ public class AssinaturaPlano {
         this.plano = plano;
         this.id = Id(BancoDeDados.getInstance().assinaturaPlano);
         this.juro = BancoDeDados.getInstance().planos.get(idPlano).getJuros();
-
         ZoneId fuso = ZoneId.of("America/Sao_Paulo");
         ZonedDateTime agora = ZonedDateTime.now(fuso);
         this.validade = agora.plusMonths(this.mesesValidade).toInstant();
@@ -38,34 +35,29 @@ public class AssinaturaPlano {
 
     //Calcular Juros
     public double calcularJuro(double valor){
-        return 100/juro*valor;
+        return (juro / 100.0) * valor;
     }
 
     //Pegar Id
     public int getId(){
         return this.id;
     }
-
     public Plano getPlano(){
         return this.plano;
     }
-
-    //Mudar Plano
+    // Mudar Plano
     public void setPlano(Plano plano){
         this.plano = plano;
     }
-
-    //Pegar Validade
+    // Pegar Validade
     public Instant getValidade(){
         return this.validade;
     }
-
-    //Pegar A validade me meses
+    // Pegar A validade em meses
     public int getMesesValidade(){
         return this.mesesValidade;
     }
-
-    //Mudar Validade
+    // Mudar Validade
     public boolean addValidade(int mesesValidade){
         if(mesesValidade <= 0){
             return false;
@@ -77,11 +69,9 @@ public class AssinaturaPlano {
             return true;
         }
     }
-
-    //Ver se o pagamento Atrasou
+    // Ver se o pagamento Atrasou
     public boolean tempoPagar(){
         Instant Agora = Instant.now();
-
         if(Agora.isAfter(this.validade)){
             this.status = false;
             return false;
@@ -89,37 +79,30 @@ public class AssinaturaPlano {
         this.status = true;
         return true;
     }
-
-    //Pegar Status
+    // Pegar Status
     public boolean getStatus(){
         return this.status;
     }
-
-    //Efutuar o Pagamento do Plano
+    // Efutuar o Pagamento do Plano
     public boolean pagarPlano(int idPlano, int idAluno){
         if(plano.getId() != idPlano){
             return false;
         }
         Instant momentoPagamento = Instant.now();
         this.dataPagamento.put(idPlano, momentoPagamento);
-
         ZoneId fuso = ZoneId.of("America/Sao_Paulo");
         ZonedDateTime validadeZona = this.validade.atZone(fuso);
         ZonedDateTime novaValidade = validadeZona.plusMonths(this.mesesValidade);
-
         BancoDeDados.getInstance().grafico.addRenda(idAluno,getId());
-
         this.validade = novaValidade.toInstant();
         this.status = true;
         return true;
     }
-
-    //Pegar a Data Em Que o Pagamento Foi Realizado
+    // Pegar a Data Em Que o Pagamento Foi Realizado
     public Instant getDataPagamento(int id){
         return this.dataPagamento.get(id);
     }
-
-    //Mostrar as Modalidade
+    // Mostrar as Modalidade
     public boolean showModalidades(){
         if(plano.getModalidade().isEmpty()){
             return false;

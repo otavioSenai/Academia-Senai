@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="800.0" prefWidth="1360.0" styleClass="root" stylesheets="@VisaoGeral.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.academia.Dono.Controller.DonoController">
+    <!-- BARRA LATERAL -->
+    <left>
+        <VBox prefWidth="260.0" spacing="12.0" style="-fx-background-color: #06090e; -fx-border-color: #0e1116; -fx-border-width: 0 1 0 0;">
+            <padding><Insets bottom="24" left="16" right="16" top="24" /></padding>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <Label style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 6 12; -fx-background-radius: 6;" text="Í" />
+                <VBox>
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #f8fafc;" text="Academia Ícaro" />
+                    <Label style="-fx-font-size: 11px; -fx-text-fill: #f1ba2a; -fx-font-weight: bold;" text="Painel Executivo" />
+                </VBox>
+            </HBox>
+            <Region minHeight="20.0" />
+            <Label style="-fx-font-size: 11px; -fx-text-fill: #94a3b8; -fx-font-weight: bold;" text="NAVEGAÇÃO" />
+            <VBox spacing="4.0" VBox.vgrow="ALWAYS">
+                <Button fx:id="btnNavGeral" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarVisaoGeral" styleClass="sidebar-btn-active" text="Visão Geral" />
+                <Button fx:id="btnNavModalidades" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaModalidades" styleClass="sidebar-btn" text="Modalidades" />
+                <Button fx:id="btnNavPlanos" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaPlanos" styleClass="sidebar-btn" text="Planos" />
+                <Button fx:id="btnNavTreinadores" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaTreinadores" styleClass="sidebar-btn" text="Treinadores" />
+                <Button fx:id="btnNavAlunos" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaAlunos" styleClass="sidebar-btn" text="Alunos" />
+                <Button fx:id="btnNavAdmin" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaAdmin" styleClass="sidebar-btn" text="Administrativo" />
+                <Button fx:id="btnNavCustos" focusTraversable="false" maxWidth="Infinity" onAction="#mostrarTelaCustos" styleClass="sidebar-btn" text="Custos" />
+            </VBox>
+            <Button focusTraversable="false" maxWidth="Infinity" onAction="#sair" style="-fx-background-color: transparent; -fx-border-color: #ef4444; -fx-text-fill: #ef4444; -fx-border-radius: 6; -fx-cursor: hand; -fx-padding: 10 16; -fx-font-weight: bold;" text="Sair" />
+        </VBox>
+    </left>
+
+    <!-- ÁREA CENTRAL -->
+    <center>
+        <VBox BorderPane.alignment="CENTER">
+
+            <!-- BARRA SUPERIOR (PESQUISA CENTRALIZADA E PERFIL À DIREITA) -->
+            <HBox alignment="CENTER" style="-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-width: 0 0 1 0; -fx-padding: 16 32;">
+
+                <!-- 1. Espaçador esquerdo -->
+                <Region HBox.hgrow="ALWAYS" />
+
+                <!-- 2. Bloco Central (Filtro à ESQUERDA + Pesquisa à DIREITA) -->
+                <HBox alignment="CENTER" spacing="12">
+                    <ComboBox fx:id="cbFiltroBusca" focusTraversable="false" prefWidth="140.0" promptText="Filtrar..." style="-fx-background-color: transparent; -fx-border-color: #141923; -fx-border-radius: 20; -fx-text-fill: white;" />
+                    <HBox alignment="CENTER_LEFT" spacing="8" style="-fx-background-color: #04070d; -fx-border-color: #141923; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 4 16;" prefWidth="400">
+                        <Label style="-fx-text-fill: white; -fx-font-size: 16px;" text="🔍" />
+                        <TextField fx:id="txtBuscaGeral" focusTraversable="false" promptText="Pesquisar Departamentos..." style="-fx-background-color: transparent; -fx-text-fill: white;" HBox.hgrow="ALWAYS" />
+                    </HBox>
+                </HBox>
+
+                <!-- 3. Espaçador direito -->
+                <Region HBox.hgrow="ALWAYS" />
+
+                <!-- 4. Perfil -->
+                <HBox alignment="CENTER_RIGHT" spacing="12">
+                    <VBox alignment="CENTER" spacing="2">
+                        <Label style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;" text="Dono Master" />
+                        <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 11px;" text="Gestão Geral" />
+                    </VBox>
+                    <Label alignment="CENTER" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #f8fafc; -fx-text-fill: #04070d; -fx-background-radius: 50; -fx-font-size: 15px;" text="👤" />
+                </HBox>
+            </HBox>
+
+            <StackPane fx:id="areaConteudo" VBox.vgrow="ALWAYS">
+                <padding><Insets bottom="32" left="32" right="32" top="32" /></padding>
+
+                <!-- TELA DE RESULTADOS DA PESQUISA -->
+                <ScrollPane fx:id="viewBusca" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;" visible="false">
+                    <VBox spacing="24.0" style="-fx-padding: 0 16 0 0;">
+                        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Resultados da Pesquisa" />
+                        <FlowPane fx:id="containerBusca" hgap="16" vgap="16" />
+                    </VBox>
+                </ScrollPane>
+
+                <!-- TELA 1: DASHBOARD (VISÃO GERAL) -->
+                <ScrollPane fx:id="viewDashboard" fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                    <VBox spacing="24.0" style="-fx-padding: 0 16 0 0;">
+                        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Visão Geral &amp; Relatório Financeiro" />
+                        <HBox spacing="16">
+                            <VBox style="-fx-background-color: #06090e; -fx-padding: 24; -fx-border-color: #141923; -fx-border-radius: 12; -fx-background-radius: 12;" HBox.hgrow="ALWAYS">
+                                <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 14px;" text="Total de Alunos" />
+                                <Label fx:id="lblTotalAlunos" style="-fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: bold;" text="0" />
+                            </VBox>
+                            <VBox style="-fx-background-color: #06090e; -fx-padding: 24; -fx-border-color: #141923; -fx-border-radius: 12; -fx-background-radius: 12;" HBox.hgrow="ALWAYS">
+                                <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 14px;" text="Total de Funcionários" />
+                                <Label fx:id="lblTotalFunc" style="-fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: bold;" text="0" />
+                            </VBox>
+                        </HBox>
+                        <!-- Relatório Financeiro Expandido -->
+                        <VBox spacing="16" style="-fx-background-color: #06090e; -fx-padding: 32; -fx-border-color: #141923; -fx-border-radius: 12; -fx-background-radius: 12; -fx-min-height: 200;">
+                            <Label style="-fx-text-fill: #f1ba2a; -fx-font-weight: bold; -fx-font-size: 20px;" text="Balanço Financeiro Consolidado" />
+                            <HBox spacing="40" alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
+                                <VBox spacing="8">
+                                    <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 14px; -fx-font-weight: bold;" text="RECEITAS (RENDA)" />
+                                    <Label fx:id="lblRenda" style="-fx-text-fill: #22c55e; -fx-font-size: 24px; -fx-font-weight: bold;" text="R$ 0,00" />
+                                </VBox>
+                                <VBox spacing="8">
+                                    <Label style="-fx-text-fill: #94a3b8; -fx-font-size: 14px; -fx-font-weight: bold;" text="DESPESAS (CUSTOS)" />
+                                    <Label fx:id="lblCusto" style="-fx-text-fill: #ef4444; -fx-font-size: 24px; -fx-font-weight: bold;" text="R$ 0,00" />
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <VBox spacing="8" style="-fx-background-color: #0a0c10; -fx-padding: 16 32; -fx-border-color: #141923; -fx-border-radius: 8; -fx-background-radius: 8;">
+                                    <Label style="-fx-text-fill: #f1ba2a; -fx-font-size: 14px; -fx-font-weight: bold;" text="RESULTADO LÍQUIDO TOTAL" />
+                                    <Label fx:id="lblLucro" style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;" text="R$ 0,00" />
+                                </VBox>
+                            </HBox>
+                            <Button focusTraversable="false" text="Atualizar Relatório Financeiro" onAction="#atualizarDashboard" style="-fx-background-color: #181c23; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 12 24; -fx-cursor: hand;"/>
+                        </VBox>
+                        <!-- Preview de Registros -->
+                        <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white; -fx-margin: 16 0 0 0;" text="Amostragem de Equipe e Alunos" />
+                        <FlowPane fx:id="boxRegistrosRecentes" hgap="16" vgap="16" />
+                    </VBox>
+                </ScrollPane>
+
+                <!-- TELA: MODALIDADES -->
+                <VBox fx:id="viewModalidades" spacing="20.0" visible="false">
+                    <HBox alignment="CENTER_LEFT" spacing="20.0">
+                        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Modalidades Ativas" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button defaultButton="true" focusTraversable="false" onAction="#cadastrarModalidade" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Nova Modalidade" />
+                    </HBox>
+                    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                        <FlowPane fx:id="containerModalidades" hgap="16" vgap="16" />
+                    </ScrollPane>
+                </VBox>
+
+                <!-- TELA: ALUNOS -->
+                <VBox fx:id="viewAlunos" spacing="20.0" visible="false">
+                    <HBox alignment="CENTER_LEFT" spacing="20.0">
+                        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Alunos Matriculados" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button defaultButton="true" focusTraversable="false" onAction="#cadastrarAluno" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Matricular Aluno" />
+                    </HBox>
+                    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                        <FlowPane fx:id="containerAlunos" hgap="16" vgap="16" />
+                    </ScrollPane>
+                </VBox>
+
+                <!-- TELA: PLANOS -->
+                <VBox fx:id="viewPlanos" spacing="20.0" visible="false">
+                    <HBox alignment="CENTER_LEFT" spacing="20.0">
+                        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Catálogo de Planos" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button defaultButton="true" focusTraversable="false" onAction="#cadastrarPlano" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Plano" />
+                    </HBox>
+                    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                        <FlowPane fx:id="containerPlanos" hgap="16" vgap="16" />
+                    </ScrollPane>
+                </VBox>
+
+                <!-- TELA: TREINADORES -->
+                <VBox fx:id="viewTreinadores" spacing="20.0" visible="false">
+                    <HBox alignment="CENTER_LEFT" spacing="20.0">
+                        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Equipe de Treinadores" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button defaultButton="true" focusTraversable="false" onAction="#cadastrarTreinador" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -background-radius: 6;" text="+ Novo Treinador" />
+                    </HBox>
+                    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                        <FlowPane fx:id="containerTreinadores" hgap="16" vgap="16" />
+                    </ScrollPane>
+                </VBox>
+
+                <!-- TELA: ADMINISTRATIVO -->
+                <VBox fx:id="viewAdmin" spacing="20.0" visible="false">
+                    <HBox alignment="CENTER_LEFT" spacing="20.0">
+                        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Equipe Administrativa" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button defaultButton="true" focusTraversable="false" onAction="#cadastrarGerente" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Nomear Gerente" />
+                        <Button defaultButton="true" focusTraversable="false" onAction="#cadastrarAdmin" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Administrativo" />
+                    </HBox>
+                    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                        <FlowPane fx:id="containerAdmin" hgap="16" vgap="16" />
+                    </ScrollPane>
+                </VBox>
+
+                <!-- TELA: CUSTOS -->
+                <VBox fx:id="viewCustos" spacing="20.0" visible="false">
+                    <HBox alignment="CENTER_LEFT" spacing="20.0">
+                        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" text="Custos da Academia" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button defaultButton="true" focusTraversable="false" onAction="#cadastrarCusto" style="-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;" text="+ Novo Custo" />
+                    </HBox>
+                    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: #04070d;">
+                        <FlowPane fx:id="containerCustos" hgap="16" vgap="16" />
+                    </ScrollPane>
+                </VBox>
+            </StackPane>
+        </VBox>
+    </center>
+</BorderPane>

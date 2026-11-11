@@ -28,7 +28,6 @@ public class Custo {
     }
 
     //Métodos
-
     public void mostrarCusto(){
         System.out.println("Nome:" + this.nome);
         System.out.println("Id:" + this.id);
@@ -76,5 +75,10 @@ public class Custo {
         ZoneId fusoBrasil = ZoneId.of("America/Sao_Paulo");
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         return this.data.atZone(fusoBrasil).format(formatador);
+    }
+
+    //Pegar data bruta (usada para ordenar a Tela Custos do mais novo para o mais antigo)
+    public Instant getDataInstant(){
+        return this.data;
     }
 }

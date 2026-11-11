@@ -3,16 +3,15 @@ import com.example.academia.ClassesUniversais.*;
 import com.example.academia.administrativo.Administrativo;
 
 public class Gerente extends Gerencia {
-int demissoes=0;
-int contratacao=0;
-int alunosExpulsos=0;
-int cadastroAlunos=0;
+    int demissoes=0;
+    int contratacao=0;
+    int alunosExpulsos=0;
+    int cadastroAlunos=0;
 
-
-public Gerente(String nome, String senha, String cpf, double salario){
-    super(nome, senha, cpf, salario);
-    gerarId(0);
-}
+    public Gerente(String nome, String senha, String cpf, double salario){
+        super(nome, senha, cpf, salario);
+        gerarId(0);
+    }
 
     //Mostra a Carteirinha do Gerente
     public void CarteirinhaGerente(){
