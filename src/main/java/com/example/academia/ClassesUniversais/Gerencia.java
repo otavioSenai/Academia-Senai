@@ -4,7 +4,9 @@ import com.example.academia.Treinador.Treinador;
 import com.example.academia.aluno.Aluno;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Gerencia extends Funcionario{
 
@@ -57,57 +59,25 @@ public abstract class Gerencia extends Funcionario{
         }
     }
 
-    //Cadastra o Treinador
-    public boolean CadastrarTreinador(int idModalidade, String nome, String senha, String cpf, double salario, String especialidade) {
-        if(!BancoDeDados.getInstance().validarIdModalidade(idModalidade) ||nome.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf) || salario <= 0 || especialidade.isBlank()){
-            return false;
-        }
-        // Se passou nas verificações, chama a classe para criptografar em SHA-512
-        String senhaCriptografada = CriptografarSenha.SenhaGeral(senha);
-        Treinador treinador = new Treinador(nome, senhaCriptografada, cpf, salario, especialidade);
-        BancoDeDados.getInstance().treinadores.put(treinador.getId(), treinador);
-        BancoDeDados.getInstance().modalidades.get(idModalidade).addTreinador(treinador.getId(), treinador);
-        return true;
-    }
-
-    //Cadastra o Treinador em Uma ou Mais Modalidades
     public boolean CadastrarTreinador(List<Integer> idsModalidades, String nome, String senha, String cpf, double salario, String especialidade) {
         if(idsModalidades == null || idsModalidades.isEmpty() || nome.isBlank() || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf) || salario <= 0 || especialidade.isBlank()){
             return false;
         }
+
         for(Integer id : idsModalidades){
             if(id == null || !BancoDeDados.getInstance().validarIdModalidade(id)){
                 return false;
             }
         }
-        // Se passou nas verificações, chama a classe para criptografar em SHA-512
-        String senhaCriptografada = CriptografarSenha.SenhaGeral(senha);
-        Treinador treinador = new Treinador(nome, senhaCriptografada, cpf, salario, especialidade);
+
+        Treinador treinador = new Treinador(nome, CriptografarSenha.SenhaGeral(senha), cpf, salario, especialidade);
+        treinador.setSenhaOriginal(senha);
         BancoDeDados.getInstance().treinadores.put(treinador.getId(), treinador);
+
         for(Integer id : idsModalidades){
             BancoDeDados.getInstance().modalidades.get(id).addTreinador(treinador.getId(), treinador);
         }
         return true;
-    }
-
-    //Verificar Feedback do Treinador
-    public boolean verificarFeedbackTreinador(int idTreinador){
-        if(BancoDeDados.getInstance().validarIdTreinador(idTreinador)) {
-            for (FeedbackTreinador f : BancoDeDados.getInstance().treinadores.get(idTreinador).getFeedback().values()) {
-                f.getFeedback();
-            }
-            return true;
-        }
-        return false;
-    }
-
-    //Verificar Solicitações Para Trocar de Treinador
-    public void VerificarSolicitacoesTrocarTreinador(int idTreinador){
-        if(BancoDeDados.getInstance().validarIdTreinador(idTreinador)){
-            for(TrocarTreinador t : BancoDeDados.getInstance().treinadores.get(idTreinador).getSolicitacaoTroca().values()){
-                t.getSolicitacaoTroca(idTreinador);
-            }
-        }
     }
 
     //Transferir Treinador de Modalidade
@@ -121,18 +91,6 @@ public abstract class Gerencia extends Funcionario{
     }
 
     //Demitir o Treinador
-    public boolean demitirTreinador(int idTreinador, int idModalidade) {
-        if(BancoDeDados.getInstance().validarIdTreinador(idTreinador) && BancoDeDados.getInstance().validarIdModalidade(idModalidade)){
-            BancoDeDados.getInstance().treinadores.remove(idTreinador);
-            BancoDeDados.getInstance().modalidades.get(idModalidade).removeTreinador(idModalidade, idTreinador);
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    //Demitir o Treinador removendo-o de TODAS as modalidades em que atua
     public boolean demitirTreinadorCompleto(int idTreinador) {
         BancoDeDados bd = BancoDeDados.getInstance();
         if(!bd.validarIdTreinador(idTreinador)){
@@ -145,27 +103,22 @@ public abstract class Gerencia extends Funcionario{
         return true;
     }
 
-    //Cadastrar o Aluno
-    public boolean cadastrarAluno(String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade, Treinador treinador) {
+    public boolean cadastrarAluno(String nome, String senha, String cpf, int idade, double altura, double peso, Plano plano, String intensidade, List<Treinador> listaTreinadores) {
         if (nome == null || nome.isBlank() || idade < 13 || altura <= 0 || peso <= 0 || intensidade == null || intensidade.isBlank()
                 || !Verificacao.verificarSenha(senha) || !Verificacao.verificarCpf(cpf)
-                || treinador == null || !BancoDeDados.getInstance().validarIdTreinador(treinador.getId())
+                || listaTreinadores == null || listaTreinadores.isEmpty()
                 || plano == null || !BancoDeDados.getInstance().validarIdPlano(plano.getId())){
             return false;
         }
-        else{
-            // Se passou nas verificações, chama a classe para criptografar em SHA-512
-            String senhaCriptografada = CriptografarSenha.SenhaGeral(senha);
-            // A assinatura é criada AGORA e registrada no banco (antes o mapa nunca era preenchido e o cadastro sempre falhava)
-            AssinaturaPlano assinaturaPlano = new AssinaturaPlano(plano.getId(), plano);
-            BancoDeDados.getInstance().assinaturaPlano.put(assinaturaPlano.getId(), assinaturaPlano);
-            Aluno aluno = new Aluno(nome, senhaCriptografada, cpf, idade, altura, peso, assinaturaPlano, intensidade, treinador);
-            BancoDeDados.getInstance().alunos.put(aluno.getId(), aluno);
-            // O aluno paga o valor do plano no ato da matrícula: entra na Renda (Visão Geral).
-            // A validade inicial da assinatura já cobre esse primeiro pagamento.
-            BancoDeDados.getInstance().grafico.addRenda(aluno.getId(), assinaturaPlano.getId());
-            return true;
-        }
+        AssinaturaPlano assinaturaPlano = new AssinaturaPlano(plano.getId(), plano);
+        BancoDeDados.getInstance().assinaturaPlano.put(assinaturaPlano.getId(), assinaturaPlano);
+
+        Aluno aluno = new Aluno(nome, CriptografarSenha.SenhaGeral(senha), cpf, idade, altura, peso, assinaturaPlano, intensidade, listaTreinadores);
+        aluno.setSenhaOriginal(senha);
+
+        BancoDeDados.getInstance().alunos.put(aluno.getId(), aluno);
+        BancoDeDados.getInstance().grafico.addRenda(aluno.getId(), assinaturaPlano.getId());
+        return true;
     }
 
     //Mudar Treinador do Aluno
@@ -196,38 +149,7 @@ public abstract class Gerencia extends Funcionario{
         }
     }
 
-    //Carteirinha Aluno
-    public boolean carteirinhaAluno(int id){
-        if(BancoDeDados.getInstance().validIdAluno(id)){
-            BancoDeDados.getInstance().alunos.get(id).mostrarCarteirinhaAluno();
-            return true;
-        }
-        return false;
-    }
-
-    //Carteirinha Treinador
-    public boolean carteirinhaTreinador(int id){
-        if(BancoDeDados.getInstance().validarIdTreinador(id)){
-            BancoDeDados.getInstance().treinadores.get(id).mostrarCarteirinhaTreinador();
-            return true;
-        }
-        return false;
-    }
-
     //Cadastrar Plano
-    public boolean cadastrarPlano(String nome, String descricao, double valor, int idModalidade, int mesesValidade, double juros){
-        if(nome.isBlank() || descricao.isBlank() || valor <= 0 || mesesValidade <= 0 || idModalidade < 0 || juros < 0){
-            return false;
-        }
-        Plano plano = new Plano(nome,descricao,valor, mesesValidade, juros);
-        if(plano.addModalidade(idModalidade)) {
-            BancoDeDados.getInstance().planos.put(plano.getId(), plano);
-            return true;
-        }
-        return false;
-    }
-
-    //Cadastrar Plano com Uma ou Mais Modalidades
     public boolean cadastrarPlano(String nome, String descricao, double valor, List<Integer> idsModalidades, int mesesValidade, double juros){
         if(nome.isBlank() || descricao.isBlank() || valor <= 0 || mesesValidade <= 0 || juros < 0 || idsModalidades == null || idsModalidades.isEmpty()){
             return false;
@@ -245,7 +167,24 @@ public abstract class Gerencia extends Funcionario{
         return true;
     }
 
-    //Definir as Modalidades de um Plano (botão "+ Modalidades"): adiciona as marcadas e retira as desmarcadas
+    //Mostrar os treinadores das modalidades do plano
+    public Map<Integer, Treinador> viewTreinador(int idPlano){
+        Map<Integer, Treinador> treinadores = new HashMap<>();
+
+        if(BancoDeDados.getInstance().planos.containsKey(idPlano)){
+            Plano plano = BancoDeDados.getInstance().planos.get(idPlano);
+
+            for(Modalidade modalidade : plano.getModalidade().values()){
+
+                for(Treinador treinador : modalidade.getTreinadores().values()){
+                    treinadores.put(treinador.getId(), treinador);
+                }
+            }
+        }
+        return treinadores;
+    }
+
+    //Definir as Modalidades de um Plano
     public boolean definirModalidadesPlano(int idPlano, List<Integer> idsModalidades){
         if(!BancoDeDados.getInstance().validarIdPlano(idPlano) || idsModalidades == null || idsModalidades.isEmpty()){
             return false;
@@ -276,73 +215,69 @@ public abstract class Gerencia extends Funcionario{
         }
     }
 
-    //Verificar Custos
-    public boolean verificarCusto(int id){
-        if(BancoDeDados.getInstance().validarIdCusto(id)){
-            BancoDeDados.getInstance().custos.get(id).mostrarCusto();
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
     //Ver o Gráfico
     public void verGrafico(){
         GraficoRenda g = BancoDeDados.getInstance().grafico;
         g.somarDespesas();
-        g.verGrafico();
     }
-
-    // ===== Consultas usadas pelos botões "Acessar" =====
 
     //Alunos que praticam uma modalidade (pelos planos que assinaram)
     public List<Aluno> alunosDaModalidade(int idModalidade){
-        List<Aluno> lista = new ArrayList<>();
-        for(Aluno a : BancoDeDados.getInstance().alunos.values()){
-            for(AssinaturaPlano ap : a.getListaAssinaturaPlano().values()){
-                if(ap.getPlano() != null && ap.getPlano().getModalidade().containsKey(idModalidade)){
-                    lista.add(a);
+        List<Aluno> alunos = new ArrayList<>();
+
+        for(Aluno aluno : BancoDeDados.getInstance().alunos.values()){
+
+            for(AssinaturaPlano assinatura : aluno.getListaAssinaturaPlano().values()){
+
+                if(assinatura.getPlano() != null && assinatura.getPlano().getModalidade().containsKey(idModalidade)){
+                    alunos.add(aluno);
                     break;
                 }
             }
         }
-        return lista;
+        return alunos;
     }
 
     //Alunos que assinaram um plano
     public List<Aluno> alunosDoPlano(int idPlano){
-        List<Aluno> lista = new ArrayList<>();
-        for(Aluno a : BancoDeDados.getInstance().alunos.values()){
-            for(AssinaturaPlano ap : a.getListaAssinaturaPlano().values()){
-                if(ap.getPlano() != null && ap.getPlano().getId() == idPlano){
-                    lista.add(a);
+        List<Aluno> alunos = new ArrayList<>();
+
+        for(Aluno aluno : BancoDeDados.getInstance().alunos.values()){
+
+            for(AssinaturaPlano assinatura : aluno.getListaAssinaturaPlano().values()){
+
+                if(assinatura.getPlano() != null && assinatura.getPlano().getId() == idPlano){
+                    alunos.add(aluno);
                     break;
                 }
             }
         }
-        return lista;
+        return alunos;
     }
 
     //Modalidades em que um treinador atua
     public List<Modalidade> modalidadesDoTreinador(int idTreinador){
-        List<Modalidade> lista = new ArrayList<>();
-        for(Modalidade m : BancoDeDados.getInstance().modalidades.values()){
-            if(m.getTreinadores().containsKey(idTreinador)){
-                lista.add(m);
+        List<Modalidade> modalidades = new ArrayList<>();
+
+        for(Modalidade modalidade : BancoDeDados.getInstance().modalidades.values()){
+
+            if(modalidade.getTreinadores().containsKey(idTreinador)){
+                modalidades.add(modalidade);
             }
         }
-        return lista;
+        return modalidades;
     }
 
     //Alunos atendidos por um treinador
     public List<Aluno> alunosDoTreinador(int idTreinador){
-        List<Aluno> lista = new ArrayList<>();
-        for(Aluno a : BancoDeDados.getInstance().alunos.values()){
-            if(a.getTreinadores().containsKey(idTreinador)){
-                lista.add(a);
+        List<Aluno> alunos = new ArrayList<>();
+
+        for(Aluno aluno : BancoDeDados.getInstance().alunos.values()){
+
+            if(aluno.getTreinadores().containsKey(idTreinador)){
+                alunos.add(aluno);
             }
         }
-        return lista;
+        return alunos;
     }
 }

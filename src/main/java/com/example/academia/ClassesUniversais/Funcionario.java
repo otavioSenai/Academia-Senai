@@ -7,6 +7,7 @@ public abstract class Funcionario extends Usuario{
     public Funcionario(String nome, String senha, String cpf, double salario){
         super(nome, senha, cpf);
         this.salario = salario;
+        BancoDeDados.getInstance().grafico.addCustoSalario(this.salario);
     }
 
     //Pega o Salário

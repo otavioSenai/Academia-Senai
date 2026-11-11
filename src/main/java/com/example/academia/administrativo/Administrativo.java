@@ -16,12 +16,4 @@ public class Administrativo extends Gerencia {
         super(nome, senha, cpf, salario);
         gerarId(Id(BancoDeDados.getInstance().administrativos));
     }
-
-    //Exibir Carterinha Do Administrativo
-    public void exibirInformacoes(){
-        System.out.println("Id: " + getId());
-        System.out.println("Nome: " + getNome());
-        System.out.println("CPF: " + getCpf());
-        System.out.println("Salário: " + getSalario());
-    }
 }

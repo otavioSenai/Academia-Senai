@@ -102,16 +102,4 @@ public class AssinaturaPlano {
     public Instant getDataPagamento(int id){
         return this.dataPagamento.get(id);
     }
-    // Mostrar as Modalidade
-    public boolean showModalidades(){
-        if(plano.getModalidade().isEmpty()){
-            return false;
-        }
-        for(Modalidade m : plano.getModalidade().values()){
-            System.out.println(m.getId() + " - " + m.getNome());
-            System.out.println(m.getDescricao());
-            m.showTreinadores();
-        }
-        return true;
-    }
 }

@@ -162,3 +162,12 @@
 .table-row-cell:odd { -fx-background-color: #0a0c10; }
 .table-row-cell:selected { -fx-background-color: #1a1e28; }
 .table-row-cell .text { -fx-fill: #f8fafc; }
+
+/* --- Barra de Rolagem (Scroll Global) --- */
+.scroll-pane { -fx-background-color: transparent; }
+.scroll-pane > .viewport { -fx-background-color: transparent; }
+.scroll-bar { -fx-background-color: transparent; }
+.scroll-bar .track, .scroll-bar .track-background { -fx-background-color: transparent; -fx-border-color: transparent; }
+.scroll-bar .thumb { -fx-background-color: #141923; -fx-background-radius: 4px; }
+.scroll-bar .thumb:hover { -fx-background-color: #f1ba2a; }
+.corner { -fx-background-color: transparent; }

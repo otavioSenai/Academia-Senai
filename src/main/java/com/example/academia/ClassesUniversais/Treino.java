@@ -1,15 +1,12 @@
 package com.example.academia.ClassesUniversais;
 
-
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
 
-
 public class Treino {
-
 
     private final DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.of("America/Sao_Paulo"));
     private Instant data;
@@ -17,7 +14,6 @@ public class Treino {
     private String nomeTreino;
     private String conteudo;
     private ArrayList<Exercicio> exercicios = new ArrayList<>();
-
 
     public int Id(Map<Integer, ?> mapa) {
         return mapa.keySet()
@@ -27,7 +23,6 @@ public class Treino {
                 .orElse(-1) + 1;
     }
 
-
     public Treino(String nomeTreino, String conteudo, ArrayList<Exercicio> exercicios, String data) {
         this.idTreino = Id(BancoDeDados.getInstance().treinos);
         this.nomeTreino = nomeTreino;
@@ -36,26 +31,21 @@ public class Treino {
         this.data = Instant.from(this.formatador.parse(data));
     }
 
-
     public Instant getData(){
         return this.data;
     }
-
 
     public void setData(String data){
         this.data = Instant.from(this.formatador.parse(data));
     }
 
-
     public int getIdTreino() {
         return idTreino;
     }
 
-
     public String getNomeTreino() {
         return nomeTreino;
     }
-
 
     public boolean setNomeTreino(String nomeTreino) {
         if(nomeTreino.isBlank()) {
@@ -65,11 +55,9 @@ public class Treino {
         return true;
     }
 
-
     public String getConteudo() {
         return conteudo;
     }
-
 
     public boolean setConteudo(String conteudo) {
         if(conteudo.isBlank()){
@@ -77,13 +65,5 @@ public class Treino {
         }
         this.conteudo = conteudo;
         return true;
-    }
-
-
-    public void mostrarTreino(){
-        System.out.println(this.nomeTreino);
-        for(int i = 0; i < this.exercicios.size(); i++){
-            System.out.println(i + " - " + this.exercicios.get(i));
-        }
     }
 }

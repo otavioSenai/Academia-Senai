@@ -1,8 +1,6 @@
 package com.example.academia.ClassesUniversais;
 
-
 import java.util.Map;
-
 
 public class Exercicio {
     private final int idExercicio;
@@ -21,7 +19,6 @@ public class Exercicio {
                 .orElse(-1) + 1;
     }
 
-
     public Exercicio(String nomeExercicio, String descricao, int repeticaoExercicio, int serieExercicio, String experiencia) {
         this.idExercicio = Id(BancoDeDados.getInstance().exercicios);
         this.nomeExercicio = nomeExercicio;
@@ -31,16 +28,13 @@ public class Exercicio {
         this.experiencia=experiencia;
     }
 
-
     public int getIdExercicio() {
         return idExercicio;
     }
 
-
     public String getNomeExercicio() {
         return nomeExercicio;
     }
-
 
     public boolean setNomeExercicio(String nomeTreino){
         if(nomeTreino.isBlank()){
@@ -50,11 +44,9 @@ public class Exercicio {
         return true;
     }
 
-
     public String getDescricao() {
         return descricao;
     }
-
 
     public boolean setDescricao(String descricao) {
         if(descricao.isBlank()){
@@ -64,11 +56,9 @@ public class Exercicio {
         return true;
     }
 
-
     public int getRepeticaoExercicio() {
         return repeticaoExercicio;
     }
-
 
     public boolean setRepeticaoExercicio(int repeticaoExercicio) {
         if(repeticaoExercicio <= 0){
@@ -78,11 +68,9 @@ public class Exercicio {
         return true;
     }
 
-
     public int getSerieExercicio(){
         return serieExercicio;
     }
-
 
     public boolean setIdExercicio(int serieExercicio){
         if(serieExercicio <= 0){
@@ -94,7 +82,6 @@ public class Exercicio {
     public String getExperiencia(){
         return experiencia;
     }
-
 
     public boolean setExperiencia(String experiencia){
         if(experiencia.isBlank()){

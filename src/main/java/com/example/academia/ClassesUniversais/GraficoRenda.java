@@ -27,7 +27,10 @@ public class GraficoRenda {
         }
     }
 
-    // Desconta um custo removido, mantendo o gráfico consistente com a Tela Custos
+    public void addCustoSalario(double salario){
+        this.custo += salario;
+    }
+
     public void removerCusto(double valor) {
         this.custo -= valor;
         if (this.custo < 0) {
@@ -42,13 +45,6 @@ public class GraficoRenda {
             return;
         }
         this.situacao = true;
-    }
-
-    public void verGrafico(){
-        System.out.println("Renda: " + this.renda);
-        System.out.println("Custo: " + this.custo);
-        System.out.println("Total: " + this.total);
-        System.out.println("Situação: " + this.situacao);
     }
 
     public double getRenda(){

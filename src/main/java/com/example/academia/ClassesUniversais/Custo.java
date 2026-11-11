@@ -27,14 +27,6 @@ public class Custo {
         BancoDeDados.getInstance().grafico.addCusto(this.id);
     }
 
-    //Métodos
-    public void mostrarCusto(){
-        System.out.println("Nome:" + this.nome);
-        System.out.println("Id:" + this.id);
-        System.out.println("Data:" + this.data);
-        System.out.println("Valor:" + this.valor);
-    }
-
     //Pegar Nome
     public String getNome(){
         return this.nome;
@@ -77,7 +69,7 @@ public class Custo {
         return this.data.atZone(fusoBrasil).format(formatador);
     }
 
-    //Pegar data bruta (usada para ordenar a Tela Custos do mais novo para o mais antigo)
+    //Pegar data bruta
     public Instant getDataInstant(){
         return this.data;
     }

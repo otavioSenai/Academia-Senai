@@ -17,7 +17,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;
-        stage.initStyle(javafx.stage.StageStyle.UNDECORATED); // Remove botões do Windows
+        // Remove botões do Windows
+        stage.initStyle(javafx.stage.StageStyle.UNDECORATED);
         mostrarLogin();
         stage.show();
     }
