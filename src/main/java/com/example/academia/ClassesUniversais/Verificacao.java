@@ -9,8 +9,9 @@ public class Verificacao {
         final int MinimoNumero = 1;
         final int MinimoCaractereEspecial = 1;
         final int TamanhoMinimo = 8;
+        final int TamanhoMaximo = 20;
 
-        if (senha == null || senha.length() < TamanhoMinimo || senha.isBlank()) {
+        if (senha == null || senha.length() < TamanhoMinimo || senha.length() > TamanhoMaximo || senha.isBlank()) {
             return false;
         }
 
@@ -33,6 +34,20 @@ public class Verificacao {
             }
         }
         return contCaractereEspecial >= MinimoCaractereEspecial && contMaiusculo >= MinimoLetraMaiuscula && contNumero >= MinimoNumero;
+    }
+
+    // Verificar Validade do Nome
+    public static boolean verificarNome(String nome) {
+        if (nome == null || nome.isBlank() || nome.length() > 20 || nome.contains(";")) {
+            return false;
+        }
+        for (int i = 0; i < nome.length(); i++) {
+            char c = nome.charAt(i);
+            if (!Character.isLetter(c) && c != ' ') {
+                return false;
+            }
+        }
+        return true;
     }
 
     //Verificar Se o cpf Está Correto

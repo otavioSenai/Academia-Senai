@@ -24,11 +24,10 @@ import javafx.util.StringConverter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class DonoController {
-    // Navegação
+    // Navegação e Painéis
     @FXML private Button btnNavGeral, btnNavAlunos, btnNavPlanos, btnNavTreinadores, btnNavModalidades, btnNavAdmin, btnNavCustos;
     @FXML private ScrollPane viewDashboard;
     @FXML private VBox viewAlunos, viewPlanos, viewTreinadores, viewModalidades, viewAdmin, viewCustos;
@@ -44,24 +43,33 @@ public class DonoController {
 
     private Dono dono;
 
-    // NOVO: Adicionado um min-height robusto (240px) aos cards para garantir alinhamento perfeito dos botões
-    private final String cardStyle = "-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16; -fx-min-width: 300; -fx-max-width: 320; -fx-min-height: 240;";
-    private final String btnDangerStyle = "-fx-background-color: transparent; -fx-border-color: #ef4444; -fx-text-fill: #ef4444; -fx-border-radius: 6; -fx-cursor: hand; -fx-padding: 8;";
-    private final String btnAcessarStyle = "-fx-background-color: transparent; -fx-border-color: #f1ba2a; -fx-text-fill: #f1ba2a; -fx-border-radius: 6; -fx-cursor: hand; -fx-padding: 8;";
-    private final String btnEditarStyle = "-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-cursor: hand; -fx-padding: 8;";
-    private final String btnSalvarStyle = "-fx-background-color: #f1ba2a; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;";
+    // LARGURA EXPANDIDA E ALTURA DINÂMICA (removido min-height)
+    private final String cardStyle = "-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 16; -fx-min-width: 340; -fx-max-width: 380;";
+    private final String btnDangerStyle = "-fx-background-color: transparent; -fx-border-color: #ef4444; -fx-text-fill: #ef4444; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 8;";
+    private final String btnAcessarStyle = "-fx-background-color: transparent; -fx-border-color: #f1ba2a; -fx-text-fill: #f1ba2a; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 8;";
+    private final String btnEditarStyle = "-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 8;";
+    private final String btnSalvarStyle = "-fx-background-color: #f1ba2a; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-border-radius: 6; -fx-background-radius: 6;";
 
     @FXML
     private void initialize() {
         dono = LoginController.obterDono();
         if (dono != null && lblNomeUsuarioTop != null) lblNomeUsuarioTop.setText(dono.getNome());
+
+        String radiusStyle = "-fx-background-radius: 6; -fx-border-radius: 6;";
+        if (cbFiltroBusca != null) cbFiltroBusca.setStyle("-fx-background-color: #04070d; -fx-border-color: #141923; -fx-text-fill: white; " + radiusStyle);
+        if (txtBuscaGeral != null) txtBuscaGeral.getParent().setStyle("-fx-background-color: #04070d; -fx-border-color: #141923; -fx-padding: 4 16; " + radiusStyle);
+        if (lblTotalAlunos != null) lblTotalAlunos.getParent().setStyle("-fx-background-color: #06090e; -fx-padding: 24; -fx-border-color: #141923; " + radiusStyle);
+        if (lblTotalFunc != null) lblTotalFunc.getParent().setStyle("-fx-background-color: #06090e; -fx-padding: 24; -fx-border-color: #141923; " + radiusStyle);
+        if (lblRenda != null) lblRenda.getParent().getParent().getParent().setStyle("-fx-background-color: #06090e; -fx-padding: 32; -fx-border-color: #141923; " + radiusStyle);
+        if (lblLucro != null) lblLucro.getParent().setStyle("-fx-background-color: #0a0c10; -fx-padding: 16 32; -fx-border-color: #141923; " + radiusStyle);
+
         mostrarVisaoGeral();
         configurarPesquisa();
         Platform.runLater(() -> { if (viewDashboard != null) viewDashboard.requestFocus(); });
     }
 
     // ==========================================
-    // SISTEMA DE PESQUISA PADRONIZADO
+    // SISTEMA DE PESQUISA
     // ==========================================
     private void configurarPesquisa() {
         if (txtBuscaGeral != null && containerBusca != null) {
@@ -151,7 +159,6 @@ public class DonoController {
                     c.getChildren().addAll(criarSecao("Dados do Dono"), criarItem("ID: " + dono.getId()), criarItem("Nome: " + dono.getNome()), criarItem("CPF: " + dono.getCpf()), criarCampoSenhaComOlho(dono.getSenhaOriginal()));
                     mostrarJanelaDetalhe("Perfil do Dono", c);
                 });
-
                 Region spacerVertical = new Region(); VBox.setVgrow(spacerVertical, Priority.ALWAYS);
                 card.getChildren().add(spacerVertical);
                 card.getChildren().add(criarLinhaAcoes(null, null, btnAcessar));
@@ -175,7 +182,7 @@ public class DonoController {
     }
 
     // ==========================================
-    // CRIAÇÃO UNIFICADA DE CARDS COM BOTÕES FIXOS
+    // CRIAÇÃO UNIFICADA DE CARDS
     // ==========================================
     private VBox criarCardAluno(Aluno a, boolean isPesquisa) {
         VBox card = new VBox(8); card.setStyle(cardStyle);
@@ -308,13 +315,42 @@ public class DonoController {
     }
 
     // ==========================================
-    // EXCLUSÃO SEGURA
+    // REGRAS DE NEGÓCIO E LIMITES SALARIAIS
+    // ==========================================
+    private boolean validarTetoSalarial(double salario, Stage parentStage) {
+        if (BancoDeDados.getInstance().gerente.isPresent()) {
+            double teto = BancoDeDados.getInstance().gerente.get().getSalario();
+            if (salario >= teto) {
+                mostrarAlertaErro("Bloqueado!\nO salário do funcionário deve ser obrigatoriamente menor que o do Gerente (R$ " + String.format("%.2f", teto) + ").", parentStage);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validarSalarioGerente(double salarioGerente, Stage parentStage) {
+        double maxSalario = 0;
+        for (Treinador t : BancoDeDados.getInstance().getTreinadores().values()) {
+            if (t.getSalario() > maxSalario) maxSalario = t.getSalario();
+        }
+        for (Administrativo a : BancoDeDados.getInstance().getAdministrativos().values()) {
+            if (a.getSalario() > maxSalario) maxSalario = a.getSalario();
+        }
+        if (salarioGerente <= maxSalario) {
+            mostrarAlertaErro("Bloqueado!\nO salário do Gerente deve ser maior que o maior salário da equipe atual (R$ " + String.format("%.2f", maxSalario) + ").", parentStage);
+            return false;
+        }
+        return true;
+    }
+
+    // ==========================================
+    // EXCLUSÃO SEGURA E REGRAS DE INTEGRIDADE
     // ==========================================
     private boolean apagarModalidadeSegura(int id) {
         BancoDeDados bd = BancoDeDados.getInstance();
         for (Plano p : bd.getPlano().values()) {
             if (p.getModalidade().containsKey(id)) {
-                mostrarAlertaErro("Bloqueado!\nNão é possível apagar esta Modalidade pois ela faz parte do Plano: '" + p.getNome() + "'. Retire-a do plano primeiro.");
+                mostrarAlertaErro("Bloqueado!\nNão é possível apagar esta Modalidade pois ela faz parte do Plano: '" + p.getNome() + "'. Retire-a do plano primeiro.", null);
                 return false;
             }
         }
@@ -324,7 +360,7 @@ public class DonoController {
                 if (mod.getId() == id) { temModalidade = true; break; }
             }
             if (temModalidade) {
-                mostrarAlertaErro("Bloqueado!\nO treinador '" + t.getNome() + "' está vinculado a esta modalidade. Edite o treinador primeiro.");
+                mostrarAlertaErro("Bloqueado!\nO treinador '" + t.getNome() + "' está vinculado a esta modalidade. Edite o treinador primeiro.", null);
                 return false;
             }
         }
@@ -334,14 +370,14 @@ public class DonoController {
 
     private boolean apagarPlanoSeguro(int id) {
         List<Aluno> alunos = dono.alunosDoPlano(id);
-        if (!alunos.isEmpty()) { mostrarAlertaErro("Bloqueado!\nExistem " + alunos.size() + " aluno(s) a usar este plano. Transfira os alunos para outro plano antes de apagar."); return false; }
+        if (!alunos.isEmpty()) { mostrarAlertaErro("Bloqueado!\nExistem " + alunos.size() + " aluno(s) a usar este plano. Transfira os alunos para outro plano antes de apagar.", null); return false; }
         if (confirmarExclusao()) { dono.removerPlano(id); return true; }
         return false;
     }
 
     private boolean demitirTreinadorSeguro(int id) {
         List<Aluno> alunos = dono.alunosDoTreinador(id);
-        if (!alunos.isEmpty()) { mostrarAlertaErro("Bloqueado!\nEste treinador possui " + alunos.size() + " aluno(s) associado(s). Transfira os alunos para outro treinador antes da demissão."); return false; }
+        if (!alunos.isEmpty()) { mostrarAlertaErro("Bloqueado!\nEste treinador possui " + alunos.size() + " aluno(s) associado(s). Transfira os alunos para outro treinador antes da demissão.", null); return false; }
         if (confirmarExclusao()) { dono.demitirTreinadorCompleto(id); return true; }
         return false;
     }
@@ -362,7 +398,7 @@ public class DonoController {
     }
 
     // ==========================================
-    // NAVEGAÇÃO
+    // NAVEGAÇÃO E ATUALIZAÇÃO
     // ==========================================
     private void alternarTela(javafx.scene.Node telaAtiva, Button btnAtivo) {
         viewDashboard.setVisible(false); viewAlunos.setVisible(false); viewPlanos.setVisible(false);
@@ -376,7 +412,7 @@ public class DonoController {
         btnNavAdmin.setStyle("-fx-background-color: transparent; -fx-text-fill: #94a3b8;");
         btnNavCustos.setStyle("-fx-background-color: transparent; -fx-text-fill: #94a3b8;");
         if (telaAtiva != null) telaAtiva.setVisible(true);
-        if (btnAtivo != null) btnAtivo.setStyle("-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold;");
+        if (btnAtivo != null) btnAtivo.setStyle("-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-background-radius: 6; -fx-border-radius: 6;");
     }
 
     @FXML public void mostrarVisaoGeral() { alternarTela(viewDashboard, btnNavGeral); atualizarDashboard(); }
@@ -385,12 +421,40 @@ public class DonoController {
     @FXML public void mostrarTelaTreinadores() { alternarTela(viewTreinadores, btnNavTreinadores); renderizarTreinadores(); }
     @FXML public void mostrarTelaModalidades() { alternarTela(viewModalidades, btnNavModalidades); renderizarModalidades(); }
     @FXML public void mostrarTelaAdmin() { alternarTela(viewAdmin, btnNavAdmin); renderizarAdmin(); }
-    @FXML public void sair() { Main.mostrarLogin(); }
     @FXML public void mostrarTelaCustos() { alternarTela(viewCustos, btnNavCustos); renderizarCustos(); }
 
-    // ==========================================
-    // RENDERIZAÇÃO
-    // ==========================================
+    @FXML public void sair() {
+        Stage stage = new Stage();
+        stage.initOwner(Main.getStage());
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.TRANSPARENT);
+
+        VBox root = new VBox(16);
+        root.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-width: 1px; -fx-padding: 32; -fx-border-radius: 6; -fx-background-radius: 6;");
+        root.setAlignment(Pos.CENTER);
+        root.setPrefSize(500, 240);
+        root.setMinSize(500, 240);
+
+        Label lblMsg = new Label("Tem certeza que deseja sair da tela? Se sair será encaminhado para tela de login");
+        lblMsg.setStyle("-fx-text-fill: #f8fafc; -fx-font-size: 15px;");
+        lblMsg.setWrapText(true);
+        lblMsg.setMaxWidth(440);
+
+        Button btnConfirmar = criarBotao("Confirmar", "-fx-background-color: #ef4444; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6; -fx-border-radius: 6;", () -> {
+            stage.close();
+            Main.mostrarLogin();
+        });
+        Button btnCancelar = criarBotao("Cancelar", "-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 8 16;", stage::close);
+        btnCancelar.setCancelButton(true);
+        HBox boxBotoes = new HBox(16, btnCancelar, btnConfirmar); boxBotoes.setAlignment(Pos.CENTER);
+
+        root.getChildren().addAll(lblMsg, new Region(), boxBotoes);
+        Scene scene = new Scene(root);
+        scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
     private void renderizarAlunos() {
         containerAlunos.getChildren().clear();
         for (Aluno a : BancoDeDados.getInstance().getAlunos().values()) containerAlunos.getChildren().add(criarCardAluno(a, false));
@@ -464,13 +528,10 @@ public class DonoController {
     private Label criarBadgeStatus(boolean emDia) {
         Label lbl = new Label(emDia ? "Em Dia" : "Atrasado");
         String cor = emDia ? "#22c55e" : "#ef4444";
-        lbl.setStyle("-fx-text-fill: " + cor + "; -fx-border-color: " + cor + "; -fx-border-radius: 4; -fx-padding: 2 6; -fx-font-size: 11px; -fx-font-weight: bold;");
+        lbl.setStyle("-fx-text-fill: " + cor + "; -fx-border-color: " + cor + "; -fx-border-radius: 6; -fx-padding: 2 6; -fx-font-size: 11px; -fx-font-weight: bold;");
         return lbl;
     }
 
-    // ==========================================
-    // OPERAÇÕES DE CADASTRO E EDIÇÃO
-    // ==========================================
     private Button criarBotaoSalvar(String texto, Runnable acao) {
         Button btnSalvar = new Button(texto); btnSalvar.setStyle(btnSalvarStyle); btnSalvar.setOnAction(e -> acao.run()); return btnSalvar;
     }
@@ -483,7 +544,7 @@ public class DonoController {
         Platform.runLater(() -> { stage.requestFocus(); btnSalvar.requestFocus(); });
     }
     private <T> void estilizarComboBox(ComboBox<T> cb) {
-        cb.setStyle("-fx-background-color: #04070d; -fx-text-fill: white; -fx-prompt-text-fill: white; -fx-border-color: #141923; -fx-padding: 4px; -fx-opacity: 1;");
+        cb.setStyle("-fx-background-color: #04070d; -fx-text-fill: white; -fx-prompt-text-fill: white; -fx-border-color: #141923; -fx-padding: 4px; -fx-opacity: 1; -fx-border-radius: 6; -fx-background-radius: 6;");
         cb.setButtonCell(new ListCell<T>() {
             @Override
             protected void updateItem(T item, boolean empty) {
@@ -497,16 +558,32 @@ public class DonoController {
         });
     }
 
+    private VBox criarCampoComDica(javafx.scene.Node campo, String dica) {
+        VBox box = new VBox(4);
+        Label lbl = new Label(dica);
+
+        lbl.setStyle("-fx-text-fill: #64748b; -fx-font-size: 10px;");
+        lbl.setWrapText(true);
+        lbl.setMinHeight(Region.USE_PREF_SIZE);
+
+        box.getChildren().addAll(campo, lbl);
+        return box;
+    }
+
+    // ==========================================
+    // OPERAÇÕES DE CADASTRO E EDIÇÃO
+    // ==========================================
     @FXML
     private void cadastrarAluno() {
-        if (BancoDeDados.getInstance().getPlano().isEmpty() || BancoDeDados.getInstance().getTreinadores().isEmpty()) { mostrarAlertaErro("Cadastre pelo menos 1 Plano e 1 Treinador antes."); return; }
+        if (BancoDeDados.getInstance().getPlano().isEmpty() || BancoDeDados.getInstance().getTreinadores().isEmpty()) { mostrarAlertaErro("Cadastre pelo menos 1 Plano e 1 Treinador antes.", Main.getStage()); return; }
         Stage stage = criarJanela("Matricular Novo Aluno", true, true); GridPane grid = (GridPane) stage.getUserData();
 
-        TextField txtNome = criarInput("Ex: Kauan Silva"); TextField txtSenha = criarInput("Mín. 8 letras, 1 Maiúscula, 1 Número, 1 Especial (@)");
+        TextField txtNome = criarInputLetras("Ex: Kauan Silva", 20);
+        TextField txtSenha = criarInputText("Sua senha", 20);
         TextField txtCpf = criarInputCpf();
-        TextField txtIdade = criarInput("Apenas números (Ex: 24)"); aplicarMascaraNumerica(txtIdade, false);
-        TextField txtAltura = criarInput("Ex: 1.75"); aplicarMascaraNumerica(txtAltura, true);
-        TextField txtPeso = criarInput("Ex: 80.5"); aplicarMascaraNumerica(txtPeso, true);
+        TextField txtIdade = criarInput("Ex: 24"); aplicarMascaraNumerica(txtIdade, false, 3);
+        TextField txtAltura = criarInput("Ex: 1.75"); aplicarMascaraNumerica(txtAltura, true, 1);
+        TextField txtPeso = criarInput("Ex: 80.5"); aplicarMascaraNumerica(txtPeso, true, 3);
         ComboBox<String> cbIntensidade = new ComboBox<>(); cbIntensidade.getItems().addAll("Leve", "Médio", "Intenso"); estilizarComboBox(cbIntensidade);
 
         ComboBox<Plano> cbPlano = new ComboBox<>(); cbPlano.getItems().addAll(BancoDeDados.getInstance().getPlano().values());
@@ -526,7 +603,7 @@ public class DonoController {
                 for (Modalidade mod : planoSelecionado.getModalidade().values()) {
                     Label lblMod = criarTextoNormal("Treinador de " + mod.getNome() + ":");
                     ComboBox<Treinador> cbT = new ComboBox<>();
-                    cbT.setPrefWidth(300);
+                    cbT.setPrefWidth(340);
                     cbT.setConverter(new StringConverter<Treinador>() {
                         @Override public String toString(Treinador t) { return t == null ? "" : t.getNome() + " (" + t.getEspecialidade() + ")"; }
                         @Override public Treinador fromString(String s) { return null; }
@@ -534,24 +611,27 @@ public class DonoController {
                     estilizarComboBox(cbT);
                     for (Treinador t : mod.getTreinadores().values()) cbT.getItems().add(t);
                     if (cbT.getItems().isEmpty()) { cbT.setDisable(true); cbT.setPromptText("Sem treinadores"); } else { cbT.setPromptText("Selecione..."); }
-
                     comboboxesTreinadores.add(cbT);
                     boxTreinadoresDinâmicos.getChildren().addAll(lblMod, cbT);
                 }
             }
         });
 
-        adicionarLinhaForm(grid, 0, "Nome Completo:", txtNome); adicionarLinhaForm(grid, 1, "Senha:", txtSenha);
-        adicionarLinhaForm(grid, 2, "CPF:", txtCpf); adicionarLinhaForm(grid, 3, "Idade:", txtIdade);
-        adicionarLinhaForm(grid, 4, "Altura (m):", txtAltura); adicionarLinhaForm(grid, 5, "Peso (kg):", txtPeso);
-        adicionarLinhaForm(grid, 6, "Intensidade:", cbIntensidade); adicionarLinhaForm(grid, 7, "Plano:", cbPlano);
+        adicionarLinhaForm(grid, 0, "Nome Completo:", criarCampoComDica(txtNome, "Apenas letras. Máx 20 caracteres."));
+        adicionarLinhaForm(grid, 1, "Senha:", criarCampoComDica(txtSenha, "De 6 a 20 caracteres (Maiúsculas, Números, Especiais)"));
+        adicionarLinhaForm(grid, 2, "CPF:", criarCampoComDica(txtCpf, "Apenas números (11 dígitos)."));
+        adicionarLinhaForm(grid, 3, "Idade:", criarCampoComDica(txtIdade, "De 13 a 120 anos."));
+        adicionarLinhaForm(grid, 4, "Altura (m):", criarCampoComDica(txtAltura, "De 0.50 a 2.50 metros."));
+        adicionarLinhaForm(grid, 5, "Peso (kg):", criarCampoComDica(txtPeso, "De 20 a 350 kg."));
+        adicionarLinhaForm(grid, 6, "Intensidade:", criarCampoComDica(cbIntensidade, "Selecione a intensidade."));
+        adicionarLinhaForm(grid, 7, "Plano:", criarCampoComDica(cbPlano, "Selecione um plano ativo."));
         adicionarLinhaForm(grid, 8, "Equipe:", boxTreinadoresDinâmicos);
 
         Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 9, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Concluir Matrícula", () -> {
             try {
-                if (cbPlano.getValue() == null || cbIntensidade.getValue() == null) { lblErro.setText("Selecione os campos nas caixas de opção."); return; }
+                if (cbPlano.getValue() == null || cbIntensidade.getValue() == null || txtNome.getText().isBlank()) { lblErro.setText("Preencha todos os campos corretamente."); return; }
                 List<Treinador> equipeEscolhida = new ArrayList<>();
                 for (ComboBox<Treinador> cb : comboboxesTreinadores) {
                     if (cb.getValue() == null && !cb.isDisabled()) { lblErro.setText("Selecione os treinadores obrigatórios."); return; }
@@ -559,37 +639,79 @@ public class DonoController {
                 }
                 double altura = Double.parseDouble(txtAltura.getText().replace(",", ".")); double peso = Double.parseDouble(txtPeso.getText().replace(",", ".")); int idade = Integer.parseInt(txtIdade.getText());
 
+                if (idade < 13 || idade > 120) { lblErro.setText("A idade deve ser entre 13 e 120 anos."); return; }
+                if (peso < 20 || peso > 350) { lblErro.setText("O peso deve ser entre 20kg e 350kg."); return; }
+                if (altura < 0.50 || altura > 2.50) { lblErro.setText("A altura deve ser entre 0.50 e 2.50m."); return; }
+
                 boolean sucesso = dono.cadastrarAluno(txtNome.getText(), txtSenha.getText(), txtCpf.getText(), idade, altura, peso, cbPlano.getValue(), cbIntensidade.getValue(), equipeEscolhida);
-                if (sucesso) { fecharSemAviso(stage); atualizarListasAtuais(); } else { lblErro.setText("Regras Violadas! CPF incorreto ou Senha fraca."); }
+                if (sucesso) { fecharSemAviso(stage); atualizarListasAtuais(); } else { lblErro.setText("Regras Violadas! Valide o CPF e a Força da Senha."); }
             } catch (Exception ex) { lblErro.setText("Preencha todos os números corretamente."); }
         });
 
-        HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER); grid.add(boxBotao, 0, 10, 2, 1);
+        HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER);
+        grid.add(boxBotao, 0, 10, 2, 1);
+
+        ScrollPane scroll = new ScrollPane(grid);
+        scroll.setFitToWidth(true);
+        scroll.setStyle("-fx-background-color: transparent; -fx-background: transparent; -fx-padding: 0;");
+
+        // Aumentado para 450 para igualar a altura natural do formulário do Treinador
+        scroll.setPrefViewportHeight(450);
+
+        VBox root = (VBox) stage.getScene().getRoot();
+        javafx.scene.Node header = root.getChildren().get(0);
+        root.getChildren().clear();
+        root.getChildren().addAll(header, scroll);
+        VBox.setVgrow(scroll, Priority.ALWAYS);
+
         forcarFocoEEnter(stage, btnSalvar); stage.showAndWait();
     }
 
     @FXML
     private void cadastrarPlano() {
-        if (BancoDeDados.getInstance().getModalidade().isEmpty()) { mostrarAlertaErro("Crie uma Modalidade antes."); return; }
+        if (BancoDeDados.getInstance().getModalidade().isEmpty()) { mostrarAlertaErro("Crie uma Modalidade antes.", Main.getStage()); return; }
         Stage stage = criarJanela("Novo Plano de Acesso", true, true); GridPane grid = (GridPane) stage.getUserData();
 
-        TextField txtNome = criarInput("Ex: VIP Anual"); TextField txtDesc = criarInput("Ex: Acesso Total");
-        TextField txtValor = criarInput("Ex: 150.00"); aplicarMascaraNumerica(txtValor, true);
-        TextField txtValidade = criarInput("Meses. Ex: 12"); aplicarMascaraNumerica(txtValidade, false);
-        TextField txtJuros = criarInput("Ex: 5.0"); aplicarMascaraNumerica(txtJuros, true);
+        TextField txtNome = criarInputLetras("Ex: VIP Anual", 20);
+        TextField txtDesc = criarInputText("Ex: Acesso Total", 100);
+        TextField txtValor = criarInput("Ex: 150.00"); aplicarMascaraNumerica(txtValor, true, 6);
+        TextField txtValidade = criarInput("Ex: 12"); aplicarMascaraNumerica(txtValidade, false, 2);
+        TextField txtJuros = criarInput("Ex: 5.0"); aplicarMascaraNumerica(txtJuros, true, 3);
         List<CheckBox> checkboxes = new ArrayList<>(); ScrollPane listaModalidades = criarListaModalidades(checkboxes);
 
-        adicionarLinhaForm(grid, 0, "Nome do Plano:", txtNome); adicionarLinhaForm(grid, 1, "Descrição:", txtDesc);
-        adicionarLinhaForm(grid, 2, "Valor Mensal (R$):", txtValor); adicionarLinhaForm(grid, 3, "Validade (Meses):", txtValidade);
-        adicionarLinhaForm(grid, 4, "Juros Atraso (%):", txtJuros); adicionarLinhaForm(grid, 5, "Modalidades:", listaModalidades);
+        adicionarLinhaForm(grid, 0, "Nome do Plano:", criarCampoComDica(txtNome, "Máx 20 letras e espaços."));
+        adicionarLinhaForm(grid, 1, "Descrição:", criarCampoComDica(txtDesc, "Breve resumo do plano (Máx 100 caracteres)."));
+        adicionarLinhaForm(grid, 2, "Valor Mensal (R$):", criarCampoComDica(txtValor, "Máx 6 dígitos (Até R$ 100.000)."));
+        adicionarLinhaForm(grid, 3, "Validade (Meses):", criarCampoComDica(txtValidade, "Máx 2 dígitos (De 1 a 99 meses)."));
+        adicionarLinhaForm(grid, 4, "Juros Atraso (%):", criarCampoComDica(txtJuros, "Máx 3 dígitos (De 0 a 100%)."));
+        adicionarLinhaForm(grid, 5, "Modalidades:", listaModalidades);
         Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 6, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar Plano", () -> {
             try {
                 List<Integer> idsModalidades = idsSelecionados(checkboxes);
-                if (idsModalidades.isEmpty()) { lblErro.setText("Selecione ao menos uma modalidade."); return; }
-                double valor = Double.parseDouble(txtValor.getText().replace(",", ".")); double juros = Double.parseDouble(txtJuros.getText().replace(",", "."));
-                boolean sucesso = dono.cadastrarPlano(txtNome.getText(), txtDesc.getText(), valor, idsModalidades, Integer.parseInt(txtValidade.getText()), juros);
+                if (idsModalidades.isEmpty()) {
+                    lblErro.setText("Selecione ao menos uma modalidade.");
+                    return;
+                }
+                double valor = Double.parseDouble(txtValor.getText().replace(",", "."));
+                double juros = Double.parseDouble(txtJuros.getText().replace(",", "."));
+                int meses = Integer.parseInt(txtValidade.getText());
+
+                if (valor <= 0 || valor > 100000) {
+                    lblErro.setText("Valor deve ser entre 1 e 100.000.");
+                    return;
+                }
+                if (juros < 0 || juros > 100) {
+                    lblErro.setText("Juros de 0% a 100%.");
+                    return;
+                }
+                if (meses <= 0 || meses > 99) {
+                    lblErro.setText("Validade de 1 a 99 meses.");
+                    return;
+                }
+
+                boolean sucesso = dono.cadastrarPlano(txtNome.getText(), txtDesc.getText(), valor, idsModalidades, meses, juros);
                 if(sucesso) { fecharSemAviso(stage); atualizarListasAtuais(); } else { lblErro.setText("Erro ao cadastrar plano. Verifique os dados."); }
             } catch (Exception ex) { lblErro.setText("Preencha Valor, Validade e Juros apenas com números."); }
         });
@@ -600,8 +722,11 @@ public class DonoController {
     @FXML
     private void cadastrarModalidade() {
         Stage stage = criarJanela("Nova Modalidade", true, true); GridPane grid = (GridPane) stage.getUserData();
-        TextField txtNome = criarInput("Ex: Musculação"); TextField txtDesc = criarInput("Ex: Área de peso livre");
-        adicionarLinhaForm(grid, 0, "Nome:", txtNome); adicionarLinhaForm(grid, 1, "Descrição:", txtDesc);
+        TextField txtNome = criarInputLetras("Ex: Musculação", 20);
+        TextField txtDesc = criarInputText("Ex: Área de peso livre", 100);
+
+        adicionarLinhaForm(grid, 0, "Nome:", criarCampoComDica(txtNome, "Máx 20 letras e espaços."));
+        adicionarLinhaForm(grid, 1, "Descrição:", criarCampoComDica(txtDesc, "Breve resumo (Máx 100 caracteres)."));
         Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 2, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar Modalidade", () -> {
@@ -614,17 +739,22 @@ public class DonoController {
 
     @FXML
     private void cadastrarTreinador() {
-        if (BancoDeDados.getInstance().getModalidade().isEmpty()) { mostrarAlertaErro("Crie uma Modalidade antes."); return; }
+        if (BancoDeDados.getInstance().getModalidade().isEmpty()) { mostrarAlertaErro("Crie uma Modalidade antes.", Main.getStage()); return; }
         Stage stage = criarJanela("Novo Treinador", true, true); GridPane grid = (GridPane) stage.getUserData();
 
-        TextField txtNome = criarInput("Nome Completo"); TextField txtSenha = criarInput("Mín. 8, 1 Maiúscula, 1 Número, 1 Especial (@)");
-        TextField txtCpf = criarInputCpf(); TextField txtSalario = criarInput("Ex: 3500.00"); aplicarMascaraNumerica(txtSalario, true);
-        TextField txtEsp = criarInput("Ex: Hipertrofia");
+        TextField txtNome = criarInputLetras("Nome Completo", 20);
+        TextField txtSenha = criarInputText("Sua senha", 20);
+        TextField txtCpf = criarInputCpf();
+        TextField txtSalario = criarInput("Ex: 3500.00"); aplicarMascaraNumerica(txtSalario, true, 6);
+        TextField txtEsp = criarInputText("Ex: Hipertrofia", 50);
         List<CheckBox> checkboxes = new ArrayList<>(); ScrollPane listaModalidades = criarListaModalidades(checkboxes);
 
-        adicionarLinhaForm(grid, 0, "Nome:", txtNome); adicionarLinhaForm(grid, 1, "Senha:", txtSenha);
-        adicionarLinhaForm(grid, 2, "CPF:", txtCpf); adicionarLinhaForm(grid, 3, "Salário (R$):", txtSalario);
-        adicionarLinhaForm(grid, 4, "Especialidade:", txtEsp); adicionarLinhaForm(grid, 5, "Modalidades:", listaModalidades);
+        adicionarLinhaForm(grid, 0, "Nome:", criarCampoComDica(txtNome, "Apenas letras. Máx 20 caracteres."));
+        adicionarLinhaForm(grid, 1, "Senha:", criarCampoComDica(txtSenha, "De 6 a 20 caracteres (Maiúsculas, Números, Especiais)"));
+        adicionarLinhaForm(grid, 2, "CPF:", criarCampoComDica(txtCpf, "Apenas números (11 dígitos)."));
+        adicionarLinhaForm(grid, 3, "Salário (R$):", criarCampoComDica(txtSalario, "Máx 6 dígitos (Até R$ 500.000)."));
+        adicionarLinhaForm(grid, 4, "Especialidade:", criarCampoComDica(txtEsp, "Especialidade principal (Máx 50 caracteres)."));
+        adicionarLinhaForm(grid, 5, "Modalidades:", listaModalidades);
         Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 6, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Contratar", () -> {
@@ -632,29 +762,45 @@ public class DonoController {
                 List<Integer> idsModalidades = idsSelecionados(checkboxes);
                 if (idsModalidades.isEmpty()) { lblErro.setText("Selecione ao menos uma modalidade."); return; }
                 double salario = Double.parseDouble(txtSalario.getText().replace(",", "."));
+                if (salario <= 0 || salario > 500000) { lblErro.setText("Salário inválido (1 a 500.000)."); return; }
+
+                if (!validarTetoSalarial(salario, stage)) return;
+
                 boolean sucesso = dono.CadastrarTreinador(idsModalidades, txtNome.getText(), txtSenha.getText(), txtCpf.getText(), salario, txtEsp.getText());
                 if(sucesso) { fecharSemAviso(stage); atualizarListasAtuais(); } else { lblErro.setText("Erro! Verifique as regras exatas de CPF e Senha."); }
             } catch (Exception ex) { lblErro.setText("Verifique os números do salário."); }
         });
-        HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER); grid.add(boxBotao, 0, 7, 2, 1);
+
+        HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER);
+        grid.add(boxBotao, 0, 7, 2, 1);
+
+        // Sem scroll principal, o Treinador fica exatamente do mesmo tamanho compacto do Plano
         forcarFocoEEnter(stage, btnSalvar); stage.showAndWait();
     }
 
     @FXML
     private void cadastrarGerente() {
-        if (BancoDeDados.getInstance().gerente.isPresent()) { mostrarAlertaErro("Bloqueado!\nA academia já possui um Gerente Geral ativo."); return; }
+        if (BancoDeDados.getInstance().gerente.isPresent()) { mostrarAlertaErro("Bloqueado!\nA academia já possui um Gerente Geral ativo.", Main.getStage()); return; }
         Stage stage = criarJanela("Nomear Gerente Geral", true, true); GridPane grid = (GridPane) stage.getUserData();
 
-        TextField txtNome = criarInput("Nome Completo"); TextField txtSenha = criarInput("Mín. 8, 1 Maiúscula, 1 Número, 1 Especial (@)");
-        TextField txtCpf = criarInputCpf(); TextField txtSalario = criarInput("Ex: 5000.00"); aplicarMascaraNumerica(txtSalario, true);
+        TextField txtNome = criarInputLetras("Nome Completo", 20);
+        TextField txtSenha = criarInputText("Sua senha", 20);
+        TextField txtCpf = criarInputCpf();
+        TextField txtSalario = criarInput("Ex: 5000.00"); aplicarMascaraNumerica(txtSalario, true, 6);
 
-        adicionarLinhaForm(grid, 0, "Nome:", txtNome); adicionarLinhaForm(grid, 1, "Senha:", txtSenha);
-        adicionarLinhaForm(grid, 2, "CPF:", txtCpf); adicionarLinhaForm(grid, 3, "Salário (R$):", txtSalario);
+        adicionarLinhaForm(grid, 0, "Nome:", criarCampoComDica(txtNome, "Apenas letras. Máx 20 caracteres."));
+        adicionarLinhaForm(grid, 1, "Senha:", criarCampoComDica(txtSenha, "De 6 a 20 caracteres (Maiúsculas, Números, Especiais)"));
+        adicionarLinhaForm(grid, 2, "CPF:", criarCampoComDica(txtCpf, "Apenas números (11 dígitos)."));
+        adicionarLinhaForm(grid, 3, "Salário (R$):", criarCampoComDica(txtSalario, "Máx 6 dígitos (Até R$ 500.000)."));
         Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 4, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Nomear", () -> {
             try {
                 double salario = Double.parseDouble(txtSalario.getText().replace(",", "."));
+                if (salario <= 0 || salario > 500000) { lblErro.setText("Salário inválido (1 a 500.000)."); return; }
+
+                if (!validarSalarioGerente(salario, stage)) return;
+
                 boolean sucesso = dono.cadastrarGerente(txtNome.getText(), txtSenha.getText(), txtCpf.getText(), salario);
                 if(sucesso) { fecharSemAviso(stage); atualizarListasAtuais(); } else { lblErro.setText("Erro! O CPF ou Senha informados não cumprem as regras."); }
             } catch (Exception ex) { lblErro.setText("Salário inválido."); }
@@ -667,16 +813,24 @@ public class DonoController {
     private void cadastrarAdmin() {
         Stage stage = criarJanela("Novo Administrativo", true, true); GridPane grid = (GridPane) stage.getUserData();
 
-        TextField txtNome = criarInput("Nome Completo"); TextField txtSenha = criarInput("Mín. 8, 1 Maiúscula, 1 Número, 1 Especial (@)");
-        TextField txtCpf = criarInputCpf(); TextField txtSalario = criarInput("Ex: 2500.00"); aplicarMascaraNumerica(txtSalario, true);
+        TextField txtNome = criarInputLetras("Nome Completo", 20);
+        TextField txtSenha = criarInputText("Sua senha", 20);
+        TextField txtCpf = criarInputCpf();
+        TextField txtSalario = criarInput("Ex: 2500.00"); aplicarMascaraNumerica(txtSalario, true, 6);
 
-        adicionarLinhaForm(grid, 0, "Nome:", txtNome); adicionarLinhaForm(grid, 1, "Senha:", txtSenha);
-        adicionarLinhaForm(grid, 2, "CPF:", txtCpf); adicionarLinhaForm(grid, 3, "Salário (R$):", txtSalario);
+        adicionarLinhaForm(grid, 0, "Nome:", criarCampoComDica(txtNome, "Apenas letras. Máx 20 caracteres."));
+        adicionarLinhaForm(grid, 1, "Senha:", criarCampoComDica(txtSenha, "De 6 a 20 caracteres (Maiúsculas, Números, Especiais)"));
+        adicionarLinhaForm(grid, 2, "CPF:", criarCampoComDica(txtCpf, "Apenas números (11 dígitos)."));
+        adicionarLinhaForm(grid, 3, "Salário (R$):", criarCampoComDica(txtSalario, "Máx 6 dígitos (Até R$ 500.000)."));
         Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 4, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Contratar", () -> {
             try {
                 double salario = Double.parseDouble(txtSalario.getText().replace(",", "."));
+                if (salario <= 0 || salario > 500000) { lblErro.setText("Salário inválido (1 a 500.000)."); return; }
+
+                if (!validarTetoSalarial(salario, stage)) return;
+
                 boolean sucesso = dono.cadastrarAdministrativo(txtNome.getText(), txtSenha.getText(), txtCpf.getText(), salario);
                 if(sucesso) { fecharSemAviso(stage); atualizarListasAtuais(); } else { lblErro.setText("Erro! O CPF ou Senha informados não cumprem as regras."); }
             } catch (Exception ex) { lblErro.setText("Salário inválido."); }
@@ -688,15 +842,19 @@ public class DonoController {
     @FXML
     private void cadastrarCusto() {
         Stage stage = criarJanela("Novo Custo", true, true); GridPane grid = (GridPane) stage.getUserData();
-        TextField txtNome = criarInput("Ex: Conta de Luz"); TextField txtValor = criarInput("Ex: 1200.00"); aplicarMascaraNumerica(txtValor, true);
-        adicionarLinhaForm(grid, 0, "Nome do Custo:", txtNome); adicionarLinhaForm(grid, 1, "Valor (R$):", txtValor);
+        TextField txtNome = criarInputText("Ex: Conta de Luz", 50);
+        TextField txtValor = criarInput("Ex: 1200.00"); aplicarMascaraNumerica(txtValor, true, 6);
+
+        adicionarLinhaForm(grid, 0, "Nome do Custo:", criarCampoComDica(txtNome, "Identificação da despesa (Máx 50 caracteres)."));
+        adicionarLinhaForm(grid, 1, "Valor (R$):", criarCampoComDica(txtValor, "Máx 6 dígitos (Até R$ 100.000)."));
         Label lblErro = criarLabelErro(); grid.add(lblErro, 0, 2, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar Custo", () -> {
             try {
                 double valor = Double.parseDouble(txtValor.getText().replace(",", "."));
+                if (valor <= 0 || valor > 100000) { lblErro.setText("O valor deve ser entre 1 e 100.000."); return; }
                 boolean sucesso = dono.cadastrarCusto(txtNome.getText(), valor);
-                if(sucesso) { fecharSemAviso(stage); atualizarListasAtuais(); } else { lblErro.setText("Informe um nome e um valor maior que zero."); }
+                if(sucesso) { fecharSemAviso(stage); atualizarListasAtuais(); } else { lblErro.setText("Informe um nome e um valor válidos."); }
             } catch (Exception ex) { lblErro.setText("Valor inválido."); }
         });
         HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER); grid.add(boxBotao, 0, 3, 2, 1);
@@ -704,14 +862,14 @@ public class DonoController {
     }
 
     // ==========================================
-    // ACESSAR E EDITAR
+    // ACESSAR E EDITAR COM LIMITES
     // ==========================================
     private HBox criarCampoSenhaComOlho(String senhaOriginal) {
         HBox box = new HBox(8); box.setAlignment(Pos.CENTER_LEFT);
         Label lblOculta = criarItem("Senha: ••••••••");
         Label lblVisivel = criarItem("Senha: " + senhaOriginal);
         lblVisivel.setVisible(false); lblVisivel.setManaged(false);
-        Button btnOlho = criarBotao("👁", "-fx-background-color: transparent; -fx-text-fill: #94a3b8; -fx-cursor: hand; -fx-padding: 0 4;", () -> {
+        Button btnOlho = criarBotao("👁", "-fx-background-color: transparent; -fx-text-fill: #94a3b8; -fx-cursor: hand; -fx-padding: 0 4; -fx-border-radius: 6; -fx-background-radius: 6;", () -> {
             boolean isOculta = lblOculta.isVisible();
             lblOculta.setVisible(!isOculta); lblOculta.setManaged(!isOculta);
             lblVisivel.setVisible(isOculta); lblVisivel.setManaged(isOculta);
@@ -722,7 +880,7 @@ public class DonoController {
 
     private void abrirDetalheAluno(Aluno a) {
         VBox conteudo = novoConteudoDetalhe();
-        conteudo.getChildren().addAll(criarSecao("Informações"), criarItem("ID: " + a.getId()), criarItem("CPF: " + a.getCpf()), criarCampoSenhaComOlho(a.getSenhaOriginal()), criarItem("Idade: " + a.getIdade() + " anos"), criarItem("Altura: " + a.getAltura() + " m"), criarItem("Peso: " + a.getPeso() + " kg"), criarItem("Intensidade: " + a.getIntensidade()), criarSecao("Planos Assinados"));
+        conteudo.getChildren().addAll(criarSecao("Informações"), criarItem("ID: " + a.getId()), criarItem("Nome: " + a.getNome()), criarItem("CPF: " + a.getCpf()), criarCampoSenhaComOlho(a.getSenhaOriginal()), criarItem("Idade: " + a.getIdade() + " anos"), criarItem("Altura: " + a.getAltura() + " m"), criarItem("Peso: " + a.getPeso() + " kg"), criarItem("Intensidade: " + a.getIntensidade()), criarSecao("Planos Assinados"));
         if (a.getListaAssinaturaPlano().isEmpty()) conteudo.getChildren().add(criarTextoNormal("Nenhum plano assinado."));
         else for (AssinaturaPlano ap : a.getListaAssinaturaPlano().values()) { conteudo.getChildren().add(criarItem("• " + ap.getPlano().getNome() + " — " + String.format("R$ %.2f", ap.getPlano().getValor()))); }
         conteudo.getChildren().add(criarSecao("Equipe de Treinadores"));
@@ -733,7 +891,7 @@ public class DonoController {
 
     private void abrirDetalhePlano(Plano p) {
         VBox conteudo = novoConteudoDetalhe();
-        conteudo.getChildren().addAll(criarSecao("Informações"), criarItem("ID: " + p.getId()), criarItem(String.format("Valor: R$ %.2f", p.getValor())), criarItem("Validade: " + p.getMesesValidade() + " meses"), criarItem(String.format("Juros por atraso: %.2f%%", p.getJuros())), criarItem("Descrição: " + p.getDescricao()), criarSecao("Modalidades do Plano"));
+        conteudo.getChildren().addAll(criarSecao("Informações"), criarItem("ID: " + p.getId()), criarItem("Nome: " + p.getNome()), criarItem(String.format("Valor: R$ %.2f", p.getValor())), criarItem("Validade: " + p.getMesesValidade() + " meses"), criarItem(String.format("Juros por atraso: %.2f%%", p.getJuros())), criarItem("Descrição: " + p.getDescricao()), criarSecao("Modalidades do Plano"));
         for (Modalidade m : p.getModalidade().values()) conteudo.getChildren().add(criarItem("• " + m.getNome()));
         conteudo.getChildren().add(criarSecao("Alunos que Assinaram"));
         for (Aluno a : dono.alunosDoPlano(p.getId())) conteudo.getChildren().add(criarItem("• " + a.getNome() + " (ID " + a.getId() + ")"));
@@ -742,7 +900,7 @@ public class DonoController {
 
     private void abrirDetalheTreinador(Treinador t) {
         VBox conteudo = novoConteudoDetalhe();
-        conteudo.getChildren().addAll(criarSecao("Informações"), criarItem("ID: " + t.getId()), criarItem("CPF: " + t.getCpf()), criarCampoSenhaComOlho(t.getSenhaOriginal()), criarItem("Especialidade: " + t.getEspecialidade()), criarItem(String.format("Salário: R$ %.2f", t.getSalario())), criarSecao("Modalidades que Leciona"));
+        conteudo.getChildren().addAll(criarSecao("Informações"), criarItem("ID: " + t.getId()), criarItem("Nome: " + t.getNome()), criarItem("CPF: " + t.getCpf()), criarCampoSenhaComOlho(t.getSenhaOriginal()), criarItem("Especialidade: " + t.getEspecialidade()), criarItem(String.format("Salário: R$ %.2f", t.getSalario())), criarSecao("Modalidades que Leciona"));
         for (Modalidade m : dono.modalidadesDoTreinador(t.getId())) conteudo.getChildren().add(criarItem("• " + m.getNome()));
         conteudo.getChildren().add(criarSecao("Alunos Atendidos"));
         for (Aluno a : dono.alunosDoTreinador(t.getId())) conteudo.getChildren().add(criarItem("• " + a.getNome() + " (ID " + a.getId() + ")"));
@@ -751,7 +909,7 @@ public class DonoController {
 
     private void abrirDetalheModalidade(Modalidade m) {
         VBox conteudo = novoConteudoDetalhe();
-        conteudo.getChildren().addAll(criarSecao("Informações"), criarItem("ID: " + m.getId()), criarItem("Descrição: " + m.getDescricao()), criarSecao("Treinadores"));
+        conteudo.getChildren().addAll(criarSecao("Informações"), criarItem("ID: " + m.getId()), criarItem("Nome: " + m.getNome()), criarItem("Descrição: " + m.getDescricao()), criarSecao("Treinadores"));
         if (m.getTreinadores().isEmpty()) conteudo.getChildren().add(criarTextoNormal("Nenhum treinador cadastrado."));
         else for (Treinador t : m.getTreinadores().values()) conteudo.getChildren().add(criarItem("• ID: " + t.getId() + " - " + t.getNome()));
         conteudo.getChildren().add(criarSecao("Alunos"));
@@ -773,9 +931,9 @@ public class DonoController {
 
     private void abrirEdicaoAluno(Aluno a) {
         Stage stage = criarJanela("Editar Aluno — " + a.getNome(), false, true); GridPane grid = (GridPane) stage.getUserData();
-        TextField txtAltura = criarInput("Ex: 1.75"); txtAltura.setText(String.valueOf(a.getAltura())); aplicarMascaraNumerica(txtAltura, true);
-        TextField txtPeso = criarInput("Ex: 80.5"); txtPeso.setText(String.valueOf(a.getPeso())); aplicarMascaraNumerica(txtPeso, true);
-        TextField txtSenha = criarInput("Nova senha (deixe vazio para manter)");
+        TextField txtAltura = criarInput("Ex: 1.75"); txtAltura.setText(String.valueOf(a.getAltura())); aplicarMascaraNumerica(txtAltura, true, 1);
+        TextField txtPeso = criarInput("Ex: 80.5"); txtPeso.setText(String.valueOf(a.getPeso())); aplicarMascaraNumerica(txtPeso, true, 3);
+        TextField txtSenha = criarInputText("Deixe vazio para manter", 20);
 
         ComboBox<String> cbIntensidade = new ComboBox<>(); cbIntensidade.getItems().addAll("Leve", "Médio", "Intenso"); cbIntensidade.setValue(a.getIntensidade());
         estilizarComboBox(cbIntensidade);
@@ -800,7 +958,7 @@ public class DonoController {
 
                     Label lblMod = criarTextoNormal("Treinador de " + mod.getNome() + ":");
                     ComboBox<Treinador> cbT = new ComboBox<>();
-                    cbT.setPrefWidth(300);
+                    cbT.setPrefWidth(340);
                     cbT.setConverter(new StringConverter<Treinador>() {
                         @Override public String toString(Treinador t) { return t == null ? "" : t.getNome() + " (" + t.getEspecialidade() + ")"; }
                         @Override public Treinador fromString(String s) { return null; }
@@ -829,11 +987,16 @@ public class DonoController {
         }
         atualizarTreinadores.run();
 
-        ScrollPane scrollPlanos = new ScrollPane(caixaPlanos); scrollPlanos.setPrefHeight(100); scrollPlanos.setStyle("-fx-background-color: #04070d; -fx-background: #04070d; -fx-border-color: #141923;");
+        ScrollPane scrollPlanos = new ScrollPane(caixaPlanos); scrollPlanos.setPrefHeight(100); scrollPlanos.setStyle("-fx-background-color: #04070d; -fx-background: #04070d; -fx-border-color: #141923; -fx-border-radius: 6; -fx-background-radius: 6;");
 
         Label lblErro = criarLabelErro();
-        adicionarLinhaForm(grid, 0, "Nome:", criarTextoDestaque(a.getNome(), "#f8fafc", 14)); adicionarLinhaForm(grid, 1, "Nova Senha:", txtSenha); adicionarLinhaForm(grid, 2, "Altura (m):", txtAltura);
-        adicionarLinhaForm(grid, 3, "Peso (kg):", txtPeso); adicionarLinhaForm(grid, 4, "Intensidade:", cbIntensidade); adicionarLinhaForm(grid, 5, "Planos:", scrollPlanos); adicionarLinhaForm(grid, 6, "Equipe:", boxTreinadoresDinâmicos);
+        adicionarLinhaForm(grid, 0, "Nome:", criarTextoDestaque(a.getNome(), "#f8fafc", 14));
+        adicionarLinhaForm(grid, 1, "Nova Senha:", criarCampoComDica(txtSenha, "De 6 a 20 caracteres (Maiúsculas, Números, Especiais)"));
+        adicionarLinhaForm(grid, 2, "Altura (m):", criarCampoComDica(txtAltura, "De 0.50 a 2.50 metros."));
+        adicionarLinhaForm(grid, 3, "Peso (kg):", criarCampoComDica(txtPeso, "De 20 a 350 kg."));
+        adicionarLinhaForm(grid, 4, "Intensidade:", criarCampoComDica(cbIntensidade, "Selecione a intensidade."));
+        adicionarLinhaForm(grid, 5, "Planos:", scrollPlanos);
+        adicionarLinhaForm(grid, 6, "Equipe:", boxTreinadoresDinâmicos);
         grid.add(lblErro, 0, 7, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar Alterações", () -> {
@@ -843,9 +1006,13 @@ public class DonoController {
                     if(Verificacao.verificarSenha(txtSenha.getText())) {
                         a.setSenha(CriptografarSenha.SenhaGeral(txtSenha.getText()));
                         a.setSenhaOriginal(txtSenha.getText());
-                    } else { lblErro.setText("A nova senha é fraca!"); return; }
+                    } else { lblErro.setText("A nova senha é fraca ou inválida!"); return; }
                 }
                 double altura = Double.parseDouble(txtAltura.getText().replace(",", ".")); double peso = Double.parseDouble(txtPeso.getText().replace(",", "."));
+
+                if (peso < 20 || peso > 350) { lblErro.setText("O peso deve ser entre 20kg e 350kg."); return; }
+                if (altura < 0.50 || altura > 2.50) { lblErro.setText("A altura deve ser entre 0.50 e 2.50m."); return; }
+
                 if (!a.setAltura(altura)) { lblErro.setText("Altura inválida."); return; }
                 if (!a.setPeso(peso)) { a.setAltura(alturaAnterior); lblErro.setText("Peso inválido."); return; }
                 if (!a.setIntensidade(cbIntensidade.getValue())) { lblErro.setText("Selecione a intensidade."); return; }
@@ -884,17 +1051,19 @@ public class DonoController {
         });
 
         HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER);
-        boxBotao.setStyle("-fx-padding: 0 32 32 32;");
+        grid.add(boxBotao, 0, 8, 2, 1);
 
         ScrollPane scroll = new ScrollPane(grid);
         scroll.setFitToWidth(true);
-        scroll.setStyle("-fx-background-color: transparent; -fx-background: #06090e; -fx-padding: 0;");
+        scroll.setStyle("-fx-background-color: transparent; -fx-background: transparent; -fx-padding: 0;");
+
+        // Aumentado para 450 para igualar a altura natural do formulário do Treinador
         scroll.setPrefViewportHeight(450);
 
         VBox root = (VBox) stage.getScene().getRoot();
         javafx.scene.Node header = root.getChildren().get(0);
         root.getChildren().clear();
-        root.getChildren().addAll(header, scroll, boxBotao);
+        root.getChildren().addAll(header, scroll);
         VBox.setVgrow(scroll, Priority.ALWAYS);
 
         forcarFocoEEnter(stage, btnSalvar); stage.showAndWait();
@@ -902,9 +1071,9 @@ public class DonoController {
 
     private void abrirEdicaoTreinador(Treinador t) {
         Stage stage = criarJanela("Editar Treinador — " + t.getNome(), false, true); GridPane grid = (GridPane) stage.getUserData();
-        TextField txtSalario = criarInput("Ex: 3500.00"); txtSalario.setText(String.valueOf(t.getSalario())); aplicarMascaraNumerica(txtSalario, true);
-        TextField txtEsp = criarInput("Ex: Hipertrofia"); txtEsp.setText(t.getEspecialidade());
-        TextField txtSenha = criarInput("Nova senha (deixe vazio para manter)");
+        TextField txtSalario = criarInput("Ex: 3500.00"); txtSalario.setText(String.valueOf(t.getSalario())); aplicarMascaraNumerica(txtSalario, true, 6);
+        TextField txtEsp = criarInputText("Ex: Hipertrofia", 50); txtEsp.setText(t.getEspecialidade());
+        TextField txtSenha = criarInputText("Deixe vazio para manter", 20);
 
         List<CheckBox> checkboxesMod = new ArrayList<>(); VBox caixaMod = new VBox(8); caixaMod.setStyle("-fx-padding: 8;");
         for (Modalidade m : BancoDeDados.getInstance().getModalidade().values()) {
@@ -912,11 +1081,14 @@ public class DonoController {
             if (m.getTreinadores().containsKey(t.getId())) cb.setSelected(true);
             checkboxesMod.add(cb); caixaMod.getChildren().add(cb);
         }
-        ScrollPane scrollMod = new ScrollPane(caixaMod); scrollMod.setPrefHeight(100); scrollMod.setStyle("-fx-background-color: #04070d; -fx-background: #04070d; -fx-border-color: #141923;");
+        ScrollPane scrollMod = new ScrollPane(caixaMod); scrollMod.setPrefHeight(100); scrollMod.setStyle("-fx-background-color: #04070d; -fx-background: #04070d; -fx-border-color: #141923; -fx-border-radius: 6; -fx-background-radius: 6;");
 
         Label lblErro = criarLabelErro();
-        adicionarLinhaForm(grid, 0, "Nome:", criarTextoDestaque(t.getNome(), "#f8fafc", 14)); adicionarLinhaForm(grid, 1, "Nova Senha:", txtSenha);
-        adicionarLinhaForm(grid, 2, "Salário (R$):", txtSalario); adicionarLinhaForm(grid, 3, "Especialidade:", txtEsp); adicionarLinhaForm(grid, 4, "Modalidades Ativas:", scrollMod);
+        adicionarLinhaForm(grid, 0, "Nome:", criarTextoDestaque(t.getNome(), "#f8fafc", 14));
+        adicionarLinhaForm(grid, 1, "Nova Senha:", criarCampoComDica(txtSenha, "De 6 a 20 caracteres (Maiúsculas, Números, Especiais)"));
+        adicionarLinhaForm(grid, 2, "Salário (R$):", criarCampoComDica(txtSalario, "Máx 6 dígitos (Até R$ 500.000)."));
+        adicionarLinhaForm(grid, 3, "Especialidade:", criarCampoComDica(txtEsp, "Especialidade principal (Máx 50 caracteres)."));
+        adicionarLinhaForm(grid, 4, "Modalidades Ativas:", scrollMod);
         grid.add(lblErro, 0, 5, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar Alterações", () -> {
@@ -928,7 +1100,10 @@ public class DonoController {
                     } else { lblErro.setText("A nova senha é fraca!"); return; }
                 }
                 double salarioNovo = Double.parseDouble(txtSalario.getText().replace(",", "."));
-                if (salarioNovo <= 0) { lblErro.setText("O salário deve ser maior que zero."); return; }
+                if (salarioNovo <= 0 || salarioNovo > 500000) { lblErro.setText("Salário inválido (1 a 500.000)."); return; }
+
+                if (!validarTetoSalarial(salarioNovo, stage)) return;
+
                 if (txtEsp.getText().isBlank()) { lblErro.setText("Informe a especialidade."); return; }
                 List<Integer> ids = idsSelecionados(checkboxesMod);
                 if (ids.isEmpty()) { lblErro.setText("Selecione pelo menos uma modalidade."); return; }
@@ -969,16 +1144,19 @@ public class DonoController {
                 fecharSemAviso(stage); atualizarListasAtuais();
             } catch (Exception ex) { lblErro.setText("Verifique os números do salário."); }
         });
-        HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER); grid.add(boxBotao, 0, 6, 2, 1);
+
+        HBox boxBotao = new HBox(btnSalvar); boxBotao.setAlignment(Pos.CENTER);
+        grid.add(boxBotao, 0, 6, 2, 1);
+
         forcarFocoEEnter(stage, btnSalvar); stage.showAndWait();
     }
 
     private void abrirEdicaoPlano(Plano p) {
         Stage stage = criarJanela("Editar Plano — " + p.getNome(), false, true); GridPane grid = (GridPane) stage.getUserData();
-        TextField txtDescricao = criarInput("Descrição do plano"); txtDescricao.setText(p.getDescricao());
-        TextField txtValidade = criarInput("Dias de validade"); txtValidade.setText(String.valueOf(p.getMesesValidade())); aplicarMascaraNumerica(txtValidade, false);
-        TextField txtValor = criarInput("Valor (R$)"); txtValor.setText(String.valueOf(p.getValor())); aplicarMascaraNumerica(txtValor, true);
-        TextField txtJuros = criarInput("Juros %"); txtJuros.setText(String.valueOf(p.getJuros())); aplicarMascaraNumerica(txtJuros, true);
+        TextField txtDescricao = criarInputText("Descrição do plano", 100); txtDescricao.setText(p.getDescricao());
+        TextField txtValidade = criarInput("Dias de validade"); txtValidade.setText(String.valueOf(p.getMesesValidade())); aplicarMascaraNumerica(txtValidade, false, 2);
+        TextField txtValor = criarInput("Valor (R$)"); txtValor.setText(String.valueOf(p.getValor())); aplicarMascaraNumerica(txtValor, true, 6);
+        TextField txtJuros = criarInput("Juros %"); txtJuros.setText(String.valueOf(p.getJuros())); aplicarMascaraNumerica(txtJuros, true, 3);
 
         List<CheckBox> checkboxes = new ArrayList<>(); VBox caixaMod = new VBox(8); caixaMod.setStyle("-fx-padding: 8;");
         for (Modalidade m : BancoDeDados.getInstance().getModalidade().values()) {
@@ -986,11 +1164,15 @@ public class DonoController {
             if (p.getModalidade().containsKey(m.getId())) cb.setSelected(true);
             checkboxes.add(cb); caixaMod.getChildren().add(cb);
         }
-        ScrollPane scrollMod = new ScrollPane(caixaMod); scrollMod.setPrefHeight(100); scrollMod.setStyle("-fx-background-color: #04070d; -fx-background: #04070d; -fx-border-color: #141923;");
+        ScrollPane scrollMod = new ScrollPane(caixaMod); scrollMod.setPrefHeight(100); scrollMod.setStyle("-fx-background-color: #04070d; -fx-background: #04070d; -fx-border-color: #141923; -fx-border-radius: 6; -fx-background-radius: 6;");
 
         Label lblErro = criarLabelErro();
-        adicionarLinhaForm(grid, 0, "Nome:", criarTextoDestaque(p.getNome(), "#f8fafc", 14)); adicionarLinhaForm(grid, 1, "Descrição:", txtDescricao);
-        adicionarLinhaForm(grid, 2, "Validade (meses):", txtValidade); adicionarLinhaForm(grid, 3, "Valor (R$):", txtValor); adicionarLinhaForm(grid, 4, "Juros (%):", txtJuros); adicionarLinhaForm(grid, 5, "Modalidades:", scrollMod);
+        adicionarLinhaForm(grid, 0, "Nome:", criarTextoDestaque(p.getNome(), "#f8fafc", 14));
+        adicionarLinhaForm(grid, 1, "Descrição:", criarCampoComDica(txtDescricao, "Breve resumo do plano (Máx 100 caracteres)."));
+        adicionarLinhaForm(grid, 2, "Validade (meses):", criarCampoComDica(txtValidade, "Máx 2 dígitos (De 1 a 99 meses)."));
+        adicionarLinhaForm(grid, 3, "Valor (R$):", criarCampoComDica(txtValor, "Máx 6 dígitos (Até R$ 100.000)."));
+        adicionarLinhaForm(grid, 4, "Juros (%):", criarCampoComDica(txtJuros, "Máx 3 dígitos (De 0 a 100%)."));
+        adicionarLinhaForm(grid, 5, "Modalidades:", scrollMod);
         grid.add(lblErro, 0, 6, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar Plano", () -> {
@@ -998,7 +1180,13 @@ public class DonoController {
                 if (txtDescricao.getText().isBlank()) { lblErro.setText("A descrição é obrigatória."); return; }
                 double novoValor = Double.parseDouble(txtValor.getText().replace(",", "."));
                 double novosJuros = Double.parseDouble(txtJuros.getText().replace(",", "."));
-                p.setDescricao(txtDescricao.getText()); p.setValor(novoValor); p.setMesesValidade(Integer.parseInt(txtValidade.getText()));
+                int meses = Integer.parseInt(txtValidade.getText());
+
+                if (novoValor <= 0 || novoValor > 100000) { lblErro.setText("Valor deve ser entre 1 e 100.000."); return; }
+                if (novosJuros < 0 || novosJuros > 100) { lblErro.setText("Juros de 0% a 100%."); return; }
+                if (meses <= 0 || meses > 99) { lblErro.setText("Validade de 1 a 99 meses."); return; }
+
+                p.setDescricao(txtDescricao.getText()); p.setValor(novoValor); p.setMesesValidade(meses);
                 p.setJuros(novosJuros);
                 p.getModalidade().clear();
                 List<Integer> selecionados = idsSelecionados(checkboxes);
@@ -1012,11 +1200,13 @@ public class DonoController {
 
     private void abrirEdicaoAdministrativo(Administrativo a) {
         Stage stage = criarJanela("Editar Administrativo — " + a.getNome(), false, true); GridPane grid = (GridPane) stage.getUserData();
-        TextField txtSalario = criarInput("Ex: 2500.00"); txtSalario.setText(String.valueOf(a.getSalario())); aplicarMascaraNumerica(txtSalario, true);
-        TextField txtSenha = criarInput("Nova senha (deixe vazio para manter)");
+        TextField txtSalario = criarInput("Ex: 2500.00"); txtSalario.setText(String.valueOf(a.getSalario())); aplicarMascaraNumerica(txtSalario, true, 6);
+        TextField txtSenha = criarInputText("Deixe vazio para manter", 20);
         Label lblErro = criarLabelErro();
 
-        adicionarLinhaForm(grid, 0, "Nome (não editável):", criarTextoDestaque(a.getNome(), "#f8fafc", 14)); adicionarLinhaForm(grid, 1, "Nova Senha:", txtSenha); adicionarLinhaForm(grid, 2, "Salário (R$):", txtSalario);
+        adicionarLinhaForm(grid, 0, "Nome (não editável):", criarTextoDestaque(a.getNome(), "#f8fafc", 14));
+        adicionarLinhaForm(grid, 1, "Nova Senha:", criarCampoComDica(txtSenha, "De 6 a 20 caracteres (Maiúsculas, Números, Especiais)"));
+        adicionarLinhaForm(grid, 2, "Salário (R$):", criarCampoComDica(txtSalario, "Máx 6 dígitos (Até R$ 500.000)."));
         grid.add(lblErro, 0, 3, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar Alterações", () -> {
@@ -1028,7 +1218,9 @@ public class DonoController {
                     } else { lblErro.setText("A nova senha é fraca!"); return; }
                 }
                 double novoSalario = Double.parseDouble(txtSalario.getText().replace(",", "."));
-                if (novoSalario <= 0) { lblErro.setText("O salário deve ser maior que zero."); return; }
+                if (novoSalario <= 0 || novoSalario > 500000) { lblErro.setText("Salário inválido (1 a 500.000)."); return; }
+
+                if (!validarTetoSalarial(novoSalario, stage)) return;
 
                 double diferenca = novoSalario - a.getSalario();
                 BancoDeDados.getInstance().grafico.addCustoSalario(diferenca);
@@ -1043,11 +1235,13 @@ public class DonoController {
 
     private void abrirEdicaoGerente(Gerente g) {
         Stage stage = criarJanela("Editar Gerente — " + g.getNome(), false, true); GridPane grid = (GridPane) stage.getUserData();
-        TextField txtSalario = criarInput("Ex: 2500.00"); txtSalario.setText(String.valueOf(g.getSalario())); aplicarMascaraNumerica(txtSalario, true);
-        TextField txtSenha = criarInput("Nova senha (deixe vazio para manter)");
+        TextField txtSalario = criarInput("Ex: 2500.00"); txtSalario.setText(String.valueOf(g.getSalario())); aplicarMascaraNumerica(txtSalario, true, 6);
+        TextField txtSenha = criarInputText("Deixe vazio para manter", 20);
         Label lblErro = criarLabelErro();
 
-        adicionarLinhaForm(grid, 0, "Nome (não editável):", criarTextoDestaque(g.getNome(), "#f8fafc", 14)); adicionarLinhaForm(grid, 1, "Nova Senha:", txtSenha); adicionarLinhaForm(grid, 2, "Salário (R$):", txtSalario);
+        adicionarLinhaForm(grid, 0, "Nome (não editável):", criarTextoDestaque(g.getNome(), "#f8fafc", 14));
+        adicionarLinhaForm(grid, 1, "Nova Senha:", criarCampoComDica(txtSenha, "De 6 a 20 caracteres (Maiúsculas, Números, Especiais)"));
+        adicionarLinhaForm(grid, 2, "Salário (R$):", criarCampoComDica(txtSalario, "Máx 6 dígitos (Até R$ 500.000)."));
         grid.add(lblErro, 0, 3, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar Alterações", () -> {
@@ -1059,7 +1253,9 @@ public class DonoController {
                     } else { lblErro.setText("A nova senha é fraca!"); return; }
                 }
                 double novoSalario = Double.parseDouble(txtSalario.getText().replace(",", "."));
-                if (novoSalario <= 0) { lblErro.setText("O salário deve ser maior que zero."); return; }
+                if (novoSalario <= 0 || novoSalario > 500000) { lblErro.setText("Salário inválido (1 a 500.000)."); return; }
+
+                if (!validarSalarioGerente(novoSalario, stage)) return;
 
                 double diferenca = novoSalario - g.getSalario();
                 BancoDeDados.getInstance().grafico.addCustoSalario(diferenca);
@@ -1075,15 +1271,15 @@ public class DonoController {
 
     private void abrirEdicaoCusto(Custo c) {
         Stage stage = criarJanela("Editar Custo — " + c.getNome(), false, true); GridPane grid = (GridPane) stage.getUserData();
-        TextField txtValor = criarInput("Novo valor (R$)"); txtValor.setText(String.valueOf(c.getValor())); aplicarMascaraNumerica(txtValor, true);
+        TextField txtValor = criarInput("Novo valor (R$)"); txtValor.setText(String.valueOf(c.getValor())); aplicarMascaraNumerica(txtValor, true, 6);
         Label lblErro = criarLabelErro();
-        adicionarLinhaForm(grid, 0, "Nome:", criarTextoDestaque(c.getNome(), "#f8fafc", 14)); adicionarLinhaForm(grid, 1, "Data Original:", criarTextoDestaque(c.getData(), "#94a3b8", 14)); adicionarLinhaForm(grid, 2, "Novo Valor (R$):", txtValor);
+        adicionarLinhaForm(grid, 0, "Nome:", criarTextoDestaque(c.getNome(), "#f8fafc", 14)); adicionarLinhaForm(grid, 1, "Data Original:", criarTextoDestaque(c.getData(), "#94a3b8", 14)); adicionarLinhaForm(grid, 2, "Novo Valor (R$):", criarCampoComDica(txtValor, "Máx 6 dígitos (Até R$ 100.000)."));
         grid.add(lblErro, 0, 3, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar Custo", () -> {
             try {
                 double novoValor = Double.parseDouble(txtValor.getText().replace(",", "."));
-                if (novoValor <= 0) { lblErro.setText("O valor deve ser maior que zero."); return; }
+                if (novoValor <= 0 || novoValor > 100000) { lblErro.setText("O valor deve ser entre 1 e 100.000."); return; }
 
                 double diferenca = novoValor - c.getValor();
                 BancoDeDados.getInstance().grafico.addCustoSalario(diferenca);
@@ -1098,9 +1294,10 @@ public class DonoController {
 
     private void abrirEdicaoModalidade(Modalidade m) {
         Stage stage = criarJanela("Editar Modalidade — " + m.getNome(), false, true); GridPane grid = (GridPane) stage.getUserData();
-        TextField txtDesc = criarInput("Ex: Área de peso livre"); txtDesc.setText(m.getDescricao());
+        TextField txtDesc = criarInputText("Ex: Área de peso livre", 100); txtDesc.setText(m.getDescricao());
         Label lblErro = criarLabelErro();
-        adicionarLinhaForm(grid, 0, "Nome:", criarTextoDestaque(m.getNome(), "#f8fafc", 14)); adicionarLinhaForm(grid, 1, "Descrição:", txtDesc);
+        adicionarLinhaForm(grid, 0, "Nome:", criarTextoDestaque(m.getNome(), "#f8fafc", 14));
+        adicionarLinhaForm(grid, 1, "Descrição:", criarCampoComDica(txtDesc, "Breve resumo (Máx 100 caracteres)."));
         grid.add(lblErro, 0, 2, 2, 1);
 
         Button btnSalvar = criarBotaoSalvar("Salvar", () -> {
@@ -1119,16 +1316,19 @@ public class DonoController {
         stage.close();
     }
 
-    private void aplicarMascaraNumerica(TextField txt, boolean permiteDecimal) {
+    private void aplicarMascaraNumerica(TextField txt, boolean permiteDecimal, int maxInteiros) {
         txt.textProperty().addListener((obs, velho, novo) -> {
             if (novo == null || novo.isEmpty()) return;
-            boolean valido = true; int contadorPonto = 0;
-            for (int i = 0; i < novo.length(); i++) {
-                char c = novo.charAt(i);
+            String teste = novo.replace(";", "");
+            boolean valido = true; int contadorPonto = 0; int countInt = 0;
+            for (int i = 0; i < teste.length(); i++) {
+                char c = teste.charAt(i);
                 if (c == '.' || c == ',') { contadorPonto++; if (!permiteDecimal || contadorPonto > 1) { valido = false; break; } }
-                else if (!Character.isDigit(c)) { valido = false; break; }
+                else if (Character.isDigit(c)) { if (contadorPonto == 0) countInt++; }
+                else { valido = false; break; }
             }
-            if (!valido) txt.setText(velho);
+            if (countInt > maxInteiros) valido = false;
+            if (!valido || !novo.equals(teste)) txt.setText(velho != null ? velho : "");
         });
     }
 
@@ -1136,7 +1336,7 @@ public class DonoController {
         TextField txt = criarInput("000.000.000-00");
         txt.textProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal == null) return;
-            String digits = newVal.replaceAll("\\D", "");
+            String digits = newVal.replaceAll("\\D", "").replace(";", "");
             if (digits.length() > 11) digits = digits.substring(0, 11);
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < digits.length(); i++) {
@@ -1149,12 +1349,39 @@ public class DonoController {
         return txt;
     }
 
-    // A JANELA BASE (Sem scroll global para manter proporções)
-    private Stage criarJanela(String titulo, boolean isCadastro, boolean mostrarX) {
-        Stage stage = new Stage(); stage.initOwner(Main.getStage()); stage.initModality(Modality.WINDOW_MODAL); stage.initStyle(StageStyle.UNDECORATED);
-        VBox root = new VBox(); root.setStyle("-fx-background-color: #06090e; -fx-border-color: #06090e; -fx-border-width: 1px;");
+    private TextField criarInputText(String prompt, int max) {
+        TextField txt = criarInput(prompt);
+        txt.textProperty().addListener((obs, old, novo) -> {
+            if (novo == null) return;
+            String limpo = novo.replace(";", "");
+            if (limpo.length() > max) limpo = limpo.substring(0, max);
+            if (!novo.equals(limpo)) txt.setText(limpo);
+        });
+        return txt;
+    }
 
-        HBox header = new HBox(); header.setStyle("-fx-background-color: #06090e; -fx-padding: 10px 16px;"); header.setAlignment(Pos.CENTER_LEFT);
+    private TextField criarInputLetras(String prompt, int max) {
+        TextField txt = criarInput(prompt);
+        txt.textProperty().addListener((obs, old, novo) -> {
+            if (novo == null) return;
+            StringBuilder limpo = new StringBuilder();
+            for (int i = 0; i < novo.length(); i++) {
+                char c = novo.charAt(i);
+                if ((Character.isLetter(c) || c == ' ') && c != ';') {
+                    limpo.append(c);
+                }
+            }
+            if (limpo.length() > max) limpo.setLength(max);
+            if (!novo.equals(limpo.toString())) txt.setText(limpo.toString());
+        });
+        return txt;
+    }
+
+    private Stage criarJanela(String titulo, boolean isCadastro, boolean mostrarX) {
+        Stage stage = new Stage(); stage.initOwner(Main.getStage()); stage.initModality(Modality.WINDOW_MODAL); stage.initStyle(StageStyle.TRANSPARENT);
+        VBox root = new VBox(); root.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-width: 1px; -fx-border-radius: 6; -fx-background-radius: 6;");
+
+        HBox header = new HBox(); header.setStyle("-fx-background-color: transparent; -fx-padding: 10px 16px;"); header.setAlignment(Pos.CENTER_LEFT);
         Label lblTitulo = new Label(titulo); lblTitulo.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;");
         Region spacer = new Region(); HBox.setHgrow(spacer, Priority.ALWAYS);
         header.getChildren().addAll(lblTitulo, spacer);
@@ -1177,38 +1404,51 @@ public class DonoController {
         GridPane grid = new GridPane(); grid.setHgap(16); grid.setVgap(16); grid.setStyle("-fx-padding: 32;");
 
         root.getChildren().addAll(header, grid);
-        Scene scene = new Scene(root); stage.setScene(scene); stage.setUserData(grid);
+        Scene scene = new Scene(root);
+        scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+
+        java.net.URL cssUrl = Main.class.getResource("/VisaoGeral.css");
+        if (cssUrl != null) scene.getStylesheets().add(cssUrl.toExternalForm());
+
+        stage.setScene(scene); stage.setUserData(grid);
         return stage;
     }
 
     private boolean confirmarSaidaJanela(boolean isCadastro, Stage parentStage) {
         final boolean[] confirmado = {false};
-        Stage stage = new Stage(); stage.initOwner(parentStage); stage.initModality(Modality.WINDOW_MODAL); stage.initStyle(StageStyle.UNDECORATED);
+        Stage stage = new Stage(); stage.initOwner(parentStage); stage.initModality(Modality.WINDOW_MODAL); stage.initStyle(StageStyle.TRANSPARENT);
 
         VBox root = new VBox(16);
-        root.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-width: 1px; -fx-padding: 32;");
+        root.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-width: 1px; -fx-padding: 32; -fx-border-radius: 6; -fx-background-radius: 6;");
         root.setAlignment(Pos.CENTER);
-        root.setPrefSize(450, 220);
-        root.setMinSize(450, 220);
+        root.setPrefSize(500, 240);
+        root.setMinSize(500, 240);
 
         String txtMsg = isCadastro ? "Tem certeza que deseja sair?\nTodas as informações inseridas serão apagadas." : "Tem certeza que deseja sair?\nTodas as informações alteradas serão apagadas.";
-        Label lblMsg = new Label(txtMsg); lblMsg.setStyle("-fx-text-fill: #f8fafc; -fx-font-size: 15px;"); lblMsg.setWrapText(true); lblMsg.setPrefWidth(380);
+        Label lblMsg = new Label(txtMsg); lblMsg.setStyle("-fx-text-fill: #f8fafc; -fx-font-size: 15px;"); lblMsg.setWrapText(true); lblMsg.setMaxWidth(440);
 
-        Button btnConfirmar = criarBotao("Confirmar", "-fx-background-color: #ef4444; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;", () -> { confirmado[0] = true; stage.close(); });
-        Button btnCancelar = criarBotao("Cancelar", "-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-cursor: hand; -fx-padding: 8 16;", stage::close); btnCancelar.setCancelButton(true);
+        Button btnConfirmar = criarBotao("Confirmar", "-fx-background-color: #ef4444; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6; -fx-border-radius: 6;", () -> { confirmado[0] = true; stage.close(); });
+        Button btnCancelar = criarBotao("Cancelar", "-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 8 16;", stage::close); btnCancelar.setCancelButton(true);
         HBox boxBotoes = new HBox(16, btnCancelar, btnConfirmar); boxBotoes.setAlignment(Pos.CENTER);
 
         root.getChildren().addAll(lblMsg, new Region(), boxBotoes);
-        stage.setScene(new Scene(root)); stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), btnConfirmar::fire); stage.showAndWait(); return confirmado[0];
+
+        Scene scene = new Scene(root);
+        scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+        java.net.URL cssUrl = Main.class.getResource("/VisaoGeral.css");
+        if (cssUrl != null) scene.getStylesheets().add(cssUrl.toExternalForm());
+        stage.setScene(scene);
+
+        stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), btnConfirmar::fire); stage.showAndWait(); return confirmado[0];
     }
 
     private void mostrarJanelaDetalhe(String titulo, VBox conteudo) {
         Stage stage = criarJanela(titulo, false, false); GridPane grid = (GridPane) stage.getUserData();
-        Button btnFechar = new Button("Fechar"); btnFechar.setStyle("-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-cursor: hand; -fx-padding: 8 16;"); btnFechar.setOnAction(e -> stage.close());
+        Button btnFechar = new Button("Fechar"); btnFechar.setStyle("-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 8 16;"); btnFechar.setOnAction(e -> stage.close());
         HBox boxFechar = new HBox(btnFechar); boxFechar.setAlignment(Pos.CENTER_LEFT);
 
         ScrollPane scroll = new ScrollPane(conteudo);
-        scroll.setFitToWidth(true); scroll.setPrefViewportWidth(420); scroll.setPrefViewportHeight(380); scroll.setStyle("-fx-background-color: transparent; -fx-background: #06090e;");
+        scroll.setFitToWidth(true); scroll.setPrefViewportWidth(460); scroll.setPrefViewportHeight(380); scroll.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
 
         grid.add(scroll, 0, 0, 2, 1); grid.add(boxFechar, 0, 1, 2, 1);
         stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), btnFechar::fire);
@@ -1233,7 +1473,9 @@ public class DonoController {
         return linha;
     }
 
-    private Button criarBotao(String texto, String estilo, Runnable acao) { Button b = new Button(texto); b.setStyle(estilo); b.setOnAction(e -> acao.run()); return b; }
+    private Button criarBotao(String texto, String estilo, Runnable acao) {
+        Button b = new Button(texto); b.setStyle(estilo); b.setOnAction(e -> acao.run()); return b;
+    }
 
     private ScrollPane criarListaModalidades(List<CheckBox> checkboxes) {
         VBox caixa = new VBox(8); caixa.setStyle("-fx-padding: 8;");
@@ -1242,7 +1484,7 @@ public class DonoController {
             checkboxes.add(cb); caixa.getChildren().add(cb);
         }
         ScrollPane scroll = new ScrollPane(caixa); scroll.setFitToWidth(true); scroll.setPrefWidth(300); scroll.setPrefHeight(120);
-        scroll.setStyle("-fx-background-color: #04070d; -fx-background: #04070d; -fx-border-color: #141923;"); return scroll;
+        scroll.setStyle("-fx-background-color: #04070d; -fx-background: #04070d; -fx-border-color: #141923; -fx-border-radius: 6; -fx-background-radius: 6;"); return scroll;
     }
 
     private List<Integer> idsSelecionados(List<CheckBox> checkboxes) {
@@ -1251,50 +1493,82 @@ public class DonoController {
         return ids;
     }
 
-    private boolean confirmarExclusao() {
-        final boolean[] confirmado = {false};
-        Stage stage = new Stage(); stage.initOwner(Main.getStage()); stage.initModality(Modality.WINDOW_MODAL); stage.initStyle(StageStyle.UNDECORATED);
-
-        VBox root = new VBox(16);
-        root.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-width: 1px; -fx-padding: 32;");
-        root.setAlignment(Pos.CENTER);
-        root.setPrefSize(450, 220);
-        root.setMinSize(450, 220);
-
-        Label lblMsg = new Label("Você tem certeza que deseja excluir?\nQualquer informação associada a este registro será excluída permanentemente.");
-        lblMsg.setStyle("-fx-text-fill: #f8fafc; -fx-font-size: 15px;"); lblMsg.setWrapText(true); lblMsg.setPrefWidth(380);
-
-        Button btnConfirmar = criarBotao("Sim, Excluir", "-fx-background-color: #ef4444; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;", () -> { confirmado[0] = true; stage.close(); });
-        Button btnCancelar = criarBotao("Cancelar", "-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-cursor: hand; -fx-padding: 8 16;", stage::close); btnCancelar.setCancelButton(true);
-        HBox boxBotoes = new HBox(16, btnCancelar, btnConfirmar); boxBotoes.setAlignment(Pos.CENTER);
-
-        root.getChildren().addAll(lblMsg, new Region(), boxBotoes);
-        stage.setScene(new Scene(root)); stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), btnConfirmar::fire); stage.showAndWait(); return confirmado[0];
-    }
-
     private TextField criarInput(String prompt) {
-        TextField t = new TextField(); t.setPromptText(prompt); t.setPrefWidth(300);
-        t.setStyle("-fx-background-color: #04070d; -fx-text-fill: white; -fx-border-color: #141923; -fx-padding: 10px; -fx-background-radius: 6;"); return t;
+        TextField t = new TextField(); t.setPromptText(prompt); t.setPrefWidth(340);
+        t.setStyle("-fx-background-color: #04070d; -fx-text-fill: white; -fx-border-color: #141923; -fx-padding: 10px; -fx-background-radius: 6; -fx-border-radius: 6;"); return t;
     }
 
     private void adicionarLinhaForm(GridPane grid, int linha, String label, javafx.scene.Node controle) {
-        Label lbl = new Label(label); lbl.setStyle("-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 14px;");
-        grid.add(lbl, 0, linha); grid.add(controle, 1, linha);
+        Label lbl = new Label(label);
+
+        lbl.setStyle("-fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 10 0 0 0;");
+        lbl.setMinWidth(Region.USE_PREF_SIZE);
+
+        grid.add(lbl, 0, linha);
+        grid.add(controle, 1, linha);
+
+        GridPane.setValignment(lbl, javafx.geometry.VPos.TOP);
     }
 
-    private void mostrarAlertaErro(String msg) {
-        Stage stage = new Stage(); stage.initOwner(Main.getStage()); stage.initModality(Modality.WINDOW_MODAL); stage.initStyle(StageStyle.UNDECORATED);
+    private boolean confirmarExclusao() {
+        final boolean[] confirmado = {false};
+        Stage stage = new Stage();
+        stage.initOwner(Main.getStage());
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initStyle(StageStyle.TRANSPARENT);
 
         VBox root = new VBox(16);
-        root.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-width: 1px; -fx-padding: 32;");
+        root.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-width: 1px; -fx-padding: 32; -fx-border-radius: 6; -fx-background-radius: 6;");
         root.setAlignment(Pos.CENTER);
-        root.setPrefSize(450, 220);
-        root.setMinSize(450, 220);
+        root.setPrefSize(500, 240);
+        root.setMinSize(500, 240);
 
-        Label lblMsg = new Label(msg); lblMsg.setStyle("-fx-text-fill: #ef4444; -fx-font-size: 15px;"); lblMsg.setWrapText(true); lblMsg.setMaxWidth(380);
-        Button btnOk = criarBotao("OK Entendi", "-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 8 16; -fx-cursor: hand; -fx-background-radius: 6;", stage::close);
+        Label lblMsg = new Label("Você tem certeza que deseja excluir?\nQualquer informação associada a este registro será excluída permanentemente.");
+        lblMsg.setStyle("-fx-text-fill: #f8fafc; -fx-font-size: 15px;"); lblMsg.setWrapText(true); lblMsg.setMaxWidth(440);
+
+        Button btnConfirmar = criarBotao("Sim, Excluir", "-fx-background-color: #ef4444; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6; -fx-border-radius: 6;", () -> { confirmado[0] = true; stage.close(); });
+        Button btnCancelar = criarBotao("Cancelar", "-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 8 16;", stage::close); btnCancelar.setCancelButton(true);
+        HBox boxBotoes = new HBox(16, btnCancelar, btnConfirmar); boxBotoes.setAlignment(Pos.CENTER);
+
+        root.getChildren().addAll(lblMsg, new Region(), boxBotoes);
+        Scene scene = new Scene(root);
+        scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+
+        java.net.URL cssUrl = Main.class.getResource("/VisaoGeral.css");
+        if (cssUrl != null) scene.getStylesheets().add(cssUrl.toExternalForm());
+
+        stage.setScene(scene);
+        stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), btnConfirmar::fire);
+        stage.showAndWait();
+        return confirmado[0];
+    }
+
+    private void mostrarAlertaErro(String msg, Stage parentStage) {
+        Stage stage = new Stage();
+        stage.initOwner(parentStage != null ? parentStage : Main.getStage());
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initStyle(StageStyle.TRANSPARENT);
+
+        VBox root = new VBox(16);
+        root.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-width: 1px; -fx-padding: 32; -fx-border-radius: 6; -fx-background-radius: 6;");
+        root.setAlignment(Pos.CENTER);
+        root.setPrefSize(500, 240);
+        root.setMinSize(500, 240);
+
+        Label lblMsg = new Label(msg); lblMsg.setStyle("-fx-text-fill: #ef4444; -fx-font-size: 15px;"); lblMsg.setWrapText(true); lblMsg.setMaxWidth(440);
+        Button btnOk = criarBotao("OK Entendi", "-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 8 16; -fx-cursor: hand; -fx-background-radius: 6; -fx-border-radius: 6;", stage::close);
 
         root.getChildren().addAll(lblMsg, new Region(), btnOk);
-        stage.setScene(new Scene(root)); stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), btnOk::fire); Platform.runLater(btnOk::requestFocus); stage.showAndWait();
+
+        Scene scene = new Scene(root);
+        scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+
+        java.net.URL cssUrl = Main.class.getResource("/VisaoGeral.css");
+        if (cssUrl != null) scene.getStylesheets().add(cssUrl.toExternalForm());
+
+        stage.setScene(scene);
+        stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), btnOk::fire);
+        Platform.runLater(btnOk::requestFocus);
+        stage.showAndWait();
     }
 }

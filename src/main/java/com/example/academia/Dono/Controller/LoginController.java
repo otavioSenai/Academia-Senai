@@ -48,7 +48,6 @@ public class LoginController {
         lblErro.setVisible(false);
         txtSenhaVisivel.textProperty().bindBidirectional(txtSenha.textProperty());
 
-        // Máscara Inteligente de CPF
         txtCpf.textProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal == null) return;
             String digits = newVal.replaceAll("\\D", "");
@@ -81,14 +80,13 @@ public class LoginController {
         Stage stage = new Stage();
         stage.initOwner(Main.getStage());
         stage.initModality(Modality.WINDOW_MODAL);
-        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.TRANSPARENT); // Remove as pontas brancas
 
         VBox root = new VBox();
-        root.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-width: 1px;");
+        root.setStyle("-fx-background-color: #06090e; -fx-border-color: #141923; -fx-border-width: 1px; -fx-border-radius: 6; -fx-background-radius: 6;");
         root.setPrefSize(450, 220);
         root.setMinSize(450, 220);
 
-        // Cabeçalho invisível apenas para dar a estrutura exata (Espaçador)
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER_RIGHT);
         header.setStyle("-fx-padding: 10px 16px 0 0;");
@@ -108,11 +106,11 @@ public class LoginController {
         lblMsg.setPrefWidth(380);
 
         Button btnConfirmar = new Button("Confirmar");
-        btnConfirmar.setStyle("-fx-background-color: #ef4444; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;");
+        btnConfirmar.setStyle("-fx-background-color: #ef4444; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6; -fx-border-radius: 6;");
         btnConfirmar.setOnAction(e -> System.exit(0));
 
         Button btnCancelar = new Button("Cancelar");
-        btnCancelar.setStyle("-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-cursor: hand; -fx-padding: 8 16;");
+        btnCancelar.setStyle("-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 8 16;");
         btnCancelar.setOnAction(e -> stage.close());
         btnCancelar.setCancelButton(true);
 
@@ -122,7 +120,9 @@ public class LoginController {
         content.getChildren().addAll(lblMsg, new Region(), boxBotoes);
         root.getChildren().addAll(header, content);
 
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.setFill(javafx.scene.paint.Color.TRANSPARENT); // Remove o fundo branco quadrado
+        stage.setScene(scene);
         stage.showAndWait();
     }
 
