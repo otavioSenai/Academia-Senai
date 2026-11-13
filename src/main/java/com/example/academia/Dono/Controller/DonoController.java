@@ -440,6 +440,11 @@ public class DonoController {
         lblMsg.setWrapText(true);
         lblMsg.setMaxWidth(440);
 
+        lblMsg.setMaxHeight(Double.MAX_VALUE);
+        lblMsg.setAlignment(Pos.CENTER);
+        lblMsg.setTextAlignment(TextAlignment.CENTER);
+        VBox.setVgrow(lblMsg, Priority.ALWAYS);
+
         Button btnConfirmar = criarBotao("Confirmar", "-fx-background-color: #ef4444; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6; -fx-border-radius: 6;", () -> {
             stage.close();
             Main.mostrarLogin();
@@ -448,7 +453,7 @@ public class DonoController {
         btnCancelar.setCancelButton(true);
         HBox boxBotoes = new HBox(16, btnCancelar, btnConfirmar); boxBotoes.setAlignment(Pos.CENTER);
 
-        root.getChildren().addAll(lblMsg, new Region(), boxBotoes);
+        root.getChildren().addAll(lblMsg, boxBotoes);
         Scene scene = new Scene(root);
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
         stage.setScene(scene);
@@ -669,19 +674,27 @@ public class DonoController {
 
     @FXML
     private void cadastrarPlano() {
-        if (BancoDeDados.getInstance().getModalidade().isEmpty()) { mostrarAlertaErro("Crie uma Modalidade antes.", Main.getStage()); return; }
-        Stage stage = criarJanela("Novo Plano de Acesso", true, true); GridPane grid = (GridPane) stage.getUserData();
+        if (BancoDeDados.getInstance().getModalidade().isEmpty()) {
+            mostrarAlertaErro("Crie uma Modalidade antes.", Main.getStage());
+            return;
+        }
+        Stage stage = criarJanela("Novo Plano de Acesso", true, true);
+        GridPane grid = (GridPane) stage.getUserData();
 
         TextField txtNome = criarInputLetras("Ex: VIP Anual", 20);
         TextField txtDesc = criarInputText("Ex: Acesso Total", 100);
-        TextField txtValor = criarInput("Ex: 150.00"); aplicarMascaraNumerica(txtValor, true, 6);
-        TextField txtValidade = criarInput("Ex: 12"); aplicarMascaraNumerica(txtValidade, false, 2);
-        TextField txtJuros = criarInput("Ex: 5.0"); aplicarMascaraNumerica(txtJuros, true, 3);
-        List<CheckBox> checkboxes = new ArrayList<>(); ScrollPane listaModalidades = criarListaModalidades(checkboxes);
+        TextField txtValor = criarInput("Ex: 1200.00");
+        aplicarMascaraNumerica(txtValor, true, 6);
+        TextField txtValidade = criarInput("Ex: 12");
+        aplicarMascaraNumerica(txtValidade, false, 2);
+        TextField txtJuros = criarInput("Ex: 5.0");
+        aplicarMascaraNumerica(txtJuros, true, 3);
+        List<CheckBox> checkboxes = new ArrayList<>();
+        ScrollPane listaModalidades = criarListaModalidades(checkboxes);
 
         adicionarLinhaForm(grid, 0, "Nome do Plano:", criarCampoComDica(txtNome, "Máx 20 letras e espaços."));
         adicionarLinhaForm(grid, 1, "Descrição:", criarCampoComDica(txtDesc, "Breve resumo do plano (Máx 100 caracteres)."));
-        adicionarLinhaForm(grid, 2, "Valor Mensal (R$):", criarCampoComDica(txtValor, "Máx 6 dígitos (Até R$ 100.000)."));
+        adicionarLinhaForm(grid, 2, "Valor (R$):", criarCampoComDica(txtValor, "Máx 6 dígitos (Até R$ 100.000)."));
         adicionarLinhaForm(grid, 3, "Validade (Meses):", criarCampoComDica(txtValidade, "Máx 2 dígitos (De 1 a 99 meses)."));
         adicionarLinhaForm(grid, 4, "Juros Atraso (%):", criarCampoComDica(txtJuros, "Máx 3 dígitos (De 0 a 100%)."));
         adicionarLinhaForm(grid, 5, "Modalidades:", listaModalidades);
@@ -1427,11 +1440,16 @@ public class DonoController {
         String txtMsg = isCadastro ? "Tem certeza que deseja sair?\nTodas as informações inseridas serão apagadas." : "Tem certeza que deseja sair?\nTodas as informações alteradas serão apagadas.";
         Label lblMsg = new Label(txtMsg); lblMsg.setStyle("-fx-text-fill: #f8fafc; -fx-font-size: 15px;"); lblMsg.setWrapText(true); lblMsg.setMaxWidth(440);
 
+        lblMsg.setMaxHeight(Double.MAX_VALUE);
+        lblMsg.setAlignment(Pos.CENTER);
+        lblMsg.setTextAlignment(TextAlignment.CENTER);
+        VBox.setVgrow(lblMsg, Priority.ALWAYS);
+
         Button btnConfirmar = criarBotao("Confirmar", "-fx-background-color: #ef4444; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6; -fx-border-radius: 6;", () -> { confirmado[0] = true; stage.close(); });
         Button btnCancelar = criarBotao("Cancelar", "-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 8 16;", stage::close); btnCancelar.setCancelButton(true);
         HBox boxBotoes = new HBox(16, btnCancelar, btnConfirmar); boxBotoes.setAlignment(Pos.CENTER);
 
-        root.getChildren().addAll(lblMsg, new Region(), boxBotoes);
+        root.getChildren().addAll(lblMsg, boxBotoes);
 
         Scene scene = new Scene(root);
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
@@ -1526,14 +1544,18 @@ public class DonoController {
         Label lblMsg = new Label("Você tem certeza que deseja excluir?\nQualquer informação associada a este registro será excluída permanentemente.");
         lblMsg.setStyle("-fx-text-fill: #f8fafc; -fx-font-size: 15px;"); lblMsg.setWrapText(true); lblMsg.setMaxWidth(440);
 
+        lblMsg.setMaxHeight(Double.MAX_VALUE);
+        lblMsg.setAlignment(Pos.CENTER);
+        lblMsg.setTextAlignment(TextAlignment.CENTER);
+        VBox.setVgrow(lblMsg, Priority.ALWAYS);
+
         Button btnConfirmar = criarBotao("Sim, Excluir", "-fx-background-color: #ef4444; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6; -fx-border-radius: 6;", () -> { confirmado[0] = true; stage.close(); });
         Button btnCancelar = criarBotao("Cancelar", "-fx-background-color: transparent; -fx-border-color: #94a3b8; -fx-text-fill: #94a3b8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-padding: 8 16;", stage::close); btnCancelar.setCancelButton(true);
         HBox boxBotoes = new HBox(16, btnCancelar, btnConfirmar); boxBotoes.setAlignment(Pos.CENTER);
 
-        root.getChildren().addAll(lblMsg, new Region(), boxBotoes);
-        Scene scene = new Scene(root);
-        scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+        root.getChildren().addAll(lblMsg, boxBotoes);
 
+        Scene scene = new Scene(root); scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
         java.net.URL cssUrl = Main.class.getResource("/VisaoGeral.css");
         if (cssUrl != null) scene.getStylesheets().add(cssUrl.toExternalForm());
 
@@ -1556,17 +1578,22 @@ public class DonoController {
         root.setMinSize(500, 240);
 
         Label lblMsg = new Label(msg); lblMsg.setStyle("-fx-text-fill: #ef4444; -fx-font-size: 15px;"); lblMsg.setWrapText(true); lblMsg.setMaxWidth(440);
+
+        lblMsg.setMaxHeight(Double.MAX_VALUE);
+        lblMsg.setAlignment(Pos.CENTER);
+        lblMsg.setTextAlignment(TextAlignment.CENTER);
+        VBox.setVgrow(lblMsg, Priority.ALWAYS);
+
         Button btnOk = criarBotao("OK Entendi", "-fx-background-color: #f1ba2a; -fx-text-fill: #04070d; -fx-font-weight: bold; -fx-padding: 8 16; -fx-cursor: hand; -fx-background-radius: 6; -fx-border-radius: 6;", stage::close);
 
-        root.getChildren().addAll(lblMsg, new Region(), btnOk);
+        root.getChildren().addAll(lblMsg, btnOk);
 
         Scene scene = new Scene(root);
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
-
         java.net.URL cssUrl = Main.class.getResource("/VisaoGeral.css");
         if (cssUrl != null) scene.getStylesheets().add(cssUrl.toExternalForm());
-
         stage.setScene(scene);
+
         stage.getScene().getAccelerators().put(new KeyCodeCombination(KeyCode.ENTER), btnOk::fire);
         Platform.runLater(btnOk::requestFocus);
         stage.showAndWait();
