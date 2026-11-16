@@ -27,7 +27,7 @@ public class Aluno extends Usuario {
 
     public Aluno(String nome, String senha, String cpf,
                  int idade, double altura, double peso,
-                 AssinaturaPlano assinaturaPlano, String intensidade, Treinador treinador) {
+                 AssinaturaPlano assinaturaPlano, String intensidade, List<Treinador> treinadores) {
 
         super(nome, senha, cpf);
         gerarId(Id(BancoDeDados.getInstance().getAlunos()));
@@ -35,7 +35,9 @@ public class Aluno extends Usuario {
         this.altura = altura;
         this.peso = peso;
         this.assinaturaPlanos.put(assinaturaPlano.getId(), assinaturaPlano);
-        this.treinadores.put(treinador.getId(),treinador);
+        for(Treinador treinador : treinadores) {
+            this.treinadores.put(treinador.getId(), treinador);
+        }
         this.intensidade = intensidade;
     }
 
@@ -153,17 +155,6 @@ public class Aluno extends Usuario {
         }
     }
 
-    //Mostra As Modalidades do Aluno
-    public boolean showModalidade() {
-        if (assinaturaPlanos.isEmpty()) {
-            return false;
-        }
-        for (AssinaturaPlano a : assinaturaPlanos.values()) {
-            a.showModalidades();
-        }
-        return true;
-    }
-
     //Pagar Assinatura Plano
     public boolean pagarAssinaturaPlano(int idAssinatura, int idPlano) {
 
@@ -265,33 +256,5 @@ public class Aluno extends Usuario {
     //Pegar Quantidade De Treinos
     public int getQuantidadeTreinos() {
         return treinos.size();
-    }
-
-    //Mostrar Carteirinha
-    public void mostrarCarteirinhaAluno() {
-        ArrayList<String> nomePlanos = new ArrayList<>();
-
-        for (AssinaturaPlano p : this.assinaturaPlanos.values()) {
-            nomePlanos.add(p.getPlano().getNome());
-        }
-        System.out.println("NOME: " + getNome());
-        System.out.println("CPF: " + getCpf());
-        System.out.println("IDADE: " + idade);
-        System.out.println("ALTURA: " + altura + " m");
-        System.out.println("PESO CORPORAL: " + peso + " kg");
-        System.out.println("INTENSIDADE: " + intensidade);
-        System.out.println("MODALIDADES:");
-        if (getModalidade().isEmpty()) {
-            System.out.println("Nenhuma modalidade selecionada.");
-        } else {
-            System.out.println("- " + getModalidade());
-        }
-        System.out.println("PLANO:");
-        if (nomePlanos.isEmpty()) {
-            System.out.print("Nenhum plano selecionado");
-        } else {
-            System.out.println("- " + nomePlanos);
-        }
-        System.out.println("QUANTIDADE DE TREINOS: " + treinos.size());
     }
 }

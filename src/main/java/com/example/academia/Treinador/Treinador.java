@@ -134,13 +134,4 @@ public class Treinador extends Funcionario {
             return false;
         }
     }
-
-
-    //Mostra a Carteirinha
-    public void mostrarCarteirinhaTreinador() {
-        System.out.println("Nome: " + this.getNome());
-        System.out.println("cpf: " + this.getCpf());
-        System.out.println("Especialidade: " + this.especialidade);
-        System.out.println("Salário: " + this.getSalario());
-    }
 }
